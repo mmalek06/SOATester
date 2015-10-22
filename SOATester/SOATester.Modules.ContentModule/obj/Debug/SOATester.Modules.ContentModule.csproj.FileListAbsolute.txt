@@ -101,7 +101,6 @@ E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\bin\Debug\ko\
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\bin\Debug\ru\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
-E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\bin\Debug\SOATester.Modules.ContentModule.pssym
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.csprojResolveAssemblyReference.cache
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\Views\ContentView.g.cs
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\Views\MainMenuView.g.cs
@@ -121,4 +120,3 @@ E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOA
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.csproj.GenerateResource.Cache
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.dll
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.pdb
-E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.dll.postsharp
