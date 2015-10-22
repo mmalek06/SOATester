@@ -1,0 +1,16 @@
+1. processing plugins may be slow, so it should be moved to a separate thread
+	1.1. while doing so we should show some kind of loading indicator
+	1.2. maybe we should come up with some more efficient algorithms for each plugin?
+
+2. should only active plugins be loaded? maybe IsActive property of a plugin should be checked each time it's run since plugin state may change based on what user 
+   changed in settings
+	2.1. plugin loading/initialization will probably be remade when we'll start developing user settings functionality
+	2.2. I don't like how Colorizer picks colors - sometimes colors for each project are almost undistinguishable. change algorithm that generates random numbers?
+	2.3. think about hierarchical coloring strategy - projects should be easily distinguished from test suites and test suites from steps, FLAT strategy gives the same color
+		 for each item in project
+	2.4. when testsuite is chosen before it's project is chosen, then it gets some random color, which is not being overridden when project is chosen. we should change that.
+		 the same applies to step -> testsuite relation and step -> project relation. maybe showing some default color for unbound items would do the trick?
+
+3. ContentView's TabControl is ugly - especially the headers - we should add some border rounding, margins, paddings
+
+4. let's think about using PostSharp - there are some places it could be applied, but is it worth extending the compilation time?

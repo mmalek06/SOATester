@@ -1,0 +1,11 @@
+﻿<Modularity:ModuleCatalog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SOATester"
+                    xmlns:Modularity="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
+    <Modularity:ModuleInfo Ref="file://SOATester.Modules.ContentModule.dll" ModuleName="ContentModule" 
+                           ModuleType="SOATester.Modules.ContentModule.ContentModule, SOATester.Modules.ContentModule, Version=1.0.0.0" 
+                           InitializationMode="WhenAvailable" />
+    <Modularity:ModuleInfo Ref="file://SOATester.Modules.ProjectsListModule.dll" ModuleName="ProjectsListModule" 
+                           ModuleType="SOATester.Modules.ProjectsListModule.ProjectsListModule, SOATester.Modules.ProjectsListModule, Version=1.0.0.0" 
+                           InitializationMode="WhenAvailable" />
+</Modularity:ModuleCatalog>

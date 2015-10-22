@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="SOATester.Modules.ProjectsListModule.Views.ProjectsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SOATester.Modules.ProjectsListModule.Views"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:Converters="clr-namespace:SOATester.Infrastructure.Converters;assembly=SOATester.Infrastructure"
+             xmlns:Behaviors="clr-namespace:SOATester.Infrastructure.Behaviors;assembly=SOATester.Infrastructure"
+             xmlns:ViewModels="clr-namespace:SOATester.Modules.ProjectsListModule.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <!-- converters -->
+        <Converters:GetElementTypeConverter x:Key="GetElementTypeConverter" />
+
+        <!-- templates -->
+        <HierarchicalDataTemplate x:Key="ProjectSteps">
+            <TextBlock Text="{Binding Name}" />
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate x:Key="TestSuites" ItemTemplate="{StaticResource ProjectSteps}" ItemsSource="{Binding Items}">
+            <TextBlock Text="{Binding Name}" />
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate x:Key="ProjectsOverview" ItemTemplate="{StaticResource TestSuites}" ItemsSource="{Binding Items}">
+            <TextBlock Text="{Binding Name}" />
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
+
+    <TreeView HorizontalAlignment="Stretch" ItemsSource="{Binding Projects, UpdateSourceTrigger=PropertyChanged}" 
+              ItemTemplate="{StaticResource ProjectsOverview}" Width="200">
+        <TreeView.ItemContainerStyle>
+            <Style TargetType="{x:Type TreeViewItem}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=., Converter={StaticResource GetElementTypeConverter}}" 
+                                 Value="{x:Type ViewModels:ProjectViewModel}">
+                        <Setter Property="Behaviors:MouseDoubleClick.Command" 
+                                Value="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                        AncestorType={x:Type TreeView}}, Path=DataContext.ChooseProject}" />
+                        <Setter Property="Behaviors:MouseDoubleClick.CommandParameter" Value="{Binding Path=.}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=., Converter={StaticResource GetElementTypeConverter}}"
+                                 Value="{x:Type ViewModels:TestSuiteViewModel}">
+                        <Setter Property="Behaviors:MouseDoubleClick.Command"
+                                Value="{Binding RelativeSource={RelativeSource FindAncestor,
+                                        AncestorType={x:Type TreeView}}, Path=DataContext.ChooseTestSuite}" />
+                        <Setter Property="Behaviors:MouseDoubleClick.CommandParameter" Value="{Binding Path=.}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=., Converter={StaticResource GetElementTypeConverter}}"
+                                 Value="{x:Type ViewModels:StepViewModel}">
+                        <Setter Property="Behaviors:MouseDoubleClick.Command"
+                                Value="{Binding RelativeSource={RelativeSource FindAncestor,
+                                        AncestorType={x:Type TreeView}}, Path=DataContext.ChooseStep}" />
+                        <Setter Property="Behaviors:MouseDoubleClick.CommandParameter" Value="{Binding Path=.}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </TreeView.ItemContainerStyle>
+    </TreeView>
+</UserControl>

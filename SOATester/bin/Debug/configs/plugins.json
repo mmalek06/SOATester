@@ -1,0 +1,20 @@
+﻿[
+    {
+        "key": "AGGREGATOR",
+        "strategy": "NONE",
+        "isActive": true,
+        "priority": 1
+    },
+    {
+        "key": "COLORIZER",
+        "strategy": "HIERARCHICAL",
+        "isActive": false,
+        "priority": 1
+    },
+    {
+        "key": "COLORIZER",
+        "strategy": "FLAT",
+        "isActive": true,
+        "priority": 1
+    }
+]
