@@ -1,0 +1,17 @@
+﻿[
+    {
+        "id": 1,
+        "projectId": 1,
+        "name": "scenario1"
+    },
+    {
+        "id": 2,
+        "projectId": 1,
+        "name": "scenario2"
+    },
+    {
+        "id": 3,
+        "projectId": 2,
+        "name": "scenario3"
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "scenarioId": 1,
+        "name": "suite1"
+    },
+    {
+        "id": 2,
+        "scenarioId": 1,
+        "name": "suite2"
+    },
+    {
+        "id": 3,
+        "scenarioId": 2,
+        "name": "suite3"
+    }
+]
