@@ -15,15 +15,19 @@
         <Converters:GetElementTypeConverter x:Key="GetElementTypeConverter" />
 
         <!-- templates -->
-        <HierarchicalDataTemplate x:Key="ProjectSteps">
+        <HierarchicalDataTemplate x:Key="Steps">
             <TextBlock Text="{Binding Name}" />
         </HierarchicalDataTemplate>
 
-        <HierarchicalDataTemplate x:Key="TestSuites" ItemTemplate="{StaticResource ProjectSteps}" ItemsSource="{Binding Items}">
+        <HierarchicalDataTemplate x:Key="Tests" ItemTemplate="{StaticResource Steps}" ItemsSource="{Binding Items}">
             <TextBlock Text="{Binding Name}" />
         </HierarchicalDataTemplate>
 
-        <HierarchicalDataTemplate x:Key="ProjectsOverview" ItemTemplate="{StaticResource TestSuites}" ItemsSource="{Binding Items}">
+        <HierarchicalDataTemplate x:Key="Scenarios" ItemTemplate="{StaticResource Tests}" ItemsSource="{Binding Items}">
+            <TextBlock Text="{Binding Name}" />
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate x:Key="ProjectsOverview" ItemTemplate="{StaticResource Scenarios}" ItemsSource="{Binding Items}">
             <TextBlock Text="{Binding Name}" />
         </HierarchicalDataTemplate>
     </UserControl.Resources>
@@ -40,8 +44,15 @@
                                         AncestorType={x:Type TreeView}}, Path=DataContext.ChooseProject}" />
                         <Setter Property="Behaviors:MouseDoubleClick.CommandParameter" Value="{Binding Path=.}" />
                     </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=., Converter={StaticResource GetElementTypeConverter}}" 
+                                 Value="{x:Type ViewModels:ScenarioViewModel}">
+                        <Setter Property="Behaviors:MouseDoubleClick.Command" 
+                                Value="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                        AncestorType={x:Type TreeView}}, Path=DataContext.ChooseScenario}" />
+                        <Setter Property="Behaviors:MouseDoubleClick.CommandParameter" Value="{Binding Path=.}" />
+                    </DataTrigger>
                     <DataTrigger Binding="{Binding Path=., Converter={StaticResource GetElementTypeConverter}}"
-                                 Value="{x:Type ViewModels:TestSuiteViewModel}">
+                                 Value="{x:Type ViewModels:TestViewModel}">
                         <Setter Property="Behaviors:MouseDoubleClick.Command"
                                 Value="{Binding RelativeSource={RelativeSource FindAncestor,
                                         AncestorType={x:Type TreeView}}, Path=DataContext.ChooseTestSuite}" />

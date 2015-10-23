@@ -10,12 +10,12 @@ using Prism.Events;
 using SOATester.Modules.ProjectsListModule.ViewModels.Base;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels {
-    public class ProjectViewModel : CollectionViewModel<TestSuiteViewModel> {
+    public class ProjectViewModel : CollectionViewModel<ScenarioViewModel> {
 
         #region constructors and destructors
 
         public ProjectViewModel(IEventAggregator eventAggregator) : base(eventAggregator) {
-            Items = new ObservableCollection<TestSuiteViewModel>();
+            Items = new ObservableCollection<ScenarioViewModel>();
         }
 
         #endregion

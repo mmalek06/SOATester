@@ -12,11 +12,11 @@ namespace SOATester.Entities {
         public Method Method { get; set; }
 
         public virtual ICollection<Parameter> Parameters { get; set; }
-        public virtual ICollection<TestSuite> TestSuites { get; set; }
+        public virtual ICollection<Scenario> Scenarios { get; set; }
 
         public Project() {
             Parameters = new List<Parameter>();
-            TestSuites = new List<TestSuite>();
+            Scenarios = new List<Scenario>();
         }
     }
 }

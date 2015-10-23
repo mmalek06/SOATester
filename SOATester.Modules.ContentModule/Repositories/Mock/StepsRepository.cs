@@ -29,12 +29,12 @@ namespace SOATester.Modules.ContentModule.Repositories.Mock {
             return cache.FirstOrDefault(item => item.Id == id);
         }
 
-        public IEnumerable<Step> GetStepsForTestSuite(int testSuiteId) {
+        public IEnumerable<Step> GetStepsForTest(int testSuiteId) {
             return cache.Where(step => step.TestSuiteId == testSuiteId);
         }
 
-        public IEnumerable<Step> GetStepsForTestSuite(TestSuite testSuite) {
-            return GetStepsForTestSuite(testSuite.Id);
+        public IEnumerable<Step> GetStepsForTest(Test testSuite) {
+            return GetStepsForTest(testSuite.Id);
         }
 
         #endregion

@@ -28,11 +28,13 @@ namespace SOATester.Modules.ContentModule {
         protected override void _initializeRepositories() {
             if (_appMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
                 _container.RegisterType<IProjectsRepository, Repositories.ProjectsRepository>();
-                _container.RegisterType<ITestSuitesRepository, Repositories.TestSuitesRepository>();
+                _container.RegisterType<IScenariosRepository, Repositories.ScenariosRepository>();
+                _container.RegisterType<ITestsRepository, Repositories.TestsRepository>();
                 _container.RegisterType<IStepsRepository, Repositories.StepsRepository>();
             } else {
                 _container.RegisterType<IProjectsRepository, Repositories.Mock.ProjectsRepository>();
-                _container.RegisterType<ITestSuitesRepository, Repositories.Mock.TestSuitesRepository>();
+                _container.RegisterType<IScenariosRepository, Repositories.Mock.ScenariosRepository>();
+                _container.RegisterType<ITestsRepository, Repositories.Mock.TestsRepository>();
                 _container.RegisterType<IStepsRepository, Repositories.Mock.StepsRepository>();
             }
         }
@@ -46,10 +48,12 @@ namespace SOATester.Modules.ContentModule {
             // register view models
             _container.RegisterType<ICollectionViewModel, ContentViewModel>(
                 new InjectionProperty("ProjectsRepository", _container.Resolve<IProjectsRepository>()),
-                new InjectionProperty("TestSuitesRepository", _container.Resolve<ITestSuitesRepository>()),
+                new InjectionProperty("ScenariosRepository", _container.Resolve<IScenariosRepository>()),
+                new InjectionProperty("TestSuitesRepository", _container.Resolve<ITestsRepository>()),
                 new InjectionProperty("StepsRepository", _container.Resolve<IStepsRepository>()));
             _container.RegisterType<ProjectViewModel>();
-            _container.RegisterType<TestSuiteViewModel>();
+            _container.RegisterType<ScenarioViewModel>();
+            _container.RegisterType<TestViewModel>();
             _container.RegisterType<StepViewModel>();
         }
 

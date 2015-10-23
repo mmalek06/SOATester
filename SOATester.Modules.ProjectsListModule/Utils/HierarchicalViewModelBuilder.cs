@@ -31,23 +31,30 @@ namespace SOATester.Modules.ProjectsListModule.Utils {
             var mainVm = _container.Resolve<ProjectsViewModel>();
             var vms = new List<ProjectViewModel>();
 
-            foreach (var projectEntity in entities) {
+            foreach (var project in entities) {
                 // for property injection use: new PropertyOverride("Project", projectEntity)
-                var projectVm = _container.Resolve<ProjectViewModel>(new PropertyOverride("Id", projectEntity.Id), 
-                    new PropertyOverride("Name", projectEntity.Name));
+                var projectVm = _container.Resolve<ProjectViewModel>(new PropertyOverride("Id", project.Id), 
+                    new PropertyOverride("Name", project.Name));
 
-                foreach (var testSuite in projectEntity.TestSuites) {
-                    var testSuiteVm = _container.Resolve<TestSuiteViewModel>(new PropertyOverride("Id", testSuite.Id),
-                        new PropertyOverride("Name", testSuite.Name));
+                foreach (var scenario in project.Scenarios) {
+                    var scenarioVm = _container.Resolve<ScenarioViewModel>(new PropertyOverride("Id", scenario.Id),
+                        new PropertyOverride("Name", scenario.Name));
 
-                    foreach (var step in testSuite.Steps) {
-                        var stepVm = _container.Resolve<StepViewModel>(new PropertyOverride("Id", step.Id),
-                            new PropertyOverride("Name", step.Name));
+                    foreach (var test in scenario.Tests) {
+                        var testVm = _container.Resolve<TestViewModel>(new PropertyOverride("Id", test.Id),
+                            new PropertyOverride("Name", test.Name));
 
-                        testSuiteVm.Items.Add(stepVm);
+                        foreach (var step in test.Steps) {
+                            var stepVm = _container.Resolve<StepViewModel>(new PropertyOverride("Id", step.Id),
+                                new PropertyOverride("Name", step.Name));
+
+                            testVm.Items.Add(stepVm);
+                        }
+
+                        scenarioVm.Items.Add(testVm);
                     }
 
-                    projectVm.Items.Add(testSuiteVm);
+                    projectVm.Items.Add(scenarioVm);
                 }
 
                 vms.Add(projectVm);

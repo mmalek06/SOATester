@@ -84,21 +84,25 @@
   <ItemGroup>
     <Compile Include="ContentModule.cs" />
     <Compile Include="Repositories\Base\IProjectsRepository.cs" />
+    <Compile Include="Repositories\Base\IScenariosRepository.cs" />
     <Compile Include="Repositories\Base\IStepsRepository.cs" />
-    <Compile Include="Repositories\Base\ITestSuitesRepository.cs" />
+    <Compile Include="Repositories\Base\ITestsRepository.cs" />
     <Compile Include="Repositories\Mock\Base\MockRepository.cs" />
     <Compile Include="Repositories\Mock\ProjectsRepository.cs" />
+    <Compile Include="Repositories\Mock\ScenariosRepository.cs" />
     <Compile Include="Repositories\Mock\StepsRepository.cs" />
-    <Compile Include="Repositories\Mock\TestSuitesRepository.cs" />
+    <Compile Include="Repositories\Mock\TestsRepository.cs" />
     <Compile Include="Repositories\ProjectsRepository.cs" />
+    <Compile Include="Repositories\ScenariosRepository.cs" />
     <Compile Include="Repositories\StepsRepository.cs" />
     <Compile Include="Repositories\TestSuitesRepository.cs" />
     <Compile Include="ViewModels\Base\ICollectionViewModel.cs" />
     <Compile Include="ViewModels\Base\IViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\StepViewModel.cs" />
-    <Compile Include="ViewModels\TestSuiteViewModel.cs" />
+    <Compile Include="ViewModels\TestViewModel.cs" />
     <Compile Include="Views\ContentView.xaml.cs">
       <DependentUpon>ContentView.xaml</DependentUpon>
     </Compile>
@@ -150,7 +154,10 @@
     <EmbeddedResource Include="MockData\steps_data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="MockData\test_suites_data.json">
+    <EmbeddedResource Include="MockData\tests_data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MockData\scenarios_data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="packages.config" />

@@ -6,8 +6,8 @@ namespace SOATester.Modules.ContentModule.Repositories.Base {
     public interface IStepsRepository {
         Step GetStep(int id);
 
-        IEnumerable<Step> GetStepsForTestSuite(TestSuite testSuite);
+        IEnumerable<Step> GetStepsForTest(Test test);
 
-        IEnumerable<Step> GetStepsForTestSuite(int testSuiteId);
+        IEnumerable<Step> GetStepsForTest(int testId);
     }
 }

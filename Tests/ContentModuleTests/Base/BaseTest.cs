@@ -19,7 +19,7 @@ namespace Tests.ContentModuletests.Base {
         protected List<IViewModel> _viewModels = new List<IViewModel>();
         protected IEventAggregator _eventAggregator;
         protected IProjectsRepository _projectsRepo;
-        protected ITestSuitesRepository _testSuitesRepo;
+        protected ITestsRepository _testSuitesRepo;
         protected IStepsRepository _stepsRepo;
 
         [TestInitialize()]
@@ -39,14 +39,14 @@ namespace Tests.ContentModuletests.Base {
             _viewModels.Add(projectViewModel1);
             _viewModels.Add(projectViewModel2);
 
-            var project1TestSuites = _testSuitesRepo.GetTestSuitesForProject(projectViewModel1.Project);
-            var project2TestSuites = _testSuitesRepo.GetTestSuitesForProject(projectViewModel2.Project);
-            TestSuiteViewModel testSuiteViewModel_1 = null;
+            var project1TestSuites = _testSuitesRepo.GetTestsForScenario(projectViewModel1.Project);
+            var project2TestSuites = _testSuitesRepo.GetTestsForScenario(projectViewModel2.Project);
+            TestViewModel testSuiteViewModel_1 = null;
 
             foreach (var ts in project1TestSuites) {
-                var testSuiteViewModel = _container.Resolve<TestSuiteViewModel>();
+                var testSuiteViewModel = _container.Resolve<TestViewModel>();
 
-                testSuiteViewModel.TestSuite = ts;
+                testSuiteViewModel.Test = ts;
 
                 _viewModels.Add(testSuiteViewModel);
 
@@ -55,14 +55,14 @@ namespace Tests.ContentModuletests.Base {
                 }
             }
             foreach (var ts in project2TestSuites) {
-                var testSuiteViewModel = _container.Resolve<TestSuiteViewModel>();
+                var testSuiteViewModel = _container.Resolve<TestViewModel>();
 
-                testSuiteViewModel.TestSuite = ts;
+                testSuiteViewModel.Test = ts;
 
                 _viewModels.Add(testSuiteViewModel);
             }
 
-            var testSuite1Steps = _stepsRepo.GetStepsForTestSuite(testSuiteViewModel_1.TestSuite);
+            var testSuite1Steps = _stepsRepo.GetStepsForTest(testSuiteViewModel_1.Test);
 
             foreach (var s in testSuite1Steps) {
                 var stepViewModel = _container.Resolve<StepViewModel>();
@@ -75,7 +75,7 @@ namespace Tests.ContentModuletests.Base {
 
         protected void _initializeRepos() {
             _projectsRepo = _container.Resolve<IProjectsRepository>();
-            _testSuitesRepo = _container.Resolve<ITestSuitesRepository>();
+            _testSuitesRepo = _container.Resolve<ITestsRepository>();
             _stepsRepo = _container.Resolve<IStepsRepository>();
         }
 
@@ -87,7 +87,7 @@ namespace Tests.ContentModuletests.Base {
 
             // register repositories
             _container.RegisterType<IProjectsRepository, ProjectsRepository>();
-            _container.RegisterType<ITestSuitesRepository, TestSuitesRepository>();
+            _container.RegisterType<ITestsRepository, TestsRepository>();
             _container.RegisterType<IStepsRepository, StepsRepository>();
 
             // register plugins
@@ -98,7 +98,7 @@ namespace Tests.ContentModuletests.Base {
 
             // register viewmodels
             _container.RegisterType<ProjectViewModel>();
-            _container.RegisterType<TestSuiteViewModel>();
+            _container.RegisterType<TestViewModel>();
             _container.RegisterType<StepViewModel>();
         }
     }

@@ -44,8 +44,10 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
         public IEnumerable<TabItemProxy> Execute(IEnumerable<TabItemProxy> objects) {
             var projectsProxies = objects.Where(obj => obj.ViewModel is ProjectViewModel);
             var projectToColorMap = new Dictionary<int, Color>();
-            var testSuitesProxies = objects.Where(obj => obj.ViewModel is TestSuiteViewModel);
-            var testSuiteToColorMap = new Dictionary<int, Color>();
+            var scenariosProxies = objects.Where(obj => obj.ViewModel is ScenarioViewModel);
+            var scenarioToColorMap = new Dictionary<int, Color>();
+            var testsProxies = objects.Where(obj => obj.ViewModel is TestViewModel);
+            var testToColorMap = new Dictionary<int, Color>();
             var stepsProxies = objects.Where(obj => obj.ViewModel is StepViewModel);
             var rand = new Random();
 
@@ -65,11 +67,11 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
                 }
             }
 
-            foreach (var proxy in testSuitesProxies) {
+            foreach (var proxy in scenariosProxies) {
                 Color color;
 
                 if (proxy.Brush == null) {
-                    if (!projectToColorMap.TryGetValue((proxy.ViewModel as TestSuiteViewModel).TestSuite.ProjectId, out color)) {
+                    if (!scenarioToColorMap.TryGetValue((proxy.ViewModel as ScenarioViewModel).Scenario.ProjectId, out color)) {
                         color = _getColor(rand);
                     }
 
@@ -79,14 +81,31 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
                     color = proxy.Brush.Color;
                 }
 
-                testSuiteToColorMap[(proxy.ViewModel as TestSuiteViewModel).Id] = proxy.Brush.Color;
+                scenarioToColorMap[(proxy.ViewModel as ScenarioViewModel).Id] = proxy.Brush.Color;
+            }
+
+            foreach (var proxy in testsProxies) {
+                Color color;
+
+                if (proxy.Brush == null) {
+                    if (!projectToColorMap.TryGetValue((proxy.ViewModel as TestViewModel).Test.ScenarioId, out color)) {
+                        color = _getColor(rand);
+                    }
+
+                    _occupiedColors.Add(color);
+                    proxy.Brush = new SolidColorBrush(color);
+                } else {
+                    color = proxy.Brush.Color;
+                }
+
+                testToColorMap[(proxy.ViewModel as TestViewModel).Id] = proxy.Brush.Color;
             }
 
             foreach (var proxy in stepsProxies) {
                 if (proxy.Brush == null) {
                     Color color;
 
-                    if (!testSuiteToColorMap.TryGetValue((proxy.ViewModel as StepViewModel).Step.TestSuiteId, out color)) {
+                    if (!testToColorMap.TryGetValue((proxy.ViewModel as StepViewModel).Step.TestSuiteId, out color)) {
                         color = _getColor(rand);
                     }
 

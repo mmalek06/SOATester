@@ -38,12 +38,14 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
         public IEnumerable<TabItemProxy> Execute(IEnumerable<TabItemProxy> objects) {
             if (objects != null) {
                 var projectsMatchingResult = _matchProjectsWithKeys(objects);
-                var testSuitesMatchingResult = _matchTestSuitesWithKeys(objects, projectsMatchingResult.Lookup);
-                var stepsMatchingResult = _matchStepsWithKeys(objects, testSuitesMatchingResult.Lookup);
+                var scenariosMatchingResult = _matchScenariosWithKeys(objects, projectsMatchingResult.Lookup);
+                var testsMatchingResult = _matchTestsWithKeys(objects, scenariosMatchingResult.Lookup);
+                var stepsMatchingResult = _matchStepsWithKeys(objects, testsMatchingResult.Lookup);
                 var dictionaries = new List<Dictionary<int, TabItemProxy>>();
 
                 dictionaries.Add(projectsMatchingResult.Mapping);
-                dictionaries.Add(testSuitesMatchingResult.Mapping);
+                dictionaries.Add(scenariosMatchingResult.Mapping);
+                dictionaries.Add(testsMatchingResult.Mapping);
                 dictionaries.Add(stepsMatchingResult);
 
                 var flatDictionary = dictionaries.SelectMany(dict => dict).ToDictionary(pair => pair.Key, pair => pair.Value);
@@ -63,7 +65,8 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
         private MatchingResult _matchProjectsWithKeys(IEnumerable<TabItemProxy> objects) {
             var projectsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
             var projectsLookup = new Dictionary<int, IndexTabItemProxyPair>();
-            int step = 10000;
+            const int StepSize = 100000;
+            int step = StepSize;
 
             foreach (var obj in objects.Where(obj => obj.ViewModel is ProjectViewModel)) {
                 projectsProxiesWithKeys[step] = obj;
@@ -72,7 +75,7 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
                     ProxyObj = obj
                 };
 
-                step += 10000;
+                step += StepSize;
             }
 
             return new MatchingResult {
@@ -81,42 +84,83 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             };
         }
 
-        private MatchingResult _matchTestSuitesWithKeys(IEnumerable<TabItemProxy> objects, Dictionary<int, IndexTabItemProxyPair> projectsLookup) {
-            var testSuitesProxiesWithKeys = new Dictionary<int, TabItemProxy>();
-            var testSuitesLookup = new Dictionary<int, IndexTabItemProxyPair>();
+        private MatchingResult _matchScenariosWithKeys(IEnumerable<TabItemProxy> objects, Dictionary<int, IndexTabItemProxyPair> projectsLookup) {
+            var scenariosProxiesWithKeys = new Dictionary<int, TabItemProxy>();
+            var scenariosLookup = new Dictionary<int, IndexTabItemProxyPair>();
             var counts = new Dictionary<int, int>();
             int maxUnboundIdx = 100000;
-            int step = 1000;
+            const int StepSize = 10000;
+            int step = StepSize;
 
-            foreach (var obj in objects.Where(obj => obj.ViewModel is TestSuiteViewModel)) {
-                var tsvm = obj.ViewModel as TestSuiteViewModel;
+            foreach (var obj in objects.Where(obj => obj.ViewModel is ScenarioViewModel)) {
+                var svm = obj.ViewModel as ScenarioViewModel;
                 IndexTabItemProxyPair outVal;
 
-                if (projectsLookup.TryGetValue(tsvm.TestSuite.ProjectId, out outVal)) {
+                if (projectsLookup.TryGetValue(svm.Scenario.ProjectId, out outVal)) {
                     int currCount;
 
-                    if (counts.TryGetValue(tsvm.TestSuite.ProjectId, out currCount)) {
-                        step = outVal.Index + (currCount + 1) * 1000;
-                        counts[tsvm.TestSuite.ProjectId] += 1;
+                    if (counts.TryGetValue(svm.Scenario.ProjectId, out currCount)) {
+                        step = outVal.Index + (currCount + 1) * StepSize;
+                        counts[svm.Scenario.ProjectId] += 1;
                     } else {
-                        step = outVal.Index + 1000;
-                        counts[tsvm.TestSuite.ProjectId] = 1;
+                        step = outVal.Index + StepSize;
+                        counts[svm.Scenario.ProjectId] = 1;
                     }
                 } else {
-                    maxUnboundIdx += 1000;
+                    maxUnboundIdx += StepSize;
                     step = maxUnboundIdx;
                 }
 
-                testSuitesProxiesWithKeys[step] = obj;
-                testSuitesLookup[(obj.ViewModel as TestSuiteViewModel).Id] = new IndexTabItemProxyPair {
+                scenariosProxiesWithKeys[step] = obj;
+                scenariosLookup[(obj.ViewModel as ScenarioViewModel).Id] = new IndexTabItemProxyPair {
                     Index = step,
                     ProxyObj = obj
                 };
             }
 
             return new MatchingResult {
-                Mapping = testSuitesProxiesWithKeys,
-                Lookup = testSuitesLookup
+                Mapping = scenariosProxiesWithKeys,
+                Lookup = scenariosLookup
+            };
+        }
+
+        private MatchingResult _matchTestsWithKeys(IEnumerable<TabItemProxy> objects, Dictionary<int, IndexTabItemProxyPair> scenariosLookup) {
+            var testsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
+            var testsLookup = new Dictionary<int, IndexTabItemProxyPair>();
+            var counts = new Dictionary<int, int>();
+            int maxUnboundIdx = 100000;
+            const int StepSize = 1000;
+            int step = StepSize;
+
+            foreach (var obj in objects.Where(obj => obj.ViewModel is TestViewModel)) {
+                var tvm = obj.ViewModel as TestViewModel;
+                IndexTabItemProxyPair outVal;
+
+                if (scenariosLookup.TryGetValue(tvm.Test.ScenarioId, out outVal)) {
+                    int currCount;
+
+                    if (counts.TryGetValue(tvm.Test.ScenarioId, out currCount)) {
+                        step = outVal.Index + (currCount + 1) * StepSize;
+                        counts[tvm.Test.ScenarioId] += 1;
+                    } else {
+                        step = outVal.Index + StepSize;
+                        counts[tvm.Test.ScenarioId] = 1;
+                    }
+                } else {
+                    maxUnboundIdx += StepSize;
+                    step = maxUnboundIdx;
+                }
+
+                testsProxiesWithKeys[step] = obj;
+                testsLookup[(obj.ViewModel as TestViewModel).Id] = new IndexTabItemProxyPair {
+                    Index = step,
+                    ProxyObj = obj
+                };
+            }
+
+            return new MatchingResult {
+                Mapping = testsProxiesWithKeys,
+                Lookup = testsLookup
             };
         }
 
@@ -124,7 +168,8 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             var stepsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
             var counts = new Dictionary<int, int>();
             int maxUnboundIndex = 1000000;
-            int step = 100;
+            const int StepSize = 1000;
+            int step = StepSize;
 
             foreach (var obj in objects.Where(obj => obj.ViewModel is StepViewModel)) {
                 var svm = obj.ViewModel as StepViewModel;
@@ -134,14 +179,14 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
                     int currCount;
 
                     if (counts.TryGetValue(svm.Step.TestSuiteId, out currCount)) {
-                        step = outVal.Index + (currCount + 1) * 100;
+                        step = outVal.Index + (currCount + 1) * StepSize;
                         counts[svm.Step.TestSuiteId] += 1;
                     } else {
-                        step = outVal.Index + 100;
+                        step = outVal.Index + StepSize;
                         counts[svm.Step.TestSuiteId] = 1;
                     }
                 } else {
-                    maxUnboundIndex += 100;
+                    maxUnboundIndex += StepSize;
                     step = maxUnboundIndex;
                 }
 

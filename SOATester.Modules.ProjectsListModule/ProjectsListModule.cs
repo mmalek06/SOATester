@@ -14,8 +14,6 @@ using SOATester.Infrastructure.ConfigurationEnums;
 using SOATester.Modules.ProjectsListModule.Utils;
 using SOATester.Modules.ProjectsListModule.Views;
 using SOATester.Modules.ProjectsListModule.ViewModels;
-using SOATester.Modules.ProjectsListModule.Repositories;
-using SOATester.Modules.ProjectsListModule.Repositories.Mock;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
 
 namespace SOATester.Modules.ProjectsListModule {
@@ -31,9 +29,9 @@ namespace SOATester.Modules.ProjectsListModule {
 
         protected override void _initializeRepositories() {
             if (_appMode == AppMode.RUN) {
-                _container.RegisterType<IProjectsRepository, SOATester.Modules.ProjectsListModule.Repositories.ProjectsRepository>();
+                _container.RegisterType<IProjectsRepository, Repositories.ProjectsRepository>();
             } else if (_appMode == AppMode.TESTING) {
-                _container.RegisterType<IProjectsRepository, SOATester.Modules.ProjectsListModule.Repositories.Mock.ProjectsRepository>();
+                _container.RegisterType<IProjectsRepository, Repositories.Mock.ProjectsRepository>();
             }
         }
 
@@ -47,8 +45,9 @@ namespace SOATester.Modules.ProjectsListModule {
 
             // register view models
             _container.RegisterInstance<ProjectsViewModel>(_container.Resolve<HierarchicalViewModelBuilder>().Build());
+            _container.RegisterType<ScenarioViewModel>();
             _container.RegisterType<ProjectViewModel>();
-            _container.RegisterType<TestSuiteViewModel>();
+            _container.RegisterType<TestViewModel>();
             _container.RegisterType<StepViewModel>();
         }
 

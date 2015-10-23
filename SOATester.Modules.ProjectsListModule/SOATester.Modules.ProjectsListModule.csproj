@@ -99,6 +99,7 @@
     <Compile Include="ViewModels\Base\CollectionViewModel.cs" />
     <Compile Include="ViewModels\ProjectsViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\StepViewModel.cs" />
     <Compile Include="ViewModels\TestSuiteViewModel.cs" />
     <Compile Include="Views\ProjectsView.xaml.cs">

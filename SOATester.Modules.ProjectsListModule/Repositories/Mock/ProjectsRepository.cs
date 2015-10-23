@@ -43,25 +43,24 @@ namespace SOATester.Modules.ProjectsListModule.Repositories.Mock {
         private RawEntitiesContainer _getRawObjects() {
             var container = new RawEntitiesContainer();
 
-            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/MockData/projects_data.json")) {
-                var projectsData = reader.ReadToEnd();
-                var projects = JsonConvert.DeserializeObject<List<Project>>(projectsData);
-
-                container.Projects = projects;
-            }
-
-            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/MockData/test_suites_data.json")) {
-                var testSuitesData = reader.ReadToEnd();
-                var testSuites = JsonConvert.DeserializeObject<List<TestSuite>>(testSuitesData);
-
-                container.TestSuites = testSuites;
-            }
-
-            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/MockData/steps_data.json")) {
-                var stepsData = reader.ReadToEnd();
-                var steps = JsonConvert.DeserializeObject<List<Step>>(stepsData);
-
-                container.Steps = steps;
+            foreach (var pair in new[] {
+                new Tuple<string, Type>("projects_data.json", typeof(Project)),
+                new Tuple<string, Type>("scenarios_data.json", typeof(Scenario)),
+                new Tuple<string, Type>("tests_data.json", typeof(Test)),
+                new Tuple<string, Type>("steps_data.json", typeof(Step)) }) {
+                using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/MockData/" + pair.Item1)) {
+                    var data = reader.ReadToEnd();
+                    
+                    if (pair.Item2 == typeof(Project)) {
+                        container.Projects = JsonConvert.DeserializeObject<List<Project>>(data);
+                    } else if (pair.Item2 == typeof(Scenario)) {
+                        container.Scenarios = JsonConvert.DeserializeObject<List<Scenario>>(data);
+                    } else if (pair.Item2 == typeof(Test)) {
+                        container.Tests = JsonConvert.DeserializeObject<List<Test>>(data);
+                    } else if (pair.Item2 == typeof(Step)) {
+                        container.Steps = JsonConvert.DeserializeObject<List<Step>>(data);
+                    }
+                }
             }
 
             return container;
@@ -71,12 +70,16 @@ namespace SOATester.Modules.ProjectsListModule.Repositories.Mock {
             var projects = new List<Project>();
 
             foreach (var project in container.Projects) {
-                foreach (var testSuite in from ts in container.TestSuites where ts.ProjectId == project.Id select ts) {
-                    foreach (var step in from st in container.Steps where st.TestSuiteId == testSuite.Id select st) {
-                        testSuite.Steps.Add(step);
+                foreach (var scenario in from sc in container.Scenarios where sc.ProjectId == project.Id select sc) {
+                    foreach (var test in from ts in container.Tests where ts.ScenarioId == scenario.Id select ts) {
+                        foreach (var step in from st in container.Steps where st.TestSuiteId == test.Id select st) {
+                            test.Steps.Add(step);
+                        }
+
+                        scenario.Tests.Add(test);
                     }
 
-                    project.TestSuites.Add(testSuite);
+                    project.Scenarios.Add(scenario);
                 }
 
                 projects.Add(project);
@@ -91,7 +94,8 @@ namespace SOATester.Modules.ProjectsListModule.Repositories.Mock {
 
         private class RawEntitiesContainer {
             public List<Project> Projects { get; set; }
-            public List<TestSuite> TestSuites { get; set; }
+            public List<Scenario> Scenarios { get; set; }
+            public List<Test> Tests { get; set; }
             public List<Step> Steps { get; set; }
         }
 

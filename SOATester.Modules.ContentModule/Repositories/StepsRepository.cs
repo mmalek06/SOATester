@@ -23,12 +23,12 @@ namespace SOATester.Modules.ContentModule.Repositories {
             return _steps.FirstOrDefault(step => step.Id == id);
         }
 
-        public IEnumerable<Step> GetStepsForTestSuite(int testSuiteId) {
+        public IEnumerable<Step> GetStepsForTest(int testSuiteId) {
             return null;
         }
 
-        public IEnumerable<Step> GetStepsForTestSuite(TestSuite testSuite) {
-            return GetStepsForTestSuite(testSuite.Id);
+        public IEnumerable<Step> GetStepsForTest(Test testSuite) {
+            return GetStepsForTest(testSuite.Id);
         }
     }
 }

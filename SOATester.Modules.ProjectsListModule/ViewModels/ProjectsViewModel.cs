@@ -42,7 +42,8 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
         #region commands
 
         public DelegateCommand<ProjectViewModel> ChooseProject { get; private set; }
-        public DelegateCommand<TestSuiteViewModel> ChooseTestSuite { get; private set; }
+        public DelegateCommand<ScenarioViewModel> ChooseScenario { get; private set; }
+        public DelegateCommand<TestViewModel> ChooseTestSuite { get; private set; }
         public DelegateCommand<StepViewModel> ChooseStep { get; private set; }
         
         #endregion
@@ -64,7 +65,8 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
 
         protected override void _initCommands() {
             ChooseProject = new DelegateCommand<ProjectViewModel>(OnProjectChosen);
-            ChooseTestSuite = new DelegateCommand<TestSuiteViewModel>(OnTestSuiteChosen);
+            ChooseScenario = new DelegateCommand<ScenarioViewModel>(OnScenarioChosen);
+            ChooseTestSuite = new DelegateCommand<TestViewModel>(OnTestSuiteChosen);
             ChooseStep = new DelegateCommand<StepViewModel>(OnStepChosen);
         }
 
@@ -81,10 +83,19 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
             _eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
         }
 
-        private void OnTestSuiteChosen(TestSuiteViewModel testSuite) {
+        private void OnScenarioChosen(ScenarioViewModel scenario) {
+            var evtDescriptor = new ItemChosenEventDescriptor {
+                Id = scenario.Id,
+                ItemType = ChosenItemType.SCENARIO
+            };
+
+            _eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
+        }
+
+        private void OnTestSuiteChosen(TestViewModel testSuite) {
             var evtDescriptor = new ItemChosenEventDescriptor {
                 Id = testSuite.Id,
-                ItemType = ChosenItemType.TEST_SUITE
+                ItemType = ChosenItemType.TEST
             };
 
             _eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);

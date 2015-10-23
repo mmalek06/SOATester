@@ -57,8 +57,8 @@ namespace Tests {
                 }),
                 // TestSuiteViewModel
                 unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is TestSuiteViewModel) {
-                        return (proxy.ViewModel as TestSuiteViewModel).Id == 1;
+                    if (proxy.ViewModel is TestViewModel) {
+                        return (proxy.ViewModel as TestViewModel).Id == 1;
                     }
                     return false;
                 }),
@@ -83,8 +83,8 @@ namespace Tests {
                 }),
                 // TestSuiteViewModel
                 unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is TestSuiteViewModel) {
-                        return (proxy.ViewModel as TestSuiteViewModel).Id == 2;
+                    if (proxy.ViewModel is TestViewModel) {
+                        return (proxy.ViewModel as TestViewModel).Id == 2;
                     }
                     return false;
                 }),
@@ -97,8 +97,8 @@ namespace Tests {
                 }),
                 // TestSuiteViewModel
                 unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is TestSuiteViewModel) {
-                        return (proxy.ViewModel as TestSuiteViewModel).Id == 3;
+                    if (proxy.ViewModel is TestViewModel) {
+                        return (proxy.ViewModel as TestViewModel).Id == 3;
                     }
                     return false;
                 })
