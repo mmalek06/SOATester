@@ -151,17 +151,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SOATester.Modules.ProjectsListModule\SOATester.Modules.ProjectsListModule.csproj">
-      <Project>{dd231416-2b3f-4dd0-94e5-058d2af1fbe8}</Project>
-      <Name>SOATester.Modules.ProjectsListModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="SOATester.Infrastructure\SOATester.Infrastructure.csproj">
+    <ProjectReference Include="..\SOATester.Infrastructure\SOATester.Infrastructure.csproj">
       <Project>{e9c6aa78-5973-4872-8dc2-1b94c39a787f}</Project>
       <Name>SOATester.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="SOATester.Modules.ContentModule\SOATester.Modules.ContentModule.csproj">
+    <ProjectReference Include="..\SOATester.Modules.ContentModule\SOATester.Modules.ContentModule.csproj">
       <Project>{4953b482-a55c-48d9-b7a1-df54a05bc02b}</Project>
       <Name>SOATester.Modules.ContentModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOATester.Modules.ProjectsListModule\SOATester.Modules.ProjectsListModule.csproj">
+      <Project>{dd231416-2b3f-4dd0-94e5-058d2af1fbe8}</Project>
+      <Name>SOATester.Modules.ProjectsListModule</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
