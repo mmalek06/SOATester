@@ -30,7 +30,7 @@ namespace SOATester.Modules.ContentModule.Repositories.Mock {
         }
 
         public IEnumerable<Step> GetStepsForTest(int testSuiteId) {
-            return cache.Where(step => step.TestSuiteId == testSuiteId);
+            return cache.Where(step => step.TestId == testSuiteId);
         }
 
         public IEnumerable<Step> GetStepsForTest(Test testSuite) {

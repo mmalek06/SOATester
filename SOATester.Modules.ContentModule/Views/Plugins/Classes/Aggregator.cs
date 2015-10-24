@@ -90,26 +90,10 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             var counts = new Dictionary<int, int>();
             int maxUnboundIdx = 100000;
             const int StepSize = 10000;
-            int step = StepSize;
 
             foreach (var obj in objects.Where(obj => obj.ViewModel is ScenarioViewModel)) {
-                var svm = obj.ViewModel as ScenarioViewModel;
-                IndexTabItemProxyPair outVal;
-
-                if (projectsLookup.TryGetValue(svm.Scenario.ProjectId, out outVal)) {
-                    int currCount;
-
-                    if (counts.TryGetValue(svm.Scenario.ProjectId, out currCount)) {
-                        step = outVal.Index + (currCount + 1) * StepSize;
-                        counts[svm.Scenario.ProjectId] += 1;
-                    } else {
-                        step = outVal.Index + StepSize;
-                        counts[svm.Scenario.ProjectId] = 1;
-                    }
-                } else {
-                    maxUnboundIdx += StepSize;
-                    step = maxUnboundIdx;
-                }
+                int id = (obj.ViewModel as ScenarioViewModel).Scenario.ProjectId;
+                int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, projectsLookup);
 
                 scenariosProxiesWithKeys[step] = obj;
                 scenariosLookup[(obj.ViewModel as ScenarioViewModel).Id] = new IndexTabItemProxyPair {
@@ -128,28 +112,12 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             var testsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
             var testsLookup = new Dictionary<int, IndexTabItemProxyPair>();
             var counts = new Dictionary<int, int>();
-            int maxUnboundIdx = 100000;
+            int maxUnboundIdx = 10000;
             const int StepSize = 1000;
-            int step = StepSize;
 
             foreach (var obj in objects.Where(obj => obj.ViewModel is TestViewModel)) {
-                var tvm = obj.ViewModel as TestViewModel;
-                IndexTabItemProxyPair outVal;
-
-                if (scenariosLookup.TryGetValue(tvm.Test.ScenarioId, out outVal)) {
-                    int currCount;
-
-                    if (counts.TryGetValue(tvm.Test.ScenarioId, out currCount)) {
-                        step = outVal.Index + (currCount + 1) * StepSize;
-                        counts[tvm.Test.ScenarioId] += 1;
-                    } else {
-                        step = outVal.Index + StepSize;
-                        counts[tvm.Test.ScenarioId] = 1;
-                    }
-                } else {
-                    maxUnboundIdx += StepSize;
-                    step = maxUnboundIdx;
-                }
+                int id = (obj.ViewModel as TestViewModel).Test.ScenarioId;
+                int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, scenariosLookup);
 
                 testsProxiesWithKeys[step] = obj;
                 testsLookup[(obj.ViewModel as TestViewModel).Id] = new IndexTabItemProxyPair {
@@ -164,36 +132,42 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             };
         }
 
-        private Dictionary<int, TabItemProxy> _matchStepsWithKeys(IEnumerable<TabItemProxy> objects, Dictionary<int, IndexTabItemProxyPair> testSuitesLookup) {
+        private Dictionary<int, TabItemProxy> _matchStepsWithKeys(IEnumerable<TabItemProxy> objects, Dictionary<int, IndexTabItemProxyPair> testsLookup) {
             var stepsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
             var counts = new Dictionary<int, int>();
-            int maxUnboundIndex = 1000000;
-            const int StepSize = 1000;
-            int step = StepSize;
+            int maxUnboundIdx = 1000;
+            const int StepSize = 100;
 
             foreach (var obj in objects.Where(obj => obj.ViewModel is StepViewModel)) {
-                var svm = obj.ViewModel as StepViewModel;
-                IndexTabItemProxyPair outVal;
-
-                if (testSuitesLookup.TryGetValue(svm.Step.TestSuiteId, out outVal)) {
-                    int currCount;
-
-                    if (counts.TryGetValue(svm.Step.TestSuiteId, out currCount)) {
-                        step = outVal.Index + (currCount + 1) * StepSize;
-                        counts[svm.Step.TestSuiteId] += 1;
-                    } else {
-                        step = outVal.Index + StepSize;
-                        counts[svm.Step.TestSuiteId] = 1;
-                    }
-                } else {
-                    maxUnboundIndex += StepSize;
-                    step = maxUnboundIndex;
-                }
+                int id = (obj.ViewModel as StepViewModel).Step.TestId;
+                int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, testsLookup);
 
                 stepsProxiesWithKeys[step] = obj;
             }
 
             return stepsProxiesWithKeys;
+        }
+
+        private int _getStep(ref int maxUnboundIdx, int stepSize, int parentId, Dictionary<int, int> counts, Dictionary<int, IndexTabItemProxyPair> lookup) {
+            IndexTabItemProxyPair outVal;
+            int step;
+
+            if (lookup.TryGetValue(parentId, out outVal)) {
+                int currCount;
+
+                if (counts.TryGetValue(parentId, out currCount)) {
+                    step = outVal.Index + (currCount + 1) * stepSize;
+                    counts[parentId] += 1;
+                } else {
+                    step = outVal.Index + stepSize;
+                    counts[parentId] = 1;
+                }
+            } else {
+                maxUnboundIdx += stepSize;
+                step = maxUnboundIdx;
+            }
+
+            return step;
         }
 
         #endregion

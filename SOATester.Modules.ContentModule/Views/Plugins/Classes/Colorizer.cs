@@ -105,7 +105,7 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
                 if (proxy.Brush == null) {
                     Color color;
 
-                    if (!testToColorMap.TryGetValue((proxy.ViewModel as StepViewModel).Step.TestSuiteId, out color)) {
+                    if (!testToColorMap.TryGetValue((proxy.ViewModel as StepViewModel).Step.TestId, out color)) {
                         color = _getColor(rand);
                     }
 
