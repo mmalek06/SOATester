@@ -121,8 +121,6 @@ E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOA
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.dll
 E:\projekty\cs\SOATester\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.pdb
 E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\bin\Debug\Configs\plugins.json
-E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\bin\Debug\MockData\projects_data.json
-E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\bin\Debug\MockData\steps_data.json
 E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\bin\Debug\SOATester.Modules.ContentModule.dll.config
 E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\bin\Debug\SOATester.Modules.ContentModule.dll
 E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\bin\Debug\SOATester.Modules.ContentModule.pdb
@@ -168,5 +166,3 @@ E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Mod
 E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.csproj.GenerateResource.Cache
 E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.dll
 E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\obj\Debug\SOATester.Modules.ContentModule.pdb
-E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\bin\Debug\MockData\tests_data.json
-E:\projekty\cs\SOATester\SOATester.Modules.ContentModule\bin\Debug\MockData\scenarios_data.json

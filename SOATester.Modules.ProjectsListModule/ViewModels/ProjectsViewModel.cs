@@ -92,9 +92,9 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
             _eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
         }
 
-        private void OnTestSuiteChosen(TestViewModel testSuite) {
+        private void OnTestSuiteChosen(TestViewModel test) {
             var evtDescriptor = new ItemChosenEventDescriptor {
-                Id = testSuite.Id,
+                Id = test.Id,
                 ItemType = ChosenItemType.TEST
             };
 

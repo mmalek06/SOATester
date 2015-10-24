@@ -68,50 +68,15 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             }
 
             foreach (var proxy in scenariosProxies) {
-                Color color;
-
-                if (proxy.Brush == null) {
-                    if (!scenarioToColorMap.TryGetValue((proxy.ViewModel as ScenarioViewModel).Scenario.ProjectId, out color)) {
-                        color = _getColor(rand);
-                    }
-
-                    _occupiedColors.Add(color);
-                    proxy.Brush = new SolidColorBrush(color);
-                } else {
-                    color = proxy.Brush.Color;
-                }
-
-                scenarioToColorMap[(proxy.ViewModel as ScenarioViewModel).Id] = proxy.Brush.Color;
+                _setColor(proxy, rand, projectToColorMap, scenarioToColorMap, (proxy.ViewModel as ScenarioViewModel).Scenario.ProjectId, (proxy.ViewModel as ScenarioViewModel).Id);
             }
 
             foreach (var proxy in testsProxies) {
-                Color color;
-
-                if (proxy.Brush == null) {
-                    if (!projectToColorMap.TryGetValue((proxy.ViewModel as TestViewModel).Test.ScenarioId, out color)) {
-                        color = _getColor(rand);
-                    }
-
-                    _occupiedColors.Add(color);
-                    proxy.Brush = new SolidColorBrush(color);
-                } else {
-                    color = proxy.Brush.Color;
-                }
-
-                testToColorMap[(proxy.ViewModel as TestViewModel).Id] = proxy.Brush.Color;
+                _setColor(proxy, rand, scenarioToColorMap, testToColorMap, (proxy.ViewModel as TestViewModel).Test.ScenarioId, (proxy.ViewModel as TestViewModel).Id);
             }
 
             foreach (var proxy in stepsProxies) {
-                if (proxy.Brush == null) {
-                    Color color;
-
-                    if (!testToColorMap.TryGetValue((proxy.ViewModel as StepViewModel).Step.TestId, out color)) {
-                        color = _getColor(rand);
-                    }
-
-                    _occupiedColors.Add(color);
-                    proxy.Brush = new SolidColorBrush(color);
-                }
+                _setColor(proxy, rand, testToColorMap, null, (proxy.ViewModel as StepViewModel).Step.TestId);
             }
 
             return objects;
@@ -120,6 +85,25 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
         #endregion
 
         #region private methods
+
+        private void _setColor(TabItemProxy proxy, Random rand, Dictionary<int, Color> parentMap, Dictionary<int, Color> childMap, int parentId, int childId = -1) {
+            Color color;
+
+            if (proxy.Brush == null) {
+                if (!parentMap.TryGetValue(parentId, out color)) {
+                    color = _getColor(rand);
+                }
+
+                _occupiedColors.Add(color);
+                proxy.Brush = new SolidColorBrush(color);
+            } else {
+                color = proxy.Brush.Color;
+            }
+
+            if (childId > -1) {
+                childMap[childId] = proxy.Brush.Color;
+            }
+        }
 
         private Color _getColor(Random rand) {
             // only dark colors

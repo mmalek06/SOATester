@@ -58,6 +58,6 @@ E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.pdb
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Modules.ProjectsListModule.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Modules.ProjectsListModule.pdb
 E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\tests_data.json
+E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\scenarios_data.json
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.pssym
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.exe.postsharp
-E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\scenarios_data.json
