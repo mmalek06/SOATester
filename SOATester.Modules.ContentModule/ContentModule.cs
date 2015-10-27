@@ -68,8 +68,9 @@ namespace SOATester.Modules.ContentModule {
             _container.RegisterType<MainMenuView>();
             _container.RegisterType<ProjectView>();
             _container.RegisterType<ContentView>();
+            _container.RegisterType<ScenarioView>();
             _container.RegisterType<StepView>();
-            _container.RegisterType<TestSuiteView>();
+            _container.RegisterType<TestView>();
         }
 
         protected override void _initializeRegions() {

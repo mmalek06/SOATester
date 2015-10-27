@@ -1,7 +1,9 @@
-E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.exe.config
 E:\projekty\cs\SOATester\SOATester\bin\Debug\Configs\plugins.json
 E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\projects_data.json
+E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\scenarios_data.json
 E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\steps_data.json
+E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\tests_data.json
+E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.exe.config
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.exe
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.pdb
 E:\projekty\cs\SOATester\SOATester\bin\Debug\DelegateDecompiler.dll
@@ -17,11 +19,13 @@ E:\projekty\cs\SOATester\SOATester\bin\Debug\Prism.Unity.Wpf.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\Prism.Wpf.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Infrastructure.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Modules.ContentModule.dll
+E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Modules.ProjectsListModule.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\System.Windows.Interactivity.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Entities.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\Newtonsoft.Json.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Infrastructure.pdb
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Modules.ContentModule.pdb
+E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Modules.ProjectsListModule.pdb
 E:\projekty\cs\SOATester\SOATester\bin\Debug\EntityFramework.xml
 E:\projekty\cs\SOATester\SOATester\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 E:\projekty\cs\SOATester\SOATester\bin\Debug\Microsoft.Practices.ServiceLocation.xml
@@ -33,7 +37,6 @@ E:\projekty\cs\SOATester\SOATester\bin\Debug\Prism.xml
 E:\projekty\cs\SOATester\SOATester\bin\Debug\Prism.Unity.Wpf.xml
 E:\projekty\cs\SOATester\SOATester\bin\Debug\Prism.Wpf.xml
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Entities.pdb
-E:\projekty\cs\SOATester\SOATester\bin\Debug\Newtonsoft.Json.xml
 E:\projekty\cs\SOATester\SOATester\bin\Debug\de\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\en\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester\bin\Debug\es\System.Windows.Interactivity.resources.dll
@@ -55,9 +58,5 @@ E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.Properties.Resources.reso
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.csproj.GenerateResource.Cache
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.exe
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.pdb
-E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Modules.ProjectsListModule.dll
-E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Modules.ProjectsListModule.pdb
-E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\tests_data.json
-E:\projekty\cs\SOATester\SOATester\bin\Debug\MockData\scenarios_data.json
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.pssym
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.exe.postsharp

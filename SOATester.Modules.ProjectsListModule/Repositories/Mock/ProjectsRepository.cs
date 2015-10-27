@@ -31,7 +31,7 @@ namespace SOATester.Modules.ProjectsListModule.Repositories.Mock {
 
         #endregion
 
-        #region private methods
+        #region methods
 
         private void _loadCache() {
             var notGroupedObjects = _getRawObjects();

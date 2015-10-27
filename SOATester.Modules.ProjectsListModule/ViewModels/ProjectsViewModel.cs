@@ -57,7 +57,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
 
         #endregion
 
-        #region private methods
+        #region methods
 
         protected override void _initCollections() {
             Projects = new ObservableCollection<ProjectViewModel>();

@@ -84,7 +84,7 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
 
         #endregion
 
-        #region private methods
+        #region methods
 
         private void _setColor(TabItemProxy proxy, Random rand, Dictionary<int, Color> parentMap, Dictionary<int, Color> childMap, int parentId, int childId = -1) {
             Color color;

@@ -6,7 +6,17 @@ namespace SOATester.Infrastructure.Events.Descriptors {
         #region public properties
 
         public int Id { get; set; }
+        public ChosenItemType ItemType { get; set; }
 
+        #endregion
+
+    }
+
+    public class ItemRunEventDescriptor {
+
+        #region public properties
+
+        public int Id { get; set; }
         public ChosenItemType ItemType { get; set; }
 
         #endregion

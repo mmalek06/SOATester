@@ -83,6 +83,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentModule.cs" />
+    <Compile Include="Models\RunnableModel.cs" />
+    <Compile Include="Models\RunnableScenario.cs" />
     <Compile Include="Repositories\Base\IProjectsRepository.cs" />
     <Compile Include="Repositories\Base\IScenariosRepository.cs" />
     <Compile Include="Repositories\Base\IStepsRepository.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Repositories\TestSuitesRepository.cs" />
     <Compile Include="ViewModels\Base\ICollectionViewModel.cs" />
     <Compile Include="ViewModels\Base\IViewModel.cs" />
+    <Compile Include="ViewModels\Base\RunnableViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\ScenarioViewModel.cs" />
@@ -119,11 +122,14 @@
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ScenarioView.xaml.cs">
+      <DependentUpon>ScenarioView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StepView.xaml.cs">
       <DependentUpon>StepView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TestSuiteView.xaml.cs">
-      <DependentUpon>TestSuiteView.xaml</DependentUpon>
+    <Compile Include="Views\TestView.xaml.cs">
+      <DependentUpon>TestView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -178,11 +184,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ScenarioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StepView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TestSuiteView.xaml">
+    <Page Include="Views\TestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

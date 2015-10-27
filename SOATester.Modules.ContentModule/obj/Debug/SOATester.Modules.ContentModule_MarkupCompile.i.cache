@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-5358368148
+6-1081747286
 
-40366707885
+44-1898878813
 76-225112371
-Views\ContentView.xaml;Views\MainMenuView.xaml;Views\ProjectView.xaml;Views\StepView.xaml;Views\TestSuiteView.xaml;
+Views\ContentView.xaml;Views\MainMenuView.xaml;Views\ProjectView.xaml;Views\ScenarioView.xaml;Views\StepView.xaml;Views\TestView.xaml;
 
-True
+False
 

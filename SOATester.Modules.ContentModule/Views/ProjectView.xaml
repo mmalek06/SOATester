@@ -52,53 +52,25 @@
                 <Style BasedOn="{StaticResource DataGridStyle}" TargetType="{x:Type DataGrid}" />
             </Grid.Resources>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="700" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="300" />
-                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="Address" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Service base address" />
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Address, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SaveAddress}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" />
                     <KeyBinding Key="Tab" Command="{Binding SaveAddress}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" />
                 </TextBox.InputBindings>
             </TextBox>
-            
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Protocol" />
-            <ComboBox Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Protocol}" ItemsSource="{Binding Source={StaticResource ProtocolValues}}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="Method" />
-            <ComboBox Grid.Column="1" Grid.Row="2" SelectedItem="{Binding Method}" ItemsSource="{Binding Source={StaticResource MethodValues}}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            
-            <TextBlock Grid.Column="0" Grid.Row="3" Text="Parameters" />
-            <DataGrid Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                      ColumnWidth="*"
-                      ScrollViewer.CanContentScroll="True"
-                      ScrollViewer.VerticalScrollBarVisibility="Auto">
-            </DataGrid>
-
-            <Button Grid.Column="0" Grid.Row="4" Command="{Binding SaveProjectConfig}">
+            <Button Grid.Column="0" Grid.Row="4" Command="{Binding Save}">
                 <Button.Content>
-                    <TextBlock FontWeight="Bold" Text="Save config" />
+                    <TextBlock FontWeight="Bold" Text="Save" />
                 </Button.Content>
             </Button>
         </Grid>

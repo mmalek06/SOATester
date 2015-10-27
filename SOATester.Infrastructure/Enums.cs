@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace SOATester.Infrastructure.Enums {
     public enum Protocol {
+        [Description("default")]
+        DEFAULT,
         [Description("http")]
         HTTP,
         [Description("https")]

@@ -86,7 +86,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         
         #endregion
 
-        #region private methods
+        #region methods
 
         protected override void _initEvents() {
             _eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnProjectChosen);

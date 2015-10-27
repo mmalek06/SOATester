@@ -45,14 +45,6 @@ E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\SOATester.Infrastruc
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\SOATester.Infrastructure.dll
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\SOATester.Infrastructure.pdb
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\System.Windows.Interactivity.dll
-E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
-E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\Microsoft.Practices.ServiceLocation.xml
-E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\Microsoft.Practices.Unity.xml
-E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\Microsoft.Practices.Unity.Configuration.xml
-E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\Microsoft.Practices.Unity.RegistrationByConvention.xml
-E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\Newtonsoft.Json.xml
-E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\Prism.xml
-E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\Prism.Wpf.xml
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\de\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\en\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\es\System.Windows.Interactivity.resources.dll

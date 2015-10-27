@@ -84,7 +84,7 @@ namespace SOATester.Modules.ContentModule.Views {
 
         #endregion
 
-        #region private methods
+        #region methods
 
         private void _runPlugins(TabItemProxy item) {
             var proxies = new List<TabItemProxy>();

@@ -11,7 +11,6 @@ using Prism.Commands;
 using SOATester.Entities;
 
 using SOATester.Infrastructure;
-using SOATester.Infrastructure.Enums;
 
 using SOATester.Modules.ContentModule.ViewModels.Base;
 
@@ -23,8 +22,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         private Project _project;
         private string _name;
         private Uri _address;
-        private Protocol? _protocol;
-        private Method? _method;
         private ObservableCollection<Parameter> _parameters;
 
         #endregion
@@ -54,16 +51,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             set { SetProperty(ref _address, value); }
         }
 
-        public Protocol Protocol {
-            get { return _protocol ?? _project.Protocol; }
-            set { SetProperty(ref _protocol, value); }
-        }
-
-        public Method Method {
-            get { return _method ?? _project.Method; }
-            set { SetProperty(ref _method, value); }
-        }
-
         public ObservableCollection<Parameter> Parameters {
             get { return _parameters; }
             set { SetProperty(ref _parameters, value); }
@@ -74,7 +61,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region commands
 
         public DelegateCommand<string> SaveAddress { get; private set; }
-        public DelegateCommand SaveProjectConfig { get; private set; }
 
         #endregion
 
@@ -88,7 +74,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #endregion
 
-        #region private methods
+        #region methods
 
         protected override void _initCollections() {
             Parameters = new ObservableCollection<Parameter>();
@@ -96,7 +82,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         protected override void _initCommands() {
             SaveAddress = new DelegateCommand<string>(OnSaveAddress);
-            SaveProjectConfig = new DelegateCommand(OnSaveConfig);
         }
 
         #endregion
@@ -105,10 +90,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnSaveAddress(string address) {
             Address = new Uri(address);
-        }
-
-        private void OnSaveConfig() {
-
         }
 
         #endregion

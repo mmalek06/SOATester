@@ -27,7 +27,7 @@ namespace SOATester.Infrastructure {
 
         #endregion
 
-        #region private methods
+        #region methods
 
         protected virtual void _initCollections() {}
 

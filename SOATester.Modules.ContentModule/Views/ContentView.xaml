@@ -43,8 +43,11 @@
                         <DataTemplate DataType="{x:Type ViewModels:ProjectViewModel}">
                             <Partials:ProjectView DataContext="{Binding Path=.}" />
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type ViewModels:ScenarioViewModel}">
+                            <Partials:ScenarioView DataContext="{Binding Path=.}" />
+                        </DataTemplate>
                         <DataTemplate DataType="{x:Type ViewModels:TestViewModel}">
-                            <Partials:TestSuiteView DataContext="{Binding Path=.}" />
+                            <Partials:TestView DataContext="{Binding Path=.}" />
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type ViewModels:StepViewModel}">
                             <Partials:StepView DataContext="{Binding Path=.}" />

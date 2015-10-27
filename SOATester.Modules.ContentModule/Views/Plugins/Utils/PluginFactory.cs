@@ -50,7 +50,7 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Utils {
 
         #endregion
 
-        #region private methods
+        #region methods
 
         private void _initializeConfig() {
             using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/Configs/plugins.json")) {

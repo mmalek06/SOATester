@@ -29,7 +29,7 @@ namespace SOATester.Modules.ProjectsListModule.Repositories {
 
         #endregion
 
-        #region private methods
+        #region methods
         
         private void _loadCache() {
             /*return new List<Project> {

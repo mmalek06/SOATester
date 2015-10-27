@@ -60,7 +60,7 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
 
         #endregion
 
-        #region private methods
+        #region methods
 
         private MatchingResult _matchProjectsWithKeys(IEnumerable<TabItemProxy> objects) {
             var projectsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
