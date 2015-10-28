@@ -6,6 +6,8 @@ using Prism.Regions;
 
 using SOATester.Infrastructure;
 
+using SOATester.Communication;
+
 using SOATester.Modules.ContentModule.Views;
 using SOATester.Modules.ContentModule.ViewModels;
 using SOATester.Modules.ContentModule.Views.Plugins.Base;
@@ -45,6 +47,8 @@ namespace SOATester.Modules.ContentModule {
             // _container.RegisterType<IPlugin, TabAggregator>();
             // _container.RegisterType<IPlugin, TabColorizer>();
 
+            _initializeCommunication();
+
             // register view models
             _container.RegisterType<ICollectionViewModel, ContentViewModel>(
                 new InjectionProperty("ProjectsRepository", _container.Resolve<IProjectsRepository>()),
@@ -55,6 +59,13 @@ namespace SOATester.Modules.ContentModule {
             _container.RegisterType<ScenarioViewModel>();
             _container.RegisterType<TestViewModel>();
             _container.RegisterType<StepViewModel>();
+        }
+
+        private void _initializeCommunication() {
+            _container.RegisterType<IProjectsRunner, ProjectsRunner>();
+            _container.RegisterType<IScenariosRunner, ScenariosRunner>();
+            _container.RegisterType<ITestsRunner, TestsRunner>();
+            _container.RegisterType<IStepsRunner, StepsRunner>();
         }
 
         protected override void _initializePlugins() {

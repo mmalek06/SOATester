@@ -58,5 +58,7 @@ E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.Properties.Resources.reso
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.csproj.GenerateResource.Cache
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.exe
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.pdb
+E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Communication.dll
+E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.Communication.pdb
 E:\projekty\cs\SOATester\SOATester\bin\Debug\SOATester.pssym
 E:\projekty\cs\SOATester\SOATester\obj\Debug\SOATester.exe.postsharp

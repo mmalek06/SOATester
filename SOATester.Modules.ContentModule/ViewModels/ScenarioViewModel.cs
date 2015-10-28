@@ -4,20 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Practices.Unity;
+
 using Prism.Events;
 using Prism.Commands;
 
 using SOATester.Infrastructure;
 using SOATester.Infrastructure.Enums;
 
+using SOATester.Communication;
+
 using SOATester.Entities;
 
-using SOATester.Modules.ContentModule.Models;
 using SOATester.Modules.ContentModule.ViewModels.Base;
-using SOATester.Modules.ContentModule.Repositories.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ScenarioViewModel : RunnableViewModel<Scenario, Test> {
+    public class ScenarioViewModel : RunnableViewModel<Scenario> {
 
         #region fields
 
@@ -25,8 +27,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         private string _name;
         private Uri _address;
         private Protocol _protocol;
-        private ITestsRepository _testsRepository;
-        
+                
         #endregion
 
         #region properties
@@ -36,7 +37,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             set {
                 if (_scenario == null) {
                     SetProperty(ref _scenario, value);
-                    _setupRunnableModel(value);
                 }
             }
         }
@@ -64,34 +64,22 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public ScenarioViewModel(IEventAggregator eventAggregator, ITestsRepository testsRepository) : base(eventAggregator) {
-            _runnableModel = new RunnableScenario();
-            _testsRepository = testsRepository;
-        }
+        public ScenarioViewModel(IEventAggregator eventAggregator, IUnityContainer container, IScenariosRunner runner) : base(eventAggregator, container, runner) {}
 
         #endregion
 
         #region event handlers
 
         protected override void _run() {
-            throw new NotImplementedException();
+            _runner.Run(Scenario);
         }
 
         protected override void _stop() {
-            throw new NotImplementedException();
+            _runner.Stop(Scenario);
         }
 
         protected override void _pause() {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region methods
-
-        private void _setupRunnableModel(Scenario scenario) {
-            _runnableModel.Model = scenario;
-            _runnableModel.RunnableChildren = _testsRepository.GetTestsForScenario(scenario);
+            _runner.Pause(Scenario);
         }
 
         #endregion

@@ -39,7 +39,7 @@ namespace Tests.ContentModuletests.Base {
             _viewModels.Add(projectViewModel1);
             _viewModels.Add(projectViewModel2);
 
-            var project1TestSuites = _testSuitesRepo.GetTestsForScenario(projectViewModel1.Project);
+            /*var project1TestSuites = _testSuitesRepo.GetTestsForScenario(projectViewModel1.Project);
             var project2TestSuites = _testSuitesRepo.GetTestsForScenario(projectViewModel2.Project);
             TestViewModel testSuiteViewModel_1 = null;
 
@@ -70,7 +70,7 @@ namespace Tests.ContentModuletests.Base {
                 stepViewModel.Step = s;
 
                 _viewModels.Add(stepViewModel);
-            }
+            }*/
         }
 
         protected void _initializeRepos() {

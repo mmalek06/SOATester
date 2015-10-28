@@ -5,16 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Practices.Unity;
+
 using Prism.Events;
 
 using SOATester.Entities;
+
+using SOATester.Communication;
 
 using SOATester.Infrastructure;
 
 using SOATester.Modules.ContentModule.ViewModels.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class TestViewModel : ViewModelBase, IViewModel {
+    public class TestViewModel : RunnableViewModel<Test> {
 
         #region fields
 
@@ -47,7 +51,23 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public TestViewModel(IEventAggregator eventAggregator) : base(eventAggregator) { }
+        public TestViewModel(IEventAggregator eventAggregator, IUnityContainer container, ITestsRunner runner) : base(eventAggregator, container, runner) { }
+
+        #endregion
+
+        #region event handlers
+
+        protected override void _run() {
+            _runner.Run(Test);
+        }
+
+        protected override void _stop() {
+            _runner.Stop(Test);
+        }
+
+        protected override void _pause() {
+            _runner.Pause(Test);
+        }
 
         #endregion
 

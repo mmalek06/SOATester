@@ -5,17 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Practices.Unity;
+
 using Prism.Events;
 using Prism.Commands;
 
 using SOATester.Entities;
+
+using SOATester.Communication;
 
 using SOATester.Infrastructure;
 
 using SOATester.Modules.ContentModule.ViewModels.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ProjectViewModel : ViewModelBase, IViewModel {
+    public class ProjectViewModel : RunnableViewModel<Project> {
 
         #region fields
 
@@ -66,7 +70,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public ProjectViewModel(IEventAggregator eventAggregator) : base(eventAggregator) {}
+        public ProjectViewModel(IEventAggregator eventAggregator, IUnityContainer container, IProjectsRunner runner) : base(eventAggregator, container, runner) {}
 
         #endregion
 
@@ -90,6 +94,18 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnSaveAddress(string address) {
             Address = new Uri(address);
+        }
+
+        protected override void _run() {
+            _runner.Run(Project);
+        }
+
+        protected override void _stop() {
+            _runner.Stop(Project);
+        }
+
+        protected override void _pause() {
+            _runner.Pause(Project);
         }
 
         #endregion

@@ -4,19 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Practices.Unity;
+
 using Prism.Events;
 using Prism.Commands;
 
 using SOATester.Infrastructure;
 
-using SOATester.Modules.ContentModule.Models;
+using SOATester.Communication;
 
 namespace SOATester.Modules.ContentModule.ViewModels.Base {
-    public abstract class RunnableViewModel<T, K> : ViewModelBase, IViewModel {
+    public abstract class RunnableViewModel<T> : ViewModelBase, IViewModel {
 
         #region fields
 
-        protected RunnableModel<T, K> _runnableModel;
+        protected IRunner<T> _runner;
+        protected IUnityContainer _container;
 
         #endregion
 
@@ -30,7 +33,10 @@ namespace SOATester.Modules.ContentModule.ViewModels.Base {
 
         #region constructors and destructors
 
-        public RunnableViewModel(IEventAggregator eventAggregator) : base(eventAggregator) { }
+        public RunnableViewModel(IEventAggregator eventAggregator, IUnityContainer container, IRunner<T> runner) : base(eventAggregator) {
+            _container = container;
+            _runner = runner;
+        }
 
         #endregion
 
@@ -46,9 +52,9 @@ namespace SOATester.Modules.ContentModule.ViewModels.Base {
 
         #region event handlers
 
-        protected abstract void _pause();
-        protected abstract void _stop();
         protected abstract void _run();
+        protected abstract void _stop();
+        protected abstract void _pause();
 
         #endregion
 

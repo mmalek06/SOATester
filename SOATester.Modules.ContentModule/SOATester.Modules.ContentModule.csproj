@@ -83,8 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentModule.cs" />
-    <Compile Include="Models\RunnableModel.cs" />
-    <Compile Include="Models\RunnableScenario.cs" />
     <Compile Include="Repositories\Base\IProjectsRepository.cs" />
     <Compile Include="Repositories\Base\IScenariosRepository.cs" />
     <Compile Include="Repositories\Base\IStepsRepository.cs" />
@@ -162,6 +160,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SOATester.Communication\SOATester.Communication.csproj">
+      <Project>{001fd79c-c59d-4f8b-bd48-d56340dd8d88}</Project>
+      <Name>SOATester.Communication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SOATester.Entities\SOATester.Entities.csproj">
       <Project>{d592a1d1-19fb-4d7b-941b-2047b56bc005}</Project>
       <Name>SOATester.Entities</Name>

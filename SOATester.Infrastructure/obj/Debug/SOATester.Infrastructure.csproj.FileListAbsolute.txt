@@ -55,7 +55,6 @@ E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\ko\System.Windows.In
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\ru\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester.Infrastructure\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
-E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\SOATester.Infrastructure.csprojResolveAssemblyReference.cache
 E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\Controls\SoaTesterTabControl.g.cs
 E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\SOATester.Infrastructure_MarkupCompile.cache
 E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\SOATester.Infrastructure_MarkupCompile.lref
@@ -65,3 +64,4 @@ E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\SOATester.Infrastruc
 E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\SOATester.Infrastructure.csproj.GenerateResource.Cache
 E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\SOATester.Infrastructure.dll
 E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\SOATester.Infrastructure.pdb
+E:\projekty\cs\SOATester\SOATester.Infrastructure\obj\Debug\SOATester.Infrastructure.csprojResolveAssemblyReference.cache

@@ -17,6 +17,7 @@ namespace SOATester.Infrastructure.Events.Descriptors {
         #region public properties
 
         public int Id { get; set; }
+        public RunKind RunKind { get; set; }
         public ChosenItemType ItemType { get; set; }
 
         #endregion
