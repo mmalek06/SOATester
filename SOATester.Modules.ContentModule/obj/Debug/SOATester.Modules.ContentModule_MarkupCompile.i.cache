@@ -16,5 +16,5 @@ DEBUG;TRACE
 77621052727
 Views\ContentView.xaml;Views\MainMenuView.xaml;Views\ProjectView.xaml;Views\ScenarioView.xaml;Views\StepView.xaml;Views\TestView.xaml;
 
-True
+False
 

@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 
 using Prism.Events;
-using Prism.Commands;
-
-using SOATester.Infrastructure;
-using SOATester.Infrastructure.Enums;
 
 using SOATester.Communication;
-
 using SOATester.Entities;
-
+using SOATester.Infrastructure.Enums;
 using SOATester.Modules.ContentModule.ViewModels.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels {

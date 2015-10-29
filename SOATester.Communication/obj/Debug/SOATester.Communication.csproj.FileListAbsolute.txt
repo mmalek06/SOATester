@@ -22,4 +22,3 @@ E:\projekty\cs\SOATester\SOATester.Communication\bin\Debug\zh-Hant\System.Window
 E:\projekty\cs\SOATester\SOATester.Communication\obj\Debug\SOATester.Communication.csprojResolveAssemblyReference.cache
 E:\projekty\cs\SOATester\SOATester.Communication\obj\Debug\SOATester.Communication.dll
 E:\projekty\cs\SOATester\SOATester.Communication\obj\Debug\SOATester.Communication.pdb
-E:\projekty\cs\SOATester\SOATester.Communication\bin\Debug\Prism.xml

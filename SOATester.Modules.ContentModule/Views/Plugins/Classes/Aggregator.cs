@@ -1,13 +1,11 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 using SOATester.Modules.ContentModule.ViewModels;
 using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.Modules.ContentModule.Views.Plugins.Base;
 using SOATester.Modules.ContentModule.Views.Plugins.Utils;
 using SOATester.Modules.ContentModule.Views.Plugins.Utils.Enums;
-using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
     public class TabAggregator : IPlugin {

@@ -4,30 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Prism.Events;
-
 using SOATester.Entities;
-
-using SOATester.Infrastructure.Events.Enums;
-using SOATester.Infrastructure.Events.EventClasses;
-using SOATester.Infrastructure.Events.Descriptors;
 
 namespace SOATester.Communication {
     public class ProjectsRunner : IProjectsRunner {
-
-        #region fields
-
-        private IEventAggregator _eventAggregator;
-
-        #endregion
-
-        #region constructors and destructors
-
-        public ProjectsRunner(IEventAggregator eventAggregator) {
-            _eventAggregator = eventAggregator;
-        }
-
-        #endregion
 
         #region public methods
 
@@ -38,14 +18,7 @@ namespace SOATester.Communication {
         }
 
         public void Run(Project project) {
-            var evtDescriptor = new ItemRunEventDescriptor {
-                Id = project.Id,
-                ItemType = ChosenItemType.PROJECT,
-                RunKind = RunKind.START
-            };
             var runInfo = _getRunInfo(project);
-
-            _eventAggregator.GetEvent<ItemRunEvent>().Publish(evtDescriptor);
         }
 
         public void Stop(IEnumerable<Project> projects) {
