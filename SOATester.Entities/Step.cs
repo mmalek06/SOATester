@@ -1,6 +1,5 @@
-﻿using System;
-
-using SOATester.Infrastructure.Enums;
+﻿using SOATester.Infrastructure.Enums;
+using System;
 
 namespace SOATester.Entities {
     public class Step {

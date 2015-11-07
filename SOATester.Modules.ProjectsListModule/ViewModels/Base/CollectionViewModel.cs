@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Prism.Events;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Prism.Events;
-
-using SOATester.Infrastructure;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels.Base {
     public abstract class CollectionViewModel<T> : ItemViewModel {

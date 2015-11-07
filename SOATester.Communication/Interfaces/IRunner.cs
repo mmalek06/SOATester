@@ -1,20 +1,16 @@
-﻿using System;
+﻿using SOATester.Communication.Base;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
-using SOATester.Entities;
 
 namespace SOATester.Communication {
     public interface IRunner<T> {
-        void Run(T project);
-        void Run(IEnumerable<T> project);
-        
-        void Stop(T project);
-        void Stop(IEnumerable<T> project);
-        
-        void Pause(T project);
-        void Pause(IEnumerable<T> project);
+        Task<RunResult> RunAsync(T project);
+        Task<IEnumerable<RunResult>> RunAsync(IEnumerable<T> project);
+
+        Task StopAsync(T project);
+        Task StopAsync(IEnumerable<T> project);
+
+        Task PauseAsync(T project);
+        Task PauseAsync(IEnumerable<T> project);
     }
 }

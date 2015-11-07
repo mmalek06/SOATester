@@ -37,3 +37,5 @@ E:\projekty\cs\SOATester\Tests\bin\Debug\zh-Hans\System.Windows.Interactivity.re
 E:\projekty\cs\SOATester\Tests\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\Tests\obj\Debug\Tests.dll
 E:\projekty\cs\SOATester\Tests\obj\Debug\Tests.pdb
+E:\projekty\cs\SOATester\Tests\bin\Debug\SOATester.Communication.dll
+E:\projekty\cs\SOATester\Tests\bin\Debug\SOATester.Communication.pdb

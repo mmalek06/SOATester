@@ -1,49 +1,62 @@
-﻿using System;
+﻿using SOATester.Communication.Base;
+using SOATester.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
-using SOATester.Entities;
 
 namespace SOATester.Communication {
     public class ProjectsRunner : IProjectsRunner {
 
         #region public methods
 
-        public void Run(IEnumerable<Project> projects) {
-            foreach (var project in projects) {
-                Run(project);
-            }
+        public async Task<IEnumerable<RunResult>> RunAsync(IEnumerable<Project> projects) {
+            var tasks = projects.Select(project => RunAsync(project)).ToArray();
+            var result = await Task.WhenAll(tasks);
+
+            return result;
         }
 
-        public void Run(Project project) {
-            var runInfo = _getRunInfo(project);
+        public async Task<RunResult> RunAsync(Project project) {
+            return await Task.Factory.StartNew(() => {
+                return _run(project);
+            });
         }
 
-        public void Stop(IEnumerable<Project> projects) {
-            foreach (var project in projects) {
-                Stop(project);
-            }
+        public async Task StopAsync(IEnumerable<Project> projects) {
+            
         }
 
-        public void Stop(Project project) {
-            var runInfo = _getRunInfo(project);
+        public async Task StopAsync(Project project) {
+            
         }
 
-        public void Pause(IEnumerable<Project> projects) {
-            foreach (var project in projects) {
-                Pause(project);
-            }
+        public async Task PauseAsync(IEnumerable<Project> projects) {
+            
         }
 
-        public void Pause(Project project) {
-            var runInfo = _getRunInfo(project);
+        public async Task PauseAsync(Project project) {
+            
         }
 
         #endregion
 
         #region methods
+
+        private RunResult _run(Project project) {
+            var runInfo = _getRunInfo(project);
+
+            return new ProjectResult {
+                Status = Enums.RunStatus.SUCCESS
+            };
+        }
+
+        private void _stop(Project project) {
+            var runInfo = _getRunInfo(project);
+        }
+
+        private void _pause(Project project) {
+            var runInfo = _getRunInfo(project);
+        }
 
         private RunInfo _getRunInfo(Project project) {
             var scenarios = project.Scenarios;

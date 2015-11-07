@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using SOATester.Entities;
+﻿using SOATester.Entities;
+using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.Repositories.Base {
     public interface IScenariosRepository {

@@ -1,23 +1,18 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-
+﻿using SOATester.Infrastructure;
+using SOATester.Modules.ContentModule.Plugins.Base;
+using SOATester.Modules.ContentModule.Plugins.Enums;
 using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.ViewModels.Base;
-using SOATester.Modules.ContentModule.Views.Plugins.Base;
-using SOATester.Modules.ContentModule.Views.Plugins.Utils;
-using SOATester.Modules.ContentModule.Views.Plugins.Utils.Enums;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
+namespace SOATester.Modules.ContentModule.Plugins {
     public class TabAggregator : IPlugin {
         
         #region public properties
 
         public PluginKey PluginKey { get; set; }
-
         public Strategy Strategy { get; set; }
-
         public bool IsActive { get; set; }
-
         public int Priority { get; set; }
 
         #endregion
@@ -33,13 +28,13 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
 
         #region public methods
 
-        public IEnumerable<TabItemProxy> Execute(IEnumerable<TabItemProxy> objects) {
+        public IEnumerable<ViewModelBase> Execute(IEnumerable<ViewModelBase> objects) {
             if (objects != null) {
                 var projectsMatchingResult = _matchProjectsWithKeys(objects);
                 var scenariosMatchingResult = _matchScenariosWithKeys(objects, projectsMatchingResult.Lookup);
                 var testsMatchingResult = _matchTestsWithKeys(objects, scenariosMatchingResult.Lookup);
                 var stepsMatchingResult = _matchStepsWithKeys(objects, testsMatchingResult.Lookup);
-                var dictionaries = new List<Dictionary<int, TabItemProxy>>();
+                var dictionaries = new List<Dictionary<int, ViewModelBase>>();
 
                 dictionaries.Add(projectsMatchingResult.Mapping);
                 dictionaries.Add(scenariosMatchingResult.Mapping);
@@ -60,17 +55,17 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
 
         #region methods
 
-        private MatchingResult _matchProjectsWithKeys(IEnumerable<TabItemProxy> objects) {
-            var projectsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
-            var projectsLookup = new Dictionary<int, IndexTabItemProxyPair>();
+        private MatchingResult _matchProjectsWithKeys(IEnumerable<ViewModelBase> objects) {
+            var projectsProxiesWithKeys = new Dictionary<int, ViewModelBase>();
+            var projectsLookup = new Dictionary<int, IndexedViewModel>();
             const int StepSize = 100000;
             int step = StepSize;
 
-            foreach (var obj in objects.Where(obj => obj.ViewModel is ProjectViewModel)) {
+            foreach (var obj in objects.Where(obj => obj is ProjectViewModel)) {
                 projectsProxiesWithKeys[step] = obj;
-                projectsLookup[(obj.ViewModel as ProjectViewModel).Id] = new IndexTabItemProxyPair {
+                projectsLookup[(obj as ProjectViewModel).Id] = new IndexedViewModel {
                     Index = step,
-                    ProxyObj = obj
+                    ViewModel = obj
                 };
 
                 step += StepSize;
@@ -82,21 +77,21 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             };
         }
 
-        private MatchingResult _matchScenariosWithKeys(IEnumerable<TabItemProxy> objects, Dictionary<int, IndexTabItemProxyPair> projectsLookup) {
-            var scenariosProxiesWithKeys = new Dictionary<int, TabItemProxy>();
-            var scenariosLookup = new Dictionary<int, IndexTabItemProxyPair>();
+        private MatchingResult _matchScenariosWithKeys(IEnumerable<ViewModelBase> objects, Dictionary<int, IndexedViewModel> projectsLookup) {
+            var scenariosProxiesWithKeys = new Dictionary<int, ViewModelBase>();
+            var scenariosLookup = new Dictionary<int, IndexedViewModel>();
             var counts = new Dictionary<int, int>();
             int maxUnboundIdx = 100000;
             const int StepSize = 10000;
 
-            foreach (var obj in objects.Where(obj => obj.ViewModel is ScenarioViewModel)) {
-                int id = (obj.ViewModel as ScenarioViewModel).Scenario.ProjectId;
+            foreach (var obj in objects.Where(obj => obj is ScenarioViewModel)) {
+                int id = (obj as ScenarioViewModel).Scenario.ProjectId;
                 int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, projectsLookup);
 
                 scenariosProxiesWithKeys[step] = obj;
-                scenariosLookup[(obj.ViewModel as ScenarioViewModel).Id] = new IndexTabItemProxyPair {
+                scenariosLookup[(obj as ScenarioViewModel).Id] = new IndexedViewModel {
                     Index = step,
-                    ProxyObj = obj
+                    ViewModel = obj
                 };
             }
 
@@ -106,21 +101,21 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             };
         }
 
-        private MatchingResult _matchTestsWithKeys(IEnumerable<TabItemProxy> objects, Dictionary<int, IndexTabItemProxyPair> scenariosLookup) {
-            var testsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
-            var testsLookup = new Dictionary<int, IndexTabItemProxyPair>();
+        private MatchingResult _matchTestsWithKeys(IEnumerable<ViewModelBase> objects, Dictionary<int, IndexedViewModel> scenariosLookup) {
+            var testsProxiesWithKeys = new Dictionary<int, ViewModelBase>();
+            var testsLookup = new Dictionary<int, IndexedViewModel>();
             var counts = new Dictionary<int, int>();
             int maxUnboundIdx = 10000;
             const int StepSize = 1000;
 
-            foreach (var obj in objects.Where(obj => obj.ViewModel is TestViewModel)) {
-                int id = (obj.ViewModel as TestViewModel).Test.ScenarioId;
+            foreach (var obj in objects.Where(obj => obj is TestViewModel)) {
+                int id = (obj as TestViewModel).Test.ScenarioId;
                 int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, scenariosLookup);
 
                 testsProxiesWithKeys[step] = obj;
-                testsLookup[(obj.ViewModel as TestViewModel).Id] = new IndexTabItemProxyPair {
+                testsLookup[(obj as TestViewModel).Id] = new IndexedViewModel {
                     Index = step,
-                    ProxyObj = obj
+                    ViewModel = obj
                 };
             }
 
@@ -130,14 +125,14 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             };
         }
 
-        private Dictionary<int, TabItemProxy> _matchStepsWithKeys(IEnumerable<TabItemProxy> objects, Dictionary<int, IndexTabItemProxyPair> testsLookup) {
-            var stepsProxiesWithKeys = new Dictionary<int, TabItemProxy>();
+        private Dictionary<int, ViewModelBase> _matchStepsWithKeys(IEnumerable<ViewModelBase> objects, Dictionary<int, IndexedViewModel> testsLookup) {
+            var stepsProxiesWithKeys = new Dictionary<int, ViewModelBase>();
             var counts = new Dictionary<int, int>();
             int maxUnboundIdx = 1000;
             const int StepSize = 100;
 
-            foreach (var obj in objects.Where(obj => obj.ViewModel is StepViewModel)) {
-                int id = (obj.ViewModel as StepViewModel).Step.TestId;
+            foreach (var obj in objects.Where(obj => obj is StepViewModel)) {
+                int id = (obj as StepViewModel).Step.TestId;
                 int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, testsLookup);
 
                 stepsProxiesWithKeys[step] = obj;
@@ -146,8 +141,8 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
             return stepsProxiesWithKeys;
         }
 
-        private int _getStep(ref int maxUnboundIdx, int stepSize, int parentId, Dictionary<int, int> counts, Dictionary<int, IndexTabItemProxyPair> lookup) {
-            IndexTabItemProxyPair outVal;
+        private int _getStep(ref int maxUnboundIdx, int stepSize, int parentId, Dictionary<int, int> counts, Dictionary<int, IndexedViewModel> lookup) {
+            IndexedViewModel outVal;
             int step;
 
             if (lookup.TryGetValue(parentId, out outVal)) {
@@ -173,15 +168,13 @@ namespace SOATester.Modules.ContentModule.Views.Plugins.Classes {
         #region classes
 
         private class MatchingResult {
-            public Dictionary<int, TabItemProxy> Mapping { get; set; }
-
-            public Dictionary<int, IndexTabItemProxyPair> Lookup { get; set; }
+            public Dictionary<int, ViewModelBase> Mapping { get; set; }
+            public Dictionary<int, IndexedViewModel> Lookup { get; set; }
         }
 
-        private class IndexTabItemProxyPair {
+        private class IndexedViewModel {
             public int Index { get; set; }
-
-            public TabItemProxy ProxyObj { get; set; }
+            public ViewModelBase ViewModel { get; set; }
         }
 
         #endregion

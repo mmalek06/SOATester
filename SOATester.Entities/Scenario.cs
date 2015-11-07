@@ -1,7 +1,6 @@
-﻿using System;
+﻿using SOATester.Infrastructure.Enums;
+using System;
 using System.Collections.Generic;
-
-using SOATester.Infrastructure.Enums;
 
 namespace SOATester.Entities {
     public class Scenario {

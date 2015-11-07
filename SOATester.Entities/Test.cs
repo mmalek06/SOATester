@@ -1,10 +1,6 @@
-﻿using System;
+﻿using SOATester.Infrastructure.Enums;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using SOATester.Infrastructure.Enums;
 
 namespace SOATester.Entities {
     public class Test {

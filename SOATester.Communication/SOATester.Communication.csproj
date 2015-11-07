@@ -40,10 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Base\RunResult.cs" />
+    <Compile Include="Classes\ProjectResult.cs" />
     <Compile Include="Classes\ProjectsRunner.cs" />
     <Compile Include="Classes\ScenariosRunner.cs" />
     <Compile Include="Classes\StepsRunner.cs" />
     <Compile Include="Classes\TestsRunner.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Interfaces\IProjectsRunner.cs" />
     <Compile Include="Interfaces\IRunner.cs" />
     <Compile Include="Interfaces\IScenariosRunner.cs" />

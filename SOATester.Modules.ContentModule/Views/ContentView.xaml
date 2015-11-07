@@ -11,7 +11,7 @@
              xmlns:prism="http://www.codeplex.com/prism"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    
+
     <TabControl ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=OpenedItems}" 
                 SelectedItem="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
                                 Path=SelectedItem.Value}" Name="ContentTabs">
@@ -22,12 +22,12 @@
         </TabControl.Resources>
         <TabControl.ItemTemplate>
             <DataTemplate>
-                <DockPanel Background="{Binding Brush}">
-                    <TextBlock Text="{Binding Path=ViewModel.Name}" DockPanel.Dock="Left" Margin="2,3,0,2" />
+                <DockPanel Background="{Binding ViewProperties[Brush]}">
+                    <TextBlock Text="{Binding Path=Name}" DockPanel.Dock="Left" Margin="2,3,0,2" />
                     <Button DockPanel.Dock="Right" BorderThickness="0" Background="Transparent" 
                             Margin="10,2,2,2" 
                             Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=DataContext.CloseItem}" 
-                            CommandParameter="{Binding ViewModel}">
+                            CommandParameter="{Binding}">
                         <Button.Content>
                             <TextBlock FontWeight="Bold" Text="X" />
                         </Button.Content>
@@ -38,7 +38,7 @@
 
         <TabControl.ContentTemplate>
             <DataTemplate>
-                <ContentControl Content="{Binding ViewModel}">
+                <ContentControl Content="{Binding}">
                     <ContentControl.Resources>
                         <DataTemplate DataType="{x:Type ViewModels:ProjectViewModel}">
                             <Partials:ProjectView DataContext="{Binding Path=.}" />

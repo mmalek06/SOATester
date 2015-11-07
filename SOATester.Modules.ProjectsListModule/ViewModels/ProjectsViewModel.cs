@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
-using Microsoft.Practices.Unity;
-
 using SOATester.Infrastructure;
-using SOATester.Infrastructure.Events.Enums;
 using SOATester.Infrastructure.Events.Descriptors;
+using SOATester.Infrastructure.Events.Enums;
 using SOATester.Infrastructure.Events.EventClasses;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
+using System.Collections.ObjectModel;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels {
     public class ProjectsViewModel : ViewModelBase {

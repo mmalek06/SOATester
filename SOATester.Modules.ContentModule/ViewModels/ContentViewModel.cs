@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Practices.Unity;
-
-using Prism.Events;
+﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
-
+using Prism.Events;
 using SOATester.Infrastructure;
+using SOATester.Infrastructure.Events.Descriptors;
 using SOATester.Infrastructure.Events.Enums;
 using SOATester.Infrastructure.Events.EventClasses;
-using SOATester.Infrastructure.Events.Descriptors;
-
-using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.Modules.ContentModule.Repositories.Base;
+using SOATester.Modules.ContentModule.ViewModels.Base;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
     public class ContentViewModel : ViewModelBase, ICollectionViewModel {
@@ -213,7 +206,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        private int _getItemIndex<T>(Func<T, bool> compareFunc) where T : class, IViewModel {
+        private int _getItemIndex<T>(Func<T, bool> compareFunc) where T : ViewModelBase {
             for (int i = 0; i < Items.Count; i++) {
                 var vm = Items[i] as T;
 

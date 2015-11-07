@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using SOATester.Entities;
-
+﻿using SOATester.Entities;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
+using System.Collections.Generic;
 
 namespace SOATester.Modules.ProjectsListModule.Repositories {
     public class ProjectsRepository : IProjectsRepository {

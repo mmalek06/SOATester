@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
-
-using Microsoft.Practices.Unity;
-
+﻿using Microsoft.Practices.Unity;
 using Prism.Regions;
-
-using SOATester.Infrastructure;
-
 using SOATester.Communication;
-
-using SOATester.Modules.ContentModule.Views;
-using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.Views.Plugins.Base;
-using SOATester.Modules.ContentModule.Views.Plugins.Utils;
-using SOATester.Modules.ContentModule.Views.Plugins.Classes;
-using SOATester.Modules.ContentModule.ViewModels.Base;
+using SOATester.Infrastructure;
+using SOATester.Modules.ContentModule.Plugins;
+using SOATester.Modules.ContentModule.Plugins.Base;
 using SOATester.Modules.ContentModule.Repositories.Base;
+using SOATester.Modules.ContentModule.ViewModels;
+using SOATester.Modules.ContentModule.ViewModels.Base;
+using SOATester.Modules.ContentModule.Views;
+using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule {
     public class ContentModule : ModuleBase {

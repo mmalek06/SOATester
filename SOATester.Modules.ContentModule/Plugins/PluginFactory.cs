@@ -1,17 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Practices.Unity;
-
+﻿using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
+using SOATester.Modules.ContentModule.Plugins.Base;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-using SOATester.Modules.ContentModule.Views.Plugins.Base;
-
-namespace SOATester.Modules.ContentModule.Views.Plugins.Utils {
+namespace SOATester.Modules.ContentModule.Plugins {
     public class PluginFactory {
 
         #region fields

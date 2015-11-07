@@ -97,7 +97,6 @@
     <Compile Include="Repositories\StepsRepository.cs" />
     <Compile Include="Repositories\TestSuitesRepository.cs" />
     <Compile Include="ViewModels\Base\ICollectionViewModel.cs" />
-    <Compile Include="ViewModels\Base\IViewModel.cs" />
     <Compile Include="ViewModels\Base\RunnableViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
@@ -110,13 +109,11 @@
     <Compile Include="Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Plugins\Base\IPlugin.cs" />
-    <Compile Include="Views\Plugins\Classes\Colorizer.cs" />
-    <Compile Include="Views\Plugins\Classes\Aggregator.cs" />
-    <Compile Include="Views\Plugins\Utils\VmWrapper.cs" />
-    <Compile Include="Views\Plugins\Utils\Enums.cs" />
-    <Compile Include="Views\Plugins\Utils\PluginFactory.cs" />
-    <Compile Include="Views\Plugins\Utils\TabItemProxy.cs" />
+    <Compile Include="Plugins\Base\IPlugin.cs" />
+    <Compile Include="Plugins\Colorizer.cs" />
+    <Compile Include="Plugins\Aggregator.cs" />
+    <Compile Include="Plugins\Enums.cs" />
+    <Compile Include="Plugins\PluginFactory.cs" />
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>

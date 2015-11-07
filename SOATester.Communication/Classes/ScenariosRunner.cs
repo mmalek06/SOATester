@@ -1,37 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using SOATester.Communication.Base;
 using SOATester.Entities;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SOATester.Communication {
     public class ScenariosRunner : IScenariosRunner {
 
         #region public methods
 
-        public void Pause(IEnumerable<Scenario> project) {
+        public Task PauseAsync(IEnumerable<Scenario> project) {
             throw new NotImplementedException();
         }
 
-        public void Pause(Scenario project) {
+        public Task PauseAsync(Scenario project) {
             throw new NotImplementedException();
         }
 
-        public void Run(IEnumerable<Scenario> project) {
+        public Task<IEnumerable<RunResult>> RunAsync(IEnumerable<Scenario> project) {
             throw new NotImplementedException();
         }
 
-        public void Run(Scenario project) {
+        public Task<RunResult> RunAsync(Scenario project) {
             throw new NotImplementedException();
         }
 
-        public void Stop(IEnumerable<Scenario> project) {
+        public Task StopAsync(IEnumerable<Scenario> project) {
             throw new NotImplementedException();
         }
 
-        public void Stop(Scenario project) {
+        public Task StopAsync(Scenario project) {
             throw new NotImplementedException();
         }
 

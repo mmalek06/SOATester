@@ -5,18 +5,19 @@ using Prism.Events;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using SOATester.Infrastructure;
 using SOATester.Modules.ContentModule.Repositories.Base;
 using SOATester.Modules.ContentModule.Repositories.Mock;
 using SOATester.Modules.ContentModule.ViewModels;
 using SOATester.Modules.ContentModule.ViewModels.Base;
-using SOATester.Modules.ContentModule.Views.Plugins.Utils;
-using SOATester.Modules.ContentModule.Views.Plugins.Base;
-using SOATester.Modules.ContentModule.Views.Plugins.Classes;
+using SOATester.Modules.ContentModule.Plugins.Enums;
+using SOATester.Modules.ContentModule.Plugins.Base;
+using SOATester.Modules.ContentModule.Plugins;
 
 namespace Tests.ContentModuletests.Base {
     public abstract class BaseTest {
         protected UnityContainer _container = new UnityContainer();
-        protected List<IViewModel> _viewModels = new List<IViewModel>();
+        protected List<ViewModelBase> _viewModels = new List<ViewModelBase>();
         protected IEventAggregator _eventAggregator;
         protected IProjectsRepository _projectsRepo;
         protected ITestsRepository _testSuitesRepo;

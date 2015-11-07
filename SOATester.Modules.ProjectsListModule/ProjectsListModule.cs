@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Practices.Unity;
-
+﻿using Microsoft.Practices.Unity;
 using Prism.Regions;
-
 using SOATester.Infrastructure;
 using SOATester.Infrastructure.ConfigurationEnums;
-
-using SOATester.Modules.ProjectsListModule.Utils;
-using SOATester.Modules.ProjectsListModule.Views;
-using SOATester.Modules.ProjectsListModule.ViewModels;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
+using SOATester.Modules.ProjectsListModule.ViewModels;
+using SOATester.Modules.ProjectsListModule.ViewModels.Builders;
+using SOATester.Modules.ProjectsListModule.Views;
 
 namespace SOATester.Modules.ProjectsListModule {
     public class ProjectsListModule : ModuleBase {

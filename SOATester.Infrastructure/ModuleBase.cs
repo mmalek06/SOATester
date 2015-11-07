@@ -1,18 +1,9 @@
-﻿using System;
-using System.Configuration;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Newtonsoft.Json;
-
-using Microsoft.Practices.Unity;
-
+﻿using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
-
 using SOATester.Infrastructure.ConfigurationEnums;
+using System;
+using System.Configuration;
 
 namespace SOATester.Infrastructure {
     public abstract class ModuleBase : IModule {

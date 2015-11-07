@@ -94,7 +94,7 @@
     <Compile Include="Repositories\Base\IProjectsRepository.cs" />
     <Compile Include="Repositories\Mock\ProjectsRepository.cs" />
     <Compile Include="Repositories\ProjectsRepository.cs" />
-    <Compile Include="Utils\HierarchicalViewModelBuilder.cs" />
+    <Compile Include="ViewModels\Builders\HierarchicalViewModelBuilder.cs" />
     <Compile Include="ViewModels\Base\ItemViewModel.cs" />
     <Compile Include="ViewModels\Base\CollectionViewModel.cs" />
     <Compile Include="ViewModels\ProjectsViewModel.cs" />

@@ -1,5 +1,11 @@
-﻿using System;
+﻿using Prism.Common;
+using SOATester.Infrastructure;
+using SOATester.Modules.ContentModule.Plugins;
+using SOATester.Modules.ContentModule.Plugins.Base;
+using SOATester.Modules.ContentModule.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +18,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-
-using Prism.Common;
-
-using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.ViewModels.Base;
-using SOATester.Modules.ContentModule.Views.Plugins;
-using SOATester.Modules.ContentModule.Views.Plugins.Utils;
-using SOATester.Modules.ContentModule.Views.Plugins.Base;
 
 namespace SOATester.Modules.ContentModule.Views {
     public partial class ContentView : UserControl {
@@ -28,16 +25,14 @@ namespace SOATester.Modules.ContentModule.Views {
         #region fields
 
         private IEnumerable<IPlugin> _plugins;
-        private VmWrapper _vmWrapper;
+        private bool _hasAnyPlugins;
 
         #endregion
 
         #region public properties
 
-        public ObservableCollection<TabItemProxy> OpenedItems { get; set; }
-        public ObservableObject<TabItemProxy> SelectedItem {
-            get;
-            set; }
+        public ObservableCollection<ViewModelBase> OpenedItems { get; set; }
+        public ObservableObject<ViewModelBase> SelectedItem { get; set; }
 
         #endregion
 
@@ -48,11 +43,11 @@ namespace SOATester.Modules.ContentModule.Views {
             InitializeComponent();
             
             _plugins = pluginFactory.GetActivePlugins();
-            _vmWrapper = new VmWrapper();
+            _hasAnyPlugins = _plugins.Any();
 
             DataContext = vm;
-            OpenedItems = new ObservableCollection<TabItemProxy>();
-            SelectedItem = new ObservableObject<TabItemProxy>();
+            OpenedItems = new ObservableCollection<ViewModelBase>();
+            SelectedItem = new ObservableObject<ViewModelBase>();
 
             vm.Items.CollectionChanged += Items_CollectionChanged;
         }
@@ -63,21 +58,26 @@ namespace SOATester.Modules.ContentModule.Views {
 
         private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add) {
-                _itemAdded(e.NewItems[0] as IViewModel);
+                _itemAdded(e.NewItems[0] as ViewModelBase);
             } else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove) {
-                _itemRemoved(e.OldItems[0] as IViewModel);
+                _itemRemoved(e.OldItems[0] as ViewModelBase);
             }
         }
 
-        private void _itemAdded(IViewModel newItem) {
-            var wrappedItem = _vmWrapper.WrapObject(newItem);
+        private void _itemAdded(ViewModelBase newItem) {
+            _fillDefaultViewProperties(newItem);
 
-            _runPlugins(wrappedItem);
-            _selectItem(wrappedItem);
+            if (_hasAnyPlugins) {
+                _runPlugins(newItem);
+            } else {
+                OpenedItems.Add(newItem);
+            }
+
+            _selectItem(newItem);
         }
 
-        private void _itemRemoved(IViewModel oldItem) {
-            var itemToRemove = OpenedItems.First(item => item.ViewModel.Equals(oldItem));
+        private void _itemRemoved(ViewModelBase oldItem) {
+            var itemToRemove = OpenedItems.First(item => item.Equals(oldItem));
 
             OpenedItems.Remove(itemToRemove);
         }
@@ -86,23 +86,28 @@ namespace SOATester.Modules.ContentModule.Views {
 
         #region methods
 
-        private void _runPlugins(TabItemProxy item) {
-            var proxies = new List<TabItemProxy>();
-            IEnumerable<TabItemProxy> pluginExecutionResult = null;
+        private void _runPlugins(ViewModelBase item) {
+            var viewModels = new List<ViewModelBase>();
 
-            proxies.AddRange(OpenedItems);
-            proxies.Add(item);
+            IEnumerable<ViewModelBase> pluginExecutionResult = null;
+
+            viewModels.AddRange(OpenedItems);
+            viewModels.Add(item);
 
             foreach (var plugin in _plugins) {
-                pluginExecutionResult = plugin.Execute(pluginExecutionResult == null ? proxies : pluginExecutionResult);
+                pluginExecutionResult = plugin.Execute(pluginExecutionResult == null ? viewModels : pluginExecutionResult);
             }
 
             OpenedItems.Clear();
-            OpenedItems.AddRange(pluginExecutionResult == null ? proxies : pluginExecutionResult);
+            OpenedItems.AddRange(pluginExecutionResult == null ? viewModels : pluginExecutionResult);
         }
 
-        private void _selectItem(TabItemProxy item) {
-            SelectedItem.Value = OpenedItems.FirstOrDefault(openedItem => openedItem.ViewModel.Equals(item.ViewModel));
+        private void _selectItem(ViewModelBase item) {
+            SelectedItem.Value = OpenedItems.FirstOrDefault(openedItem => openedItem.Equals(item));
+        }
+
+        private void _fillDefaultViewProperties(ViewModelBase viewModel) {
+            viewModel.ViewProperties["Brush"] = null;
         }
 
         #endregion

@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Practices.Unity;
-
-using Prism.Events;
+﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
-
+using Prism.Events;
+using SOATester.Communication;
 using SOATester.Infrastructure;
 
-using SOATester.Communication;
-
 namespace SOATester.Modules.ContentModule.ViewModels.Base {
-    public abstract class RunnableViewModel<T> : ViewModelBase, IViewModel {
+    public abstract class RunnableViewModel<T> : ViewModelBase {
 
         #region fields
 

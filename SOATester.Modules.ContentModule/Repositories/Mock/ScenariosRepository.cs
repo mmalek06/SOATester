@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using SOATester.Entities;
 using SOATester.Modules.ContentModule.Repositories.Base;
 using SOATester.Modules.ContentModule.Repositories.Mock.Base;
-
-using SOATester.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories.Mock {
     public class ScenariosRepository : MockRepository<Scenario>, IScenariosRepository {

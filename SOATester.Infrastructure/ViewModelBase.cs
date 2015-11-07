@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Prism.Events;
 using Prism.Mvvm;
-using Prism.Events;
+using System.Collections.Generic;
 
 namespace SOATester.Infrastructure {
     public abstract class ViewModelBase : BindableBase {
@@ -15,10 +10,18 @@ namespace SOATester.Infrastructure {
 
         #endregion
 
+        #region public properties
+
+        public Dictionary<string, object> ViewProperties { get; set; }
+
+        #endregion
+
         #region constructors and destructors
 
         public ViewModelBase(IEventAggregator eventAggregator) {
             _eventAggregator = eventAggregator;
+
+            ViewProperties = new Dictionary<string, object>();
 
             _initCollections();
             _initEvents();

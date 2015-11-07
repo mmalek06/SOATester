@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Practices.Unity;
-
+﻿using Microsoft.Practices.Unity;
 using Prism.Events;
-
 using SOATester.Communication;
 using SOATester.Entities;
 using SOATester.Infrastructure.Enums;
 using SOATester.Modules.ContentModule.ViewModels.Base;
+using System;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
     public class ScenarioViewModel : RunnableViewModel<Scenario> {
@@ -66,15 +59,15 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region event handlers
 
         protected override void _run() {
-            _runner.Run(Scenario);
+            _runner.RunAsync(Scenario);
         }
 
         protected override void _stop() {
-            _runner.Stop(Scenario);
+            _runner.StopAsync(Scenario);
         }
 
         protected override void _pause() {
-            _runner.Pause(Scenario);
+            _runner.PauseAsync(Scenario);
         }
 
         #endregion

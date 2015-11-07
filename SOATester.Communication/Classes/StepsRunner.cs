@@ -1,36 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SOATester.Communication.Base;
 using SOATester.Entities;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SOATester.Communication {
     public class StepsRunner : IStepsRunner {
 
         #region public methods
 
-        public void Pause(IEnumerable<Step> project) {
+        public Task PauseAsync(IEnumerable<Step> project) {
             throw new NotImplementedException();
         }
 
-        public void Pause(Step project) {
+        public Task PauseAsync(Step project) {
             throw new NotImplementedException();
         }
 
-        public void Run(IEnumerable<Step> project) {
+        public Task<IEnumerable<RunResult>> RunAsync(IEnumerable<Step> project) {
             throw new NotImplementedException();
         }
 
-        public void Run(Step project) {
+        public Task<RunResult> RunAsync(Step project) {
             throw new NotImplementedException();
         }
 
-        public void Stop(IEnumerable<Step> project) {
+        public Task StopAsync(IEnumerable<Step> project) {
             throw new NotImplementedException();
         }
 
-        public void Stop(Step project) {
+        public Task StopAsync(Step project) {
             throw new NotImplementedException();
         }
 

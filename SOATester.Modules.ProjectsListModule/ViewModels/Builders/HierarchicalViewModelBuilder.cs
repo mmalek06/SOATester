@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Practices.Unity;
-
-using SOATester.Entities;
-
-using SOATester.Modules.ProjectsListModule.ViewModels;
+﻿using Microsoft.Practices.Unity;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
+using SOATester.Modules.ProjectsListModule.ViewModels;
+using System.Collections.Generic;
 
-namespace SOATester.Modules.ProjectsListModule.Utils {
+namespace SOATester.Modules.ProjectsListModule.ViewModels.Builders {
     public class HierarchicalViewModelBuilder {
 
         #region fields

@@ -1,12 +1,7 @@
-﻿using System;
+﻿using SOATester.Entities;
+using SOATester.Modules.ContentModule.Repositories.Base;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using SOATester.Entities;
-
-using SOATester.Modules.ContentModule.Repositories.Base;
 
 namespace SOATester.Modules.ContentModule.Repositories {
     public class ProjectsRepository : IProjectsRepository {

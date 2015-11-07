@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Practices.Unity;
-
+﻿using Microsoft.Practices.Unity;
 using Prism.Events;
-
-using SOATester.Entities;
-
 using SOATester.Communication;
-
-using SOATester.Infrastructure;
-
+using SOATester.Entities;
 using SOATester.Modules.ContentModule.ViewModels.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
@@ -58,15 +45,15 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region event handlers
 
         protected override void _run() {
-            _runner.Run(Test);
+            _runner.RunAsync(Test);
         }
 
         protected override void _stop() {
-            _runner.Stop(Test);
+            _runner.StopAsync(Test);
         }
 
         protected override void _pause() {
-            _runner.Pause(Test);
+            _runner.PauseAsync(Test);
         }
 
         #endregion

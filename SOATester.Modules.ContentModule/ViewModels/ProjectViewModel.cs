@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Practices.Unity;
-
-using Prism.Events;
+﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
-
-using SOATester.Entities;
-
+using Prism.Events;
 using SOATester.Communication;
-
-using SOATester.Infrastructure;
-
+using SOATester.Entities;
 using SOATester.Modules.ContentModule.ViewModels.Base;
+using System;
+using System.Collections.ObjectModel;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
     public class ProjectViewModel : RunnableViewModel<Project> {
@@ -85,6 +74,8 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         }
 
         protected override void _initCommands() {
+            base._initCommands();
+
             SaveAddress = new DelegateCommand<string>(OnSaveAddress);
         }
 
@@ -96,16 +87,16 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             Address = new Uri(address);
         }
 
-        protected override void _run() {
-            _runner.Run(Project);
+        protected async override void _run() {
+            var result = await _runner.RunAsync(Project);
         }
 
-        protected override void _stop() {
-            _runner.Stop(Project);
+        protected async override void _stop() {
+            await _runner.StopAsync(Project);
         }
 
-        protected override void _pause() {
-            _runner.Pause(Project);
+        protected async override void _pause() {
+            await _runner.PauseAsync(Project);
         }
 
         #endregion

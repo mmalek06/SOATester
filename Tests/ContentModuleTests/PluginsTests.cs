@@ -6,10 +6,11 @@ using Prism.Events;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using SOATester.Infrastructure;
 using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.Views.Plugins.Utils;
-using SOATester.Modules.ContentModule.Views.Plugins.Base;
-using SOATester.Modules.ContentModule.Views.Plugins.Utils.Enums;
+using SOATester.Modules.ContentModule.Plugins;
+using SOATester.Modules.ContentModule.Plugins.Enums;
+using SOATester.Modules.ContentModule.Plugins.Base;
 
 using Tests.ContentModuletests.Base;
 
@@ -22,18 +23,17 @@ namespace Tests {
         [TestMethod]
         public void Test_AggregateStrategy_NONE() {
             var plugin = _getAggregateNonePlugin();
-            var vmWrapper = new VmWrapper();
-            var unorderedWrappedViewModels = vmWrapper.WrapObjects(_viewModels);
-            var orderedWrappedViewModels = plugin.Execute(unorderedWrappedViewModels);
-            var orderingReference = _getOrderingReference(unorderedWrappedViewModels);
+            var unorderedViewModels = _viewModels;
+            var orderedViewModels = plugin.Execute(unorderedViewModels);
+            var orderingReference = _getOrderingReference(unorderedViewModels);
 
             // false conditions
-            Assert.IsFalse(Enumerable.SequenceEqual(orderingReference, unorderedWrappedViewModels), "Collections should not have the same ordering");
-            Assert.IsFalse(Enumerable.SequenceEqual(unorderedWrappedViewModels, orderedWrappedViewModels), "Collections have the same ordering");
+            Assert.IsFalse(Enumerable.SequenceEqual(orderingReference, unorderedViewModels), "Collections should not have the same ordering");
+            Assert.IsFalse(Enumerable.SequenceEqual(unorderedViewModels, orderedViewModels), "Collections have the same ordering");
 
             // true conditions
-            Assert.IsTrue(orderingReference.Count() == orderedWrappedViewModels.Count(), "Collections should have the same length");
-            Assert.IsTrue(Enumerable.SequenceEqual(orderedWrappedViewModels, orderingReference), "Collections should have the same ordering");
+            Assert.IsTrue(orderingReference.Count() == orderedViewModels.Count(), "Collections should have the same length");
+            Assert.IsTrue(Enumerable.SequenceEqual(orderedViewModels, orderingReference), "Collections should have the same ordering");
         }
 
         #endregion
@@ -46,59 +46,59 @@ namespace Tests {
             return plugins.FirstOrDefault(plugin => plugin.PluginKey == PluginKey.AGGREGATOR && plugin.Strategy == Strategy.NONE);
         }
 
-        private IEnumerable<TabItemProxy> _getOrderingReference(IEnumerable<TabItemProxy> unorderedWrappedViewModels) {
-            var result = (new List<TabItemProxy> {
+        private IEnumerable<ViewModelBase> _getOrderingReference(IEnumerable<ViewModelBase> unorderedWrappedViewModels) {
+            var result = (new List<ViewModelBase> {
                 // ProjectViewModel
-                unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is ProjectViewModel) {
-                        return (proxy.ViewModel as ProjectViewModel).Id == 1;
+                unorderedWrappedViewModels.FirstOrDefault(viewModel => {
+                    if (viewModel is ProjectViewModel) {
+                        return (viewModel as ProjectViewModel).Id == 1;
                     }
                     return false;
                 }),
                 // TestSuiteViewModel
-                unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is TestViewModel) {
-                        return (proxy.ViewModel as TestViewModel).Id == 1;
+                unorderedWrappedViewModels.FirstOrDefault(viewModel => {
+                    if (viewModel is TestViewModel) {
+                        return (viewModel as TestViewModel).Id == 1;
                     }
                     return false;
                 }),
                 // StepViewModel
-                unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is StepViewModel) {
-                        return (proxy.ViewModel as StepViewModel).Id == 1;
+                unorderedWrappedViewModels.FirstOrDefault(viewModel => {
+                    if (viewModel is StepViewModel) {
+                        return (viewModel as StepViewModel).Id == 1;
                     }
                     return false;
                 }),
-                unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is StepViewModel) {
-                        return (proxy.ViewModel as StepViewModel).Id == 2;
+                unorderedWrappedViewModels.FirstOrDefault(viewModel => {
+                    if (viewModel is StepViewModel) {
+                        return (viewModel as StepViewModel).Id == 2;
                     }
                     return false;
                 }),
-                unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is StepViewModel) {
-                        return (proxy.ViewModel as StepViewModel).Id == 3;
+                unorderedWrappedViewModels.FirstOrDefault(viewModel => {
+                    if (viewModel is StepViewModel) {
+                        return (viewModel as StepViewModel).Id == 3;
                     }
                     return false;
                 }),
                 // TestSuiteViewModel
-                unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is TestViewModel) {
-                        return (proxy.ViewModel as TestViewModel).Id == 2;
+                unorderedWrappedViewModels.FirstOrDefault(viewModel => {
+                    if (viewModel is TestViewModel) {
+                        return (viewModel as TestViewModel).Id == 2;
                     }
                     return false;
                 }),
                 // ProjectViewModel
-                unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is ProjectViewModel) {
-                        return (proxy.ViewModel as ProjectViewModel).Id == 2;
+                unorderedWrappedViewModels.FirstOrDefault(viewModel => {
+                    if (viewModel is ProjectViewModel) {
+                        return (viewModel as ProjectViewModel).Id == 2;
                     }
                     return false;
                 }),
                 // TestSuiteViewModel
-                unorderedWrappedViewModels.FirstOrDefault(proxy => {
-                    if (proxy.ViewModel is TestViewModel) {
-                        return (proxy.ViewModel as TestViewModel).Id == 3;
+                unorderedWrappedViewModels.FirstOrDefault(viewModel => {
+                    if (viewModel is TestViewModel) {
+                        return (viewModel as TestViewModel).Id == 3;
                     }
                     return false;
                 })

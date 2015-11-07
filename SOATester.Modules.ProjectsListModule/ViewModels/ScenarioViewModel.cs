@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Prism.Events;
-
+﻿using Prism.Events;
 using SOATester.Modules.ProjectsListModule.ViewModels.Base;
+using System.Collections.ObjectModel;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels {
     public class ScenarioViewModel : CollectionViewModel<TestViewModel> {
