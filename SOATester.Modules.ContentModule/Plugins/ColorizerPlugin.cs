@@ -8,7 +8,7 @@ using System.Linq;
 using System.Windows.Media;
 
 namespace SOATester.Modules.ContentModule.Plugins {
-    public class TabColorizer : IPlugin {
+    public class ColorizerPlugin : IPlugin {
 
         #region fields
 
@@ -30,7 +30,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region constructors and destructors
 
-        public TabColorizer() {
+        public ColorizerPlugin() {
             PluginKey = PluginKey.COLORIZER;
             Strategy = Strategy.FLAT;
             _occupiedColors = new HashSet<Color>();

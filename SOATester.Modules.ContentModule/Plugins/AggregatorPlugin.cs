@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Plugins {
-    public class TabAggregator : IPlugin {
+    public class AggregatorPlugin : IPlugin {
         
         #region public properties
 
@@ -19,7 +19,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region constructors and destructors
 
-        public TabAggregator() {
+        public AggregatorPlugin() {
             PluginKey = PluginKey.AGGREGATOR;
             Strategy = Strategy.NONE;
         }

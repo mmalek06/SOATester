@@ -93,8 +93,8 @@ namespace Tests.ContentModuletests.Base {
 
             // register plugins
             _container.RegisterType<PluginFactory>();
-            _container.RegisterType<IPlugin, TabAggregator>("Aggregator");
-            _container.RegisterType<IPlugin, TabColorizer>("Colorizer");
+            _container.RegisterType<IPlugin, AggregatorPlugin>("Aggregator");
+            _container.RegisterType<IPlugin, ColorizerPlugin>("Colorizer");
             _container.RegisterType<IEnumerable<IPlugin>, IPlugin[]>();
 
             // register viewmodels

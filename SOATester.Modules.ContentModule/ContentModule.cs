@@ -64,8 +64,8 @@ namespace SOATester.Modules.ContentModule {
 
         protected override void _initializePlugins() {
             _container.RegisterType<PluginFactory>();
-            _container.RegisterType<IPlugin, TabAggregator>("Aggregator");
-            _container.RegisterType<IPlugin, TabColorizer>("Colorizer");
+            _container.RegisterType<IPlugin, AggregatorPlugin>("Aggregator");
+            _container.RegisterType<IPlugin, ColorizerPlugin>("Colorizer");
             _container.RegisterType<IEnumerable<IPlugin>, IPlugin[]>();
         }
 
