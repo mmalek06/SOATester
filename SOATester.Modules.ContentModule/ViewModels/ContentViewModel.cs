@@ -23,7 +23,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         private ITestsRepository _testSuitesRepository;
         private IStepsRepository _stepsRepository;
         private object _activeItem;
-        
+
         #endregion
 
         #region properties

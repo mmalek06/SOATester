@@ -1,9 +1,9 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
-using SOATester.Communication;
 using SOATester.Entities;
 using SOATester.Modules.ContentModule.ViewModels.Base;
+using SOATester.RestCommunication.Base;
 using System;
 using System.Collections.ObjectModel;
 
@@ -15,7 +15,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         private Project _project;
         private string _name;
         private Uri _address;
-        private ObservableCollection<Parameter> _parameters;
+        private ObservableCollection<RequestHeader> _parameters;
 
         #endregion
 
@@ -30,9 +30,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        public int Id {
-            get { return _project.Id; }
-        }
+        public int Id => _project.Id;
 
         public string Name {
             get { return _name ?? Project.Name; }
@@ -40,11 +38,11 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         }
 
         public Uri Address {
-            get { return _address ?? _project.Address; }
+            get { return _address == null ? new Uri(_project.Address) : _address; }
             set { SetProperty(ref _address, value); }
         }
 
-        public ObservableCollection<Parameter> Parameters {
+        public ObservableCollection<RequestHeader> Parameters {
             get { return _parameters; }
             set { SetProperty(ref _parameters, value); }
         }
@@ -70,7 +68,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region methods
 
         protected override void _initCollections() {
-            Parameters = new ObservableCollection<Parameter>();
+            Parameters = new ObservableCollection<RequestHeader>();
         }
 
         protected override void _initCommands() {

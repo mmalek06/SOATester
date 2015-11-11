@@ -22,11 +22,11 @@ namespace SOATester.Modules.ContentModule.Repositories.Mock {
         }
 
         public IEnumerable<Test> GetTestsForScenario(int scenarioId) {
-            return cache.Where(test => test.ScenarioId == scenarioId);
+            return cache.Where(test => test.Scenario.Id == scenarioId);
         }
 
         public IEnumerable<Test> GetTestsForScenario(Scenario scenario) {
-            return GetTestsForScenario(scenario.Id);
+            return cache.Where(test => test.Scenario.Equals(scenario));
         }
 
         #endregion

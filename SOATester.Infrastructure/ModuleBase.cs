@@ -4,6 +4,7 @@ using Prism.Regions;
 using SOATester.Infrastructure.ConfigurationEnums;
 using System;
 using System.Configuration;
+using System.Linq;
 
 namespace SOATester.Infrastructure {
     public abstract class ModuleBase : IModule {
@@ -21,6 +22,8 @@ namespace SOATester.Infrastructure {
         public ModuleBase(IUnityContainer container, IRegionManager regionManager) {
             _container = container;
             _regionManager = regionManager;
+
+            _setAppMode();
         }
 
         #endregion
@@ -38,7 +41,17 @@ namespace SOATester.Infrastructure {
 
         #endregion
 
-        #region private methods
+        #region methods
+
+        protected void _setAppMode() {
+            bool isUnderTests = AppDomain.CurrentDomain.GetAssemblies().Any(a => a.FullName.ToLowerInvariant().StartsWith("microsoft.visualstudio.qualitytools"));
+
+            if (isUnderTests) {
+                _appMode = AppMode.TESTING;
+            } else {
+                _appMode = AppMode.RUN;
+            }
+        }
 
         protected virtual void _getConfiguration() {
             var mode = ConfigurationManager.AppSettings["mode"];

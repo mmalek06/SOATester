@@ -19,11 +19,8 @@ namespace SOATester.Modules.ContentModule.Plugins {
         #region public properties
 
         public PluginKey PluginKey { get; set; }
-
         public Strategy Strategy { get; set; }
-
         public bool IsActive { get; set; }
-
         public int Priority { get; set; }
 
         #endregion
@@ -70,15 +67,15 @@ namespace SOATester.Modules.ContentModule.Plugins {
             }
 
             foreach (var proxy in scenarioViewModels) {
-                _setColor(proxy, rand, projectToColorMap, scenarioToColorMap, (proxy as ScenarioViewModel).Scenario.ProjectId, (proxy as ScenarioViewModel).Id);
+                _setColor(proxy, rand, projectToColorMap, scenarioToColorMap, (proxy as ScenarioViewModel).Scenario.Project.Id, (proxy as ScenarioViewModel).Id);
             }
 
             foreach (var proxy in testViewModels) {
-                _setColor(proxy, rand, scenarioToColorMap, testToColorMap, (proxy as TestViewModel).Test.ScenarioId, (proxy as TestViewModel).Id);
+                _setColor(proxy, rand, scenarioToColorMap, testToColorMap, (proxy as TestViewModel).Test.Scenario.Id, (proxy as TestViewModel).Id);
             }
 
             foreach (var proxy in stepViewModels) {
-                _setColor(proxy, rand, testToColorMap, null, (proxy as StepViewModel).Step.TestId);
+                _setColor(proxy, rand, testToColorMap, null, (proxy as StepViewModel).Step.Test.Id);
             }
 
             return objects;

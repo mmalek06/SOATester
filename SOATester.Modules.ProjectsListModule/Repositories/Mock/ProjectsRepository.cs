@@ -65,9 +65,9 @@ namespace SOATester.Modules.ProjectsListModule.Repositories.Mock {
             var projects = new List<Project>();
 
             foreach (var project in container.Projects) {
-                foreach (var scenario in from sc in container.Scenarios where sc.ProjectId == project.Id select sc) {
-                    foreach (var test in from ts in container.Tests where ts.ScenarioId == scenario.Id select ts) {
-                        foreach (var step in from st in container.Steps where st.TestId == test.Id select st) {
+                foreach (var scenario in from sc in container.Scenarios where sc.Project.Id == project.Id select sc) {
+                    foreach (var test in from ts in container.Tests where ts.Scenario.Id == scenario.Id select ts) {
+                        foreach (var step in from st in container.Steps where st.Test.Id == test.Id select st) {
                             test.Steps.Add(step);
                         }
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Events;
-using SOATester.Communication;
 using SOATester.Entities;
 using SOATester.Modules.ContentModule.ViewModels.Base;
+using SOATester.RestCommunication.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
     public class TestViewModel : RunnableViewModel<Test> {
@@ -25,9 +25,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        public int Id {
-            get { return _test.Id; }
-        }
+        public int Id => _test.Id;
 
         public string Name {
             get { return _name ?? _test.Name; }
@@ -44,17 +42,9 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region event handlers
 
-        protected override void _run() {
-            _runner.RunAsync(Test);
-        }
-
-        protected override void _stop() {
-            _runner.StopAsync(Test);
-        }
-
-        protected override void _pause() {
-            _runner.PauseAsync(Test);
-        }
+        protected override void _run() => _runner.RunAsync(Test);
+        protected override void _stop() => _runner.StopAsync(Test);
+        protected override void _pause() => _runner.PauseAsync(Test);
 
         #endregion
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Regions;
-using SOATester.Communication;
+using SOATester.RestCommunication;
+using SOATester.RestCommunication.Base;
 using SOATester.Infrastructure;
 using SOATester.Modules.ContentModule.Plugins;
 using SOATester.Modules.ContentModule.Plugins.Base;

@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\SOATester\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,18 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Base\RunResult.cs" />
-    <Compile Include="Classes\ProjectResult.cs" />
-    <Compile Include="Classes\ProjectsRunner.cs" />
-    <Compile Include="Classes\ScenariosRunner.cs" />
-    <Compile Include="Classes\StepsRunner.cs" />
-    <Compile Include="Classes\TestsRunner.cs" />
+    <Compile Include="Results\Base\RunResult.cs" />
+    <Compile Include="Results\ProjectResult.cs" />
+    <Compile Include="Runners\ProjectsRunner.cs" />
+    <Compile Include="Runners\ScenariosRunner.cs" />
+    <Compile Include="Runners\StepsRunner.cs" />
+    <Compile Include="Runners\TestsRunner.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Interfaces\IProjectsRunner.cs" />
-    <Compile Include="Interfaces\IRunner.cs" />
-    <Compile Include="Interfaces\IScenariosRunner.cs" />
-    <Compile Include="Interfaces\IStepsRunner.cs" />
-    <Compile Include="Interfaces\ITestsRunner.cs" />
+    <Compile Include="Runners\Base\IProjectsRunner.cs" />
+    <Compile Include="Runners\Base\IRunner.cs" />
+    <Compile Include="Runners\Base\IScenariosRunner.cs" />
+    <Compile Include="Runners\Base\IStepsRunner.cs" />
+    <Compile Include="Runners\Base\ITestsRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +68,9 @@
       <Project>{e9c6aa78-5973-4872-8dc2-1b94c39a787f}</Project>
       <Name>SOATester.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

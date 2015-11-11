@@ -85,7 +85,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
             const int StepSize = 10000;
 
             foreach (var obj in objects.Where(obj => obj is ScenarioViewModel)) {
-                int id = (obj as ScenarioViewModel).Scenario.ProjectId;
+                int id = (obj as ScenarioViewModel).Scenario.Project.Id;
                 int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, projectsLookup);
 
                 scenariosProxiesWithKeys[step] = obj;
@@ -109,7 +109,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
             const int StepSize = 1000;
 
             foreach (var obj in objects.Where(obj => obj is TestViewModel)) {
-                int id = (obj as TestViewModel).Test.ScenarioId;
+                int id = (obj as TestViewModel).Test.Scenario.Id;
                 int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, scenariosLookup);
 
                 testsProxiesWithKeys[step] = obj;
@@ -132,7 +132,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
             const int StepSize = 100;
 
             foreach (var obj in objects.Where(obj => obj is StepViewModel)) {
-                int id = (obj as StepViewModel).Step.TestId;
+                int id = (obj as StepViewModel).Step.Test.Id;
                 int step = _getStep(ref maxUnboundIdx, StepSize, id, counts, testsLookup);
 
                 stepsProxiesWithKeys[step] = obj;

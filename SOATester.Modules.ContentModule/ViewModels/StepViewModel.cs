@@ -1,8 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Events;
-using SOATester.Communication;
 using SOATester.Entities;
 using SOATester.Modules.ContentModule.ViewModels.Base;
+using SOATester.RestCommunication.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
     public class StepViewModel : RunnableViewModel<Step> {
@@ -25,9 +25,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        public int Id {
-            get { return _step.Id; }
-        }
+        public int Id => _step.Id;
 
         public string Name {
             get { return _name ?? _step.Name; }

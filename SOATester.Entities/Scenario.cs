@@ -1,18 +1,14 @@
-﻿using SOATester.Infrastructure.Enums;
-using System;
+﻿using SOATester.Entities.Base;
 using System.Collections.Generic;
 
 namespace SOATester.Entities {
-    public class Scenario {
-        public int Id { get; set; }
+    public class Scenario : RequestModel {
         public int ProjectId { get; set; }
-        public string Name { get; set; }
-        public Uri Address { get; set; }
-        public Protocol Protocol { get; set; }
-        
+
+        public virtual Project Project { get; set; }        
         public virtual ICollection<Test> Tests { get; set; }
 
-        public Scenario() {
+        public Scenario() : base() {
             Tests = new List<Test>();
         }
     }

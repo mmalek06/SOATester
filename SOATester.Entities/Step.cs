@@ -1,13 +1,10 @@
-﻿using SOATester.Infrastructure.Enums;
-using System;
+﻿using SOATester.Entities.Base;
 
 namespace SOATester.Entities {
-    public class Step {
-        public int Id { get; set; }
+    public class Step : RequestModel {
         public int TestId { get; set; }
-        public string Name { get; set; }
-        public Uri Address { get; set; }
-        public Protocol Protocol { get; set; }
-        public Method Method { get; set; }
+        public string RequestBody { get; set; }
+
+        public virtual Test Test { get; set; }
     }
 }

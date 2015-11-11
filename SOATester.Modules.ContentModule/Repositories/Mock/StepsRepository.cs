@@ -21,12 +21,12 @@ namespace SOATester.Modules.ContentModule.Repositories.Mock {
             return cache.FirstOrDefault(item => item.Id == id);
         }
 
-        public IEnumerable<Step> GetStepsForTest(int testSuiteId) {
-            return cache.Where(step => step.TestId == testSuiteId);
+        public IEnumerable<Step> GetStepsForTest(int testId) {
+            return cache.Where(step => step.Test.Id == testId);
         }
 
-        public IEnumerable<Step> GetStepsForTest(Test testSuite) {
-            return GetStepsForTest(testSuite.Id);
+        public IEnumerable<Step> GetStepsForTest(Test test) {
+            return cache.Where(step => step.Test.Equals(test));
         }
 
         #endregion

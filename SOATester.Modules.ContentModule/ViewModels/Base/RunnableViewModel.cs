@@ -1,8 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
-using SOATester.Communication;
 using SOATester.Infrastructure;
+using SOATester.RestCommunication.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels.Base {
     public abstract class RunnableViewModel<T> : ViewModelBase {

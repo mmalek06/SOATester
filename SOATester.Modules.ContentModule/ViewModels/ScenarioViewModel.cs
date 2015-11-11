@@ -1,9 +1,9 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Events;
-using SOATester.Communication;
 using SOATester.Entities;
 using SOATester.Infrastructure.Enums;
 using SOATester.Modules.ContentModule.ViewModels.Base;
+using SOATester.RestCommunication.Base;
 using System;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
@@ -29,9 +29,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        public int Id {
-            get { return _scenario.Id; }
-        }
+        public int Id => _scenario.Id;
 
         public string Name {
             get { return _name ?? _scenario.Name; }
@@ -39,12 +37,12 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         }
 
         public Uri Address {
-            get { return _address ?? _scenario.Address; }
+            get { return _address == null ? new Uri(_scenario.Address) : _address; }
             set { SetProperty(ref _address, value); }
         }
 
         public Protocol Protocol {
-            get { return _scenario.Protocol; }
+            get { return (Protocol)Enum.Parse(typeof(Protocol), _scenario.Protocol); }
             set { SetProperty(ref _protocol, value); }
         }
 

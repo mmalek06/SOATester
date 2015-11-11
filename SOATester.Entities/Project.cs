@@ -1,17 +1,11 @@
-﻿using System;
+﻿using SOATester.Entities.Base;
 using System.Collections.Generic;
 
 namespace SOATester.Entities {
-    public class Project {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Uri Address { get; set; }
-        
-        public virtual ICollection<Parameter> Parameters { get; set; }
+    public class Project : RequestModel {
         public virtual ICollection<Scenario> Scenarios { get; set; }
 
-        public Project() {
-            Parameters = new List<Parameter>();
+        public Project() : base() {
             Scenarios = new List<Scenario>();
         }
     }
