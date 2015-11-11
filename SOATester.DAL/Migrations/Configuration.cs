@@ -1,20 +1,26 @@
 namespace SOATester.DAL.Migrations
 {
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SOATester.DAL.SoaTesterContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SoaTesterContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+
             AppDomain.CurrentDomain.SetData("DataDirectory", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
         }
 
-        protected override void Seed(SOATester.DAL.SoaTesterContext context)
+        protected override void Seed(SoaTesterContext context)
         {
+            // delete all data
+            context.Database.ExecuteSqlCommand("sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'");
+            // deletes data from all tables except __MigrationHistory
+            context.Database.ExecuteSqlCommand("sp_MSForEachTable 'IF OBJECT_ID(''?'') NOT IN (ISNULL(OBJECT_ID(''[dbo].[__MigrationHistory]''),0)) DELETE FROM ?'");
+            context.Database.ExecuteSqlCommand("EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL'");
+
+            // seed
             var restProj = new Entities.Project { Name = "REST" };
             var soapProj = new Entities.Project { Name = "SOAP" };
 
