@@ -1,13 +1,17 @@
-﻿using SOATester.Entities;
+﻿using SOATester.DAL;
+using SOATester.Entities;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace SOATester.Modules.ProjectsListModule.Repositories {
     public class ProjectsRepository : IProjectsRepository {
 
         #region fields
 
-        private List<Project> _cache;
+        private IEnumerable<Project> _cache;
 
         #endregion
 
@@ -26,46 +30,18 @@ namespace SOATester.Modules.ProjectsListModule.Repositories {
         #region methods
         
         private void _loadCache() {
-            /*return new List<Project> {
-                new Project {
-                    Id = 1,
-                    Name = "Rest",
-                    TestSuites = new List<TestSuite> {
-                        new TestSuite {
-                            Id = 1,
-                            Name = "Basic tests",
-                            Steps = new List<Step> {
-                                new Step { Id = 1, Name = "Step1" },
-                                new Step { Id = 2, Name = "Step2" },
-                                new Step { Id = 3, Name = "Step3" }
-                            }
-                        },
-                        new TestSuite {
-                            Id = 2,
-                            Name = "Advanced tests",
-                            Steps = new List<Step> {
-                                new Step { Id = 4, Name = "Only one step" }
-                            }
-                        }
-                    }
-                },
-                new Project {
-                    Id = 2,
-                    Name = "Soap",
-                    TestSuites = new List<TestSuite> {
-                        new TestSuite {
-                            Id = 3,
-                            Name = "Very basic tests",
-                            Steps = new List<Step> {
-                                new Step { Id = 5, Name = "OtherStep1" },
-                                new Step { Id = 6, Name = "OtherStep2" },
-                                new Step { Id = 7, Name = "OtherStep3" },
-                                new Step { Id = 8, Name = "OtherStep4" }
-                            }
-                        }
-                    }
-                }
-            };*/
+            using (var ctx = new SoaTesterContext()) {
+#if DEBUG
+                ctx.Database.Log = sql => Console.WriteLine(sql);
+#endif
+
+                var projects = ctx.Projects
+                                  .Include(project => project.Scenarios
+                                                             .Select(scenario => scenario.Tests
+                                                                                         .Select(test => test.Steps)));
+
+                _cache = projects.ToList();
+            }
         }
 
         #endregion

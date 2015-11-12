@@ -1,4 +1,5 @@
 ﻿using SOATester.Entities;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -10,7 +11,10 @@ namespace SOATester.DAL {
         public DbSet<Step> Steps { get; set; }
         public DbSet<RequestHeader> RequestHeaders { get; set; }
 
-        public SoaTesterContext() : base("SoaTester") { }
+        public SoaTesterContext() : base("SoaTesterDB") {
+            Database.SetInitializer<SoaTesterContext>(null);
+            AppDomain.CurrentDomain.SetData("DataDirectory", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

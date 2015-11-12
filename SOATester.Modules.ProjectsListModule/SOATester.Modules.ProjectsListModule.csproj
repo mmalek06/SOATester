@@ -133,6 +133,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\SOATester.DAL\SOATester.DAL.csproj">
+      <Project>{23b09e4c-57c5-46e6-9139-e231e440f1d8}</Project>
+      <Name>SOATester.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SOATester.Entities\SOATester.Entities.csproj">
       <Project>{d592a1d1-19fb-4d7b-941b-2047b56bc005}</Project>
       <Name>SOATester.Entities</Name>

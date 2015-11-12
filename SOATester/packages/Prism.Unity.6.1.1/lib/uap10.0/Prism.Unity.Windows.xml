@@ -21,34 +21,14 @@
             Get the IoC Unity Container 
             </summary>
         </member>
-        <member name="P:Prism.Unity.Windows.PrismUnityApplication.Logger">
-            <summary>
-            Gets the <see cref="T:Prism.Logging.ILoggerFacade"/> for the application.
-            </summary>
-            <value>A <see cref="T:Prism.Logging.ILoggerFacade"/> instance.</value>
-        </member>
-        <member name="M:Prism.Unity.Windows.PrismUnityApplication.OnInitializeAsync(Windows.ApplicationModel.Activation.IActivatedEventArgs)">
-            <summary>
-            Implements and seals the OnInitialize method to configure the container.
-            </summary>
-            <param name="args">The <see cref="T:Windows.ApplicationModel.Activation.IActivatedEventArgs"/> instance containing the event data.</param>
-        </member>
         <member name="M:Prism.Unity.Windows.PrismUnityApplication.Resolve(System.Type)">
             <summary>
-            Implements and seals the Resolves method to be handled by the Unity Container.
+            Implements the Resolves method to be handled by the Unity Container.
             Use the container to resolve types (e.g. ViewModels and Flyouts)
             so their dependencies get injected
             </summary>
             <param name="type">The type.</param>
             <returns>A concrete instance of the specified type.</returns>
-        </member>
-        <member name="M:Prism.Unity.Windows.PrismUnityApplication.CreateLogger">
-            <summary>
-            Create the <see cref="T:Prism.Logging.ILoggerFacade" /> used by the bootstrapper.
-            </summary>
-            <remarks>
-            The base implementation returns a new DebugLogger.
-            </remarks>
         </member>
         <member name="M:Prism.Unity.Windows.PrismUnityApplication.CreateContainer">
             <summary>
@@ -56,10 +36,35 @@
             </summary>
             <returns>A new instance of <see cref="T:Microsoft.Practices.Unity.IUnityContainer"/>.</returns>
         </member>
-        <member name="M:Prism.Unity.Windows.PrismUnityApplication.ConfigureViewModelLocator">
+        <member name="M:Prism.Unity.Windows.PrismUnityApplication.ConfigureContainer">
             <summary>
-            Configures the <see cref="!:ViewModelLocator"/> used by Prism.
+            Creates and configures the container and service locator
             </summary>
+        </member>
+        <member name="M:Prism.Unity.Windows.PrismUnityApplication.ConfigureServiceLocator">
+            <summary>
+            Configures the LocatorProvider for the <see cref="T:Microsoft.Practices.ServiceLocation.ServiceLocator" />.
+            </summary>
+        </member>
+        <member name="M:Prism.Unity.Windows.PrismUnityApplication.CreateNavigationService(Prism.Windows.Navigation.IFrameFacade,Prism.Windows.AppModel.ISessionStateService)">
+            <summary>
+            Creates the nav service through the base class and registers it with the container
+            </summary>
+            <param name="rootFrame">The frame where nav happens</param>
+            <param name="sessionStateService">The session state service</param>
+            <returns>NavigationService</returns>
+        </member>
+        <member name="M:Prism.Unity.Windows.PrismUnityApplication.OnCreateSessionStateService">
+            <summary>
+            Creates the SessionStateService as a singleton through the container
+            </summary>
+            <returns>The SessionStateService</returns>
+        </member>
+        <member name="M:Prism.Unity.Windows.PrismUnityApplication.OnCreateDeviceGestureService">
+            <summary>
+            Creates the DeviceGestureService as a singleton through the container
+            </summary>
+            <returns>DeviceGestureService instance</returns>
         </member>
         <member name="M:Prism.Unity.Windows.PrismUnityApplication.RegisterTypeIfMissing(System.Type,System.Type,System.Boolean)">
             <summary>
@@ -122,6 +127,33 @@
             <param name="container">The cointainer that will be used to resolve the type.</param>
             <param name="typeToResolve">The type to resolve.</param>
             <returns>The instance of <paramref name="typeToResolve"/> built up by the container.</returns>
+        </member>
+        <member name="T:Prism.Unity.Windows.UnityServiceLocatorAdapter">
+            <summary>
+            Defines a <see cref="T:Microsoft.Practices.Unity.IUnityContainer"/> adapter for the <see cref="T:Microsoft.Practices.ServiceLocation.IServiceLocator"/> interface to be used by the Prism Library.
+            </summary>
+        </member>
+        <member name="M:Prism.Unity.Windows.UnityServiceLocatorAdapter.#ctor(Microsoft.Practices.Unity.IUnityContainer)">
+            <summary>
+            Initializes a new instance of <see cref="T:Prism.Unity.Windows.UnityServiceLocatorAdapter"/>.
+            </summary>
+            <param name="unityContainer">The <see cref="T:Microsoft.Practices.Unity.IUnityContainer"/> that will be used
+            by the <see cref="M:Prism.Unity.Windows.UnityServiceLocatorAdapter.DoGetInstance(System.Type,System.String)"/> and <see cref="M:Prism.Unity.Windows.UnityServiceLocatorAdapter.DoGetAllInstances(System.Type)"/> methods.</param>
+        </member>
+        <member name="M:Prism.Unity.Windows.UnityServiceLocatorAdapter.DoGetInstance(System.Type,System.String)">
+            <summary>
+            Resolves the instance of the requested service.
+            </summary>
+            <param name="serviceType">Type of instance requested.</param>
+            <param name="key">Name of registered service you want. May be null.</param>
+            <returns>The requested service instance.</returns>
+        </member>
+        <member name="M:Prism.Unity.Windows.UnityServiceLocatorAdapter.DoGetAllInstances(System.Type)">
+            <summary>
+            Resolves all the instances of the requested service.
+            </summary>
+            <param name="serviceType">Type of service requested.</param>
+            <returns>Sequence of service instance objects.</returns>
         </member>
     </members>
 </doc>
