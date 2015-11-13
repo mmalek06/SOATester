@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories.Mock {
-    public class TestsRepository : MockRepository<Test>, ITestsRepository {
+    public class TestsRepository : MockRepository<Test> {
 
         #region constructors and destructors
 

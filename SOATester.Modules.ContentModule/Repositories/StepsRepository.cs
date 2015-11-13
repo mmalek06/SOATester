@@ -1,31 +1,42 @@
-﻿using SOATester.Entities;
+﻿using SOATester.DAL;
+using SOATester.Entities;
 using SOATester.Modules.ContentModule.Repositories.Base;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories {
-    public class StepsRepository : IStepsRepository {
-        private List<Step> _steps = new List<Step> {
-                new Step { Id = 1, Name = "Step1" },
-                new Step { Id = 2, Name = "Step2" },
-                new Step { Id = 3, Name = "Step3" },
-                new Step { Id = 4, Name = "Only one step" },
-                new Step { Id = 5, Name = "OtherStep1" },
-                new Step { Id = 6, Name = "OtherStep2" },
-                new Step { Id = 7, Name = "OtherStep3" },
-                new Step { Id = 8, Name = "OtherStep4" }
-            };
+    public class StepsRepository : Repository<Step, Test> {
 
-        public Step GetStep(int id) {
-            return _steps.FirstOrDefault(step => step.Id == id);
+        #region methods
+
+        protected override IQueryable<Step> _getEntityQuery(int id, SoaTesterContext ctx) {
+            return from step in ctx.Steps
+                   where step.Id == id
+                   select step;
         }
 
-        public IEnumerable<Step> GetStepsForTest(int testSuiteId) {
-            return null;
+        protected override IQueryable<Step> _getByParentEntityQuery(int parentId, SoaTesterContext ctx) {
+            return from step in ctx.Steps
+                   where step.TestId == parentId
+                   select step;
         }
 
-        public IEnumerable<Step> GetStepsForTest(Test testSuite) {
-            return GetStepsForTest(testSuite.Id);
+        protected override int _getId(Step entity) {
+            return entity.Id;
         }
+
+        protected override int _getParentId(Test parent) {
+            return parent.Id;
+        }
+
+        protected override int _getParentId(Step entity) {
+            return entity.TestId;
+        }
+
+        protected override void _addToContext(SoaTesterContext ctx, Step entity) {
+            ctx.Steps.Add(entity);
+        }
+
+        #endregion
+
     }
 }

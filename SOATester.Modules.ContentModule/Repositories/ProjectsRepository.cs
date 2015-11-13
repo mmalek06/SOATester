@@ -1,23 +1,20 @@
-﻿using SOATester.Entities;
+﻿using SOATester.DAL;
+using SOATester.Entities;
 using SOATester.Modules.ContentModule.Repositories.Base;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories {
-    public class ProjectsRepository : IProjectsRepository {
-        private List<Project> _projects = new List<Project> {
-                new Project {
-                    Id = 1,
-                    Name = "Rest"
-                },
-                new Project {
-                    Id = 2,
-                    Name = "Soap"
-                }
-            };
+    public class ProjectsRepository : SimpleRepository<Project> {
 
-        public Project GetProject(int id) {
-            return _projects.FirstOrDefault(project => project.Id == id);
+        #region methods
+
+        protected override IQueryable<Project> _getEntityQuery(int id, SoaTesterContext ctx) {
+            return from proj in ctx.Projects
+                   where proj.Id == id
+                   select proj;
         }
+
+        #endregion
+
     }
 }

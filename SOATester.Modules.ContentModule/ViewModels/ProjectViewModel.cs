@@ -38,7 +38,17 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         }
 
         public Uri Address {
-            get { return _address == null ? new Uri(_project.Address) : _address; }
+            get {
+                if (_address == null) {
+                    if (_project.Address != null) {
+                        return new Uri(_project.Address);
+                    }
+
+                    return null;
+                }
+
+                return _address;
+            }
             set { SetProperty(ref _address, value); }
         }
 

@@ -10,6 +10,7 @@ using SOATester.Modules.ContentModule.ViewModels;
 using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.Modules.ContentModule.Views;
 using System.Collections.Generic;
+using SOATester.Entities;
 
 namespace SOATester.Modules.ContentModule {
     public class ContentModule : ModuleBase {
@@ -24,15 +25,15 @@ namespace SOATester.Modules.ContentModule {
 
         protected override void _initializeRepositories() {
             if (_appMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
-                _container.RegisterType<IProjectsRepository, Repositories.ProjectsRepository>();
-                _container.RegisterType<IScenariosRepository, Repositories.ScenariosRepository>();
-                _container.RegisterType<ITestsRepository, Repositories.TestsRepository>();
-                _container.RegisterType<IStepsRepository, Repositories.StepsRepository>();
+                _container.RegisterType<ISimpleRepository<Project>, Repositories.ProjectsRepository>();
+                _container.RegisterType<IRepository<Scenario, Project>, Repositories.ScenariosRepository>();
+                _container.RegisterType<IRepository<Test, Scenario>, Repositories.TestsRepository>();
+                _container.RegisterType<IRepository<Step, Test>, Repositories.StepsRepository>();
             } else {
-                _container.RegisterType<IProjectsRepository, Repositories.Mock.ProjectsRepository>();
-                _container.RegisterType<IScenariosRepository, Repositories.Mock.ScenariosRepository>();
-                _container.RegisterType<ITestsRepository, Repositories.Mock.TestsRepository>();
-                _container.RegisterType<IStepsRepository, Repositories.Mock.StepsRepository>();
+                /*_container.RegisterType<ISimpleRepository<Project>, Repositories.Mock.ProjectsRepository>();
+                _container.RegisterType<IRepository<Scenario, Project>, Repositories.Mock.ScenariosRepository>();
+                _container.RegisterType<IRepository<Test, Scenario>, Repositories.Mock.TestsRepository>();
+                _container.RegisterType<IRepository<Step, Test>, Repositories.Mock.StepsRepository>();*/
             }
         }
 
@@ -46,10 +47,10 @@ namespace SOATester.Modules.ContentModule {
 
             // register view models
             _container.RegisterType<ICollectionViewModel, ContentViewModel>(
-                new InjectionProperty("ProjectsRepository", _container.Resolve<IProjectsRepository>()),
-                new InjectionProperty("ScenariosRepository", _container.Resolve<IScenariosRepository>()),
-                new InjectionProperty("TestSuitesRepository", _container.Resolve<ITestsRepository>()),
-                new InjectionProperty("StepsRepository", _container.Resolve<IStepsRepository>()));
+                new InjectionProperty("ProjectsRepository", _container.Resolve<ISimpleRepository<Project>>()),
+                new InjectionProperty("ScenariosRepository", _container.Resolve<IRepository<Scenario, Project>>()),
+                new InjectionProperty("TestsRepository", _container.Resolve<IRepository<Test, Scenario>>()),
+                new InjectionProperty("StepsRepository", _container.Resolve<IRepository<Step, Test>>()));
             _container.RegisterType<ProjectViewModel>();
             _container.RegisterType<ScenarioViewModel>();
             _container.RegisterType<TestViewModel>();

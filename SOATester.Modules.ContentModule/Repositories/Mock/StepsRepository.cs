@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories.Mock {
-    public class StepsRepository : MockRepository<Step>, IStepsRepository {
+    public class StepsRepository : MockRepository<Step> {
 
         #region constructors and destructors
 

@@ -4,7 +4,7 @@ using SOATester.Modules.ContentModule.Repositories.Mock.Base;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories.Mock {
-    public class ProjectsRepository : MockRepository<Project>, IProjectsRepository {
+    public class ProjectsRepository : MockRepository<Project> {
 
         #region constructors and destructors
 

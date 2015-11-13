@@ -1,7 +1,6 @@
 ﻿using SOATester.DAL;
 using SOATester.Entities;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -31,10 +30,6 @@ namespace SOATester.Modules.ProjectsListModule.Repositories {
         
         private void _loadCache() {
             using (var ctx = new SoaTesterContext()) {
-#if DEBUG
-                ctx.Database.Log = sql => Console.WriteLine(sql);
-#endif
-
                 var projects = ctx.Projects
                                   .Include(project => project.Scenarios
                                                              .Select(scenario => scenario.Tests

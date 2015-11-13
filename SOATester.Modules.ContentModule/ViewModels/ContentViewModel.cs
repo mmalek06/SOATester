@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
+using SOATester.Entities;
 using SOATester.Infrastructure;
 using SOATester.Infrastructure.Events.Descriptors;
 using SOATester.Infrastructure.Events.Enums;
@@ -18,10 +19,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private ObservableCollection<object> _openedItems;
         private IUnityContainer _container;
-        private IProjectsRepository _projectsRepository;
-        private IScenariosRepository _scenariosRepository;
-        private ITestsRepository _testSuitesRepository;
-        private IStepsRepository _stepsRepository;
+        private ISimpleRepository<Project> _projectsRepository;
+        private IRepository<Scenario, Project> _scenariosRepository;
+        private IRepository<Test, Scenario> _testsRepository;
+        private IRepository<Step, Test> _stepsRepository;
         private object _activeItem;
 
         #endregion
@@ -39,22 +40,22 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         }
         
         [Dependency]
-        public IProjectsRepository ProjectsRepository {
+        public ISimpleRepository<Project> ProjectsRepository {
             set { SetProperty(ref _projectsRepository, value); }
         }
 
         [Dependency]
-        public IScenariosRepository ScenariosRepository {
+        public IRepository<Scenario, Project> ScenariosRepository {
             set { SetProperty(ref _scenariosRepository, value); }
         }
 
         [Dependency]
-        public ITestsRepository TestSuitesRepository {
-            set { SetProperty(ref _testSuitesRepository, value); }
+        public IRepository<Test, Scenario> TestsRepository {
+            set { SetProperty(ref _testsRepository, value); }
         }
 
         [Dependency]
-        public IStepsRepository StepsRepository {
+        public IRepository<Step, Test> StepsRepository {
             set { SetProperty(ref _stepsRepository, value); }
         }
 
@@ -108,7 +109,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnProjectChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.PROJECT) {
-                var project = _projectsRepository.GetProject(evtDescriptor.Id);
+                var project = _projectsRepository.GetEntity(evtDescriptor.Id);
                 
                 if (project != null) {
                     ProjectViewModel projectVm;
@@ -133,7 +134,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnScenarioChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.SCENARIO) {
-                var scenario = _scenariosRepository.GetScenario(evtDescriptor.Id);
+                var scenario = _scenariosRepository.GetEntity(evtDescriptor.Id);
 
                 if (scenario != null) {
                     ScenarioViewModel scenarioVm;
@@ -158,7 +159,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnTestSuiteChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.TEST) {
-                var testSuite = _testSuitesRepository.GetTest(evtDescriptor.Id);
+                var testSuite = _testsRepository.GetEntity(evtDescriptor.Id);
                 
                 if (testSuite != null) {
                     TestViewModel testSuiteVm;
@@ -183,7 +184,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnStepChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.STEP) {
-                var step = _stepsRepository.GetStep(evtDescriptor.Id);
+                var step = _stepsRepository.GetEntity(evtDescriptor.Id);
 
                 if (step != null) {
                     StepViewModel stepVm;

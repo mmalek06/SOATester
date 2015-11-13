@@ -14,6 +14,10 @@ namespace SOATester.DAL {
         public SoaTesterContext() : base("SoaTesterDB") {
             Database.SetInitializer<SoaTesterContext>(null);
             AppDomain.CurrentDomain.SetData("DataDirectory", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+
+#if DEBUG
+            Database.Log = sql => Console.WriteLine(sql);
+#endif
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {

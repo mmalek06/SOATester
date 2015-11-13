@@ -97,10 +97,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentModule.cs" />
-    <Compile Include="Repositories\Base\IProjectsRepository.cs" />
-    <Compile Include="Repositories\Base\IScenariosRepository.cs" />
-    <Compile Include="Repositories\Base\IStepsRepository.cs" />
-    <Compile Include="Repositories\Base\ITestsRepository.cs" />
+    <Compile Include="Repositories\Base\Repository.cs" />
+    <Compile Include="Repositories\Base\ISimpleRepository.cs" />
+    <Compile Include="Repositories\Base\IRepository.cs" />
+    <Compile Include="Repositories\Base\SimpleRepository.cs" />
     <Compile Include="Repositories\Mock\Base\MockRepository.cs" />
     <Compile Include="Repositories\Mock\ProjectsRepository.cs" />
     <Compile Include="Repositories\Mock\ScenariosRepository.cs" />
@@ -109,7 +109,7 @@
     <Compile Include="Repositories\ProjectsRepository.cs" />
     <Compile Include="Repositories\ScenariosRepository.cs" />
     <Compile Include="Repositories\StepsRepository.cs" />
-    <Compile Include="Repositories\TestSuitesRepository.cs" />
+    <Compile Include="Repositories\TestsRepository.cs" />
     <Compile Include="ViewModels\Base\ICollectionViewModel.cs" />
     <Compile Include="ViewModels\Base\RunnableViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
@@ -171,6 +171,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SOATester.DAL\SOATester.DAL.csproj">
+      <Project>{23b09e4c-57c5-46e6-9139-e231e440f1d8}</Project>
+      <Name>SOATester.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SOATester.Entities\SOATester.Entities.csproj">
       <Project>{d592a1d1-19fb-4d7b-941b-2047b56bc005}</Project>
       <Name>SOATester.Entities</Name>
