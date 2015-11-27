@@ -1,6 +1,4 @@
-﻿using SOATester.Infrastructure.Events.Enums;
-
-namespace SOATester.Infrastructure.Events.Descriptors {
+﻿namespace SOATester.Infrastructure.Events {
     public class ItemChosenEventDescriptor {
 
         #region public properties

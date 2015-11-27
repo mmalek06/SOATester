@@ -33,7 +33,7 @@ namespace SOATester.Modules.ContentModule.ViewModels.Base {
 
         #region methods
 
-        protected override void _initCommands() {
+        protected override void InitCommands() {
             Run = new DelegateCommand(_run);
             Stop = new DelegateCommand(_stop);
             Pause = new DelegateCommand(_pause);

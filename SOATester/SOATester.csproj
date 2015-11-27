@@ -100,10 +100,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="MainShell.xaml.cs">
+    <Compile Include="Shells\MainShell.xaml.cs">
       <DependentUpon>MainShell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SplashScreenShell.xaml.cs">
+    <Compile Include="Shells\SplashScreenShell.xaml.cs">
       <DependentUpon>SplashScreenShell.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -150,19 +150,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ModCatalogMainShell.xaml">
+    <Resource Include="ModCatalogs\ModCatalogMainShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Page Include="SplashScreenShell.xaml">
+    <Page Include="Shells\SplashScreenShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="ModCatalogSplashScreenShell.xaml">
+    <Resource Include="ModCatalogs\ModCatalogSplashScreenShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Page Include="MainShell.xaml">
+    <Page Include="Shells\MainShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

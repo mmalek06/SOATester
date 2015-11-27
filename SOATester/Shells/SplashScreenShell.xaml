@@ -8,7 +8,8 @@
         xmlns:infrastructure="clr-namespace:SOATester.Infrastructure;assembly=SOATester.Infrastructure"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        WindowStyle="None">
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SplashScreenRegion}" />
     </Grid>

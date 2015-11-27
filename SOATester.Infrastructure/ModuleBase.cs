@@ -10,9 +10,9 @@ namespace SOATester.Infrastructure {
 
         #region fields
 
-        protected IUnityContainer _container;
-        protected IRegionManager _regionManager;
-        protected static AppMode _appMode;
+        protected IUnityContainer container;
+        protected IRegionManager regionManager;
+        protected static AppMode appMode;
 
         #endregion
 
@@ -22,15 +22,15 @@ namespace SOATester.Infrastructure {
             bool isUnderTests = AppDomain.CurrentDomain.GetAssemblies().Any(a => a.FullName.ToLowerInvariant().StartsWith("microsoft.visualstudio.qualitytools"));
 
             if (isUnderTests) {
-                _appMode = AppMode.TESTING;
+                appMode = AppMode.TESTING;
             } else {
-                _appMode = AppMode.RUN;
+                appMode = AppMode.RUN;
             }
         }
 
         public ModuleBase(IUnityContainer container, IRegionManager regionManager) {
-            _container = container;
-            _regionManager = regionManager;
+            this.container = container;
+            this.regionManager = regionManager;
         }
 
         #endregion
@@ -38,26 +38,26 @@ namespace SOATester.Infrastructure {
         #region public methods
 
         public void Initialize() {
-            _initializeRepositories();
-            _initializeViewModels();
-            _initializePlugins();
-            _initializeViews();
-            _initializeRegions();
+            InitializeRepositories();
+            InitializeViewModels();
+            InitializePlugins();
+            InitializeViews();
+            InitializeRegions();
         }
 
         #endregion
 
         #region methods
 
-        protected virtual void _initializeRegions() { }
+        protected virtual void InitializeRegions() { }
 
-        protected virtual void _initializePlugins() { }
+        protected virtual void InitializePlugins() { }
 
-        protected virtual void _initializeViews() { }
+        protected virtual void InitializeViews() { }
 
-        protected virtual void _initializeViewModels() { }
+        protected virtual void InitializeViewModels() { }
 
-        protected virtual void _initializeRepositories() { }
+        protected virtual void InitializeRepositories() { }
 
         #endregion
     }

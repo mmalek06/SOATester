@@ -2,20 +2,19 @@
 using Prism.Commands;
 using Prism.Events;
 using SOATester.Infrastructure;
-using SOATester.Infrastructure.Events.Descriptors;
-using SOATester.Infrastructure.Events.Enums;
-using SOATester.Infrastructure.Events.EventClasses;
+using SOATester.Infrastructure.Events;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
 using System.Collections.ObjectModel;
+using System;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels {
     public class ProjectsViewModel : ViewModelBase {
 
         #region fields
 
-        private IProjectsRepository _repository;
-        private ObservableCollection<ProjectViewModel> _projects;
-        private IUnityContainer _container;
+        private IProjectsRepository repository;
+        private ObservableCollection<ProjectViewModel> projects;
+        private IUnityContainer container;
 
         #endregion
 
@@ -23,10 +22,10 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
 
         public ObservableCollection<ProjectViewModel> Projects {
             get {
-                return _projects;
+                return projects;
             }
             private set {
-                SetProperty(ref _projects, value);
+                SetProperty(ref projects, value);
             }
         }
 
@@ -44,23 +43,27 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
         #region constructors and destructors
 
         public ProjectsViewModel(IProjectsRepository repository, IEventAggregator eventAggregator, IUnityContainer container) : base(eventAggregator) {
-            _repository = repository;
-            _container = container;
+            this.repository = repository;
+            this.container = container;
         }
 
         #endregion
 
         #region methods
 
-        protected override void _initCollections() {
+        protected override void InitCollections() {
             Projects = new ObservableCollection<ProjectViewModel>();
         }
 
-        protected override void _initCommands() {
+        protected override void InitCommands() {
             ChooseProject = new DelegateCommand<ProjectViewModel>(OnProjectChosen);
             ChooseScenario = new DelegateCommand<ScenarioViewModel>(OnScenarioChosen);
             ChooseTestSuite = new DelegateCommand<TestViewModel>(OnTestSuiteChosen);
             ChooseStep = new DelegateCommand<StepViewModel>(OnStepChosen);
+        }
+
+        protected override void InitEvents() {
+            eventAggregator.GetEvent<StartupEventEnd>().Subscribe(OnStartupCompleted);
         }
 
         #endregion
@@ -73,7 +76,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
                 ItemType = ChosenItemType.PROJECT
             };
 
-            _eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
+            eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
         }
 
         private void OnScenarioChosen(ScenarioViewModel scenario) {
@@ -82,7 +85,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
                 ItemType = ChosenItemType.SCENARIO
             };
 
-            _eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
+            eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
         }
 
         private void OnTestSuiteChosen(TestViewModel test) {
@@ -91,7 +94,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
                 ItemType = ChosenItemType.TEST
             };
 
-            _eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
+            eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
         }
 
         private void OnStepChosen(StepViewModel step) {
@@ -100,7 +103,13 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
                 ItemType = ChosenItemType.STEP
             };
 
-            _eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
+            eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
+        }
+
+        private void OnStartupCompleted(StartupActivity activity) {
+            if (activity == StartupActivity.PROJECTS_INIT) {
+
+            }
         }
 
         #endregion

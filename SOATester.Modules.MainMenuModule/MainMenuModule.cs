@@ -15,16 +15,16 @@ namespace SOATester.Modules.MainMenuModule {
 
         #region non public methods
 
-        protected override void _initializeRegions() {
-            base._initializeRegions();
+        protected override void InitializeRegions() {
+            base.InitializeRegions();
         }
 
-        protected override void _initializeViews() {
-            base._initializeViews();
+        protected override void InitializeViews() {
+            base.InitializeViews();
         }
 
-        protected override void _initializeViewModels() {
-            base._initializeViewModels();
+        protected override void InitializeViewModels() {
+            base.InitializeViewModels();
         }
 
         #endregion

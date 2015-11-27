@@ -1,13 +1,13 @@
-﻿using Prism.Events;
+﻿using Microsoft.Practices.Unity;
+using Prism.Events;
 using SOATester.Infrastructure;
-using SOATester.Infrastructure.Events.EventClasses;
-using System;
-using System.Collections.Generic;
+using SOATester.Infrastructure.Events;
+using SOATester.Repositories;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
+using System.Windows;
 
 namespace SOATester.Modules.AppLoaderModule.ViewModels {
     public class AppLoaderViewModel : ViewModelBase {
@@ -15,7 +15,8 @@ namespace SOATester.Modules.AppLoaderModule.ViewModels {
         #region fields
 
         private int _progress;
-        private ObservableCollection<string> _runningOperations;
+        private ObservableCollection<string> runningOperations;
+        private IUnityContainer container;
 
         #endregion
 
@@ -27,41 +28,63 @@ namespace SOATester.Modules.AppLoaderModule.ViewModels {
         }
 
         public ObservableCollection<string> RunningOperations {
-            get { return _runningOperations; }
-            set { SetProperty(ref _runningOperations, value); }
+            get { return runningOperations; }
+            set { SetProperty(ref runningOperations, value); }
         }
 
         #endregion
 
         #region constructors and destructors
 
-        public AppLoaderViewModel(IEventAggregator eventAggregator) : base(eventAggregator) {
+        public AppLoaderViewModel(IEventAggregator eventAggregator, IUnityContainer container) : base(eventAggregator) {
             Progress = 0;
             RunningOperations = new ObservableCollection<string>();
+            this.container = container;
 
-            _initWorkspaceAsync();
+            InitializeApplication();
         }
 
         #endregion
 
         #region methods
 
-        private async void _initWorkspaceAsync() {
-            const string Activity = "Initializing workspace";
+        public void InitializeApplication() {
+            var tasks = new Task[2];
+
+            tasks[0] = InitWorkspaceAsync();
+            tasks[1] = InitProjectsAsync();
+                
+            Task.WhenAll(tasks).ContinueWith((result) => {
+                Application.Current.Dispatcher.Invoke(() => {
+                    eventAggregator.GetEvent<BootingCompleted>().Publish(true);
+                });
+            });
+        }
+
+        private async Task InitProjectsAsync() {
+            const string Activity = "Initializing project list";
+
+            RunningOperations.Add(Activity);
+
+            var repository = container.Resolve<ProjectsRepository>();
+
+            await repository.LoadProjectsAsync();
+
+            RunningOperations.Remove(Activity);
+            eventAggregator.GetEvent<StartupEventEnd>().Publish(StartupActivity.PROJECTS_INIT);
+        }
+
+        private async Task InitWorkspaceAsync() {
+            const string Activity = "Initializing user workspace";
 
             RunningOperations.Add(Activity);
 
             await Task.Run(() => {
-                for (int i = 0; i < 5; i++) {
-                    Thread.Sleep(1000);
-
-                    Progress += 25;
-                }
+                //Thread.Sleep(5000);
             });
 
             RunningOperations.Remove(Activity);
-
-            _eventAggregator.GetEvent<BootingCompleted>().Publish(true);
+            eventAggregator.GetEvent<StartupEventEnd>().Publish(StartupActivity.WORKSPACE_INIT);
         }
 
         #endregion

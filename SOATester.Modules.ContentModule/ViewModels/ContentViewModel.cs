@@ -3,9 +3,7 @@ using Prism.Commands;
 using Prism.Events;
 using SOATester.Entities;
 using SOATester.Infrastructure;
-using SOATester.Infrastructure.Events.Descriptors;
-using SOATester.Infrastructure.Events.Enums;
-using SOATester.Infrastructure.Events.EventClasses;
+using SOATester.Infrastructure.Events;
 using SOATester.Modules.ContentModule.Repositories.Base;
 using SOATester.Modules.ContentModule.ViewModels.Base;
 using System;
@@ -82,14 +80,14 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region methods
 
-        protected override void _initEvents() {
-            _eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnProjectChosen);
-            _eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnScenarioChosen);
-            _eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnTestSuiteChosen);
-            _eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnStepChosen);
+        protected override void InitEvents() {
+            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnProjectChosen);
+            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnScenarioChosen);
+            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnTestSuiteChosen);
+            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnStepChosen);
         }
 
-        protected override void _initCommands() {
+        protected override void InitCommands() {
             CloseItem = new DelegateCommand<object>(OnItemClose);
         }
 

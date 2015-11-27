@@ -18,35 +18,34 @@ namespace SOATester.Modules.ProjectsListModule {
 
         #region non public methods
 
-        protected override void _initializeRepositories() {
-            if (_appMode == AppMode.RUN) {
-                _container.RegisterInstance<SOATester.Repositories.ProjectsRepository>(new SOATester.Repositories.ProjectsRepository());
-                _container.RegisterType<IProjectsRepository, Repositories.ProjectsRepository>();
-            } else if (_appMode == AppMode.TESTING) {
-                _container.RegisterType<IProjectsRepository, Repositories.Mock.ProjectsRepository>();
+        protected override void InitializeRepositories() {
+            if (appMode == AppMode.RUN) {
+                container.RegisterType<IProjectsRepository, Repositories.ProjectsRepository>();
+            } else if (appMode == AppMode.TESTING) {
+                container.RegisterType<IProjectsRepository, Repositories.Mock.ProjectsRepository>();
             }
         }
 
-        protected override void _initializeViews() {
-            _container.RegisterType<ProjectsView>();
+        protected override void InitializeViews() {
+            container.RegisterType<ProjectsView>();
         }
 
-        protected override void _initializeViewModels() {
+        protected override void InitializeViewModels() {
             // register utility classes
-            _container.RegisterType<HierarchicalViewModelBuilder>();
+            container.RegisterType<HierarchicalViewModelBuilder>();
 
             // register view models
-            _container.RegisterInstance<ProjectsViewModel>(_container.Resolve<HierarchicalViewModelBuilder>().Build());
-            _container.RegisterType<ScenarioViewModel>();
-            _container.RegisterType<ProjectViewModel>();
-            _container.RegisterType<TestViewModel>();
-            _container.RegisterType<StepViewModel>();
+            container.RegisterInstance<ProjectsViewModel>(container.Resolve<HierarchicalViewModelBuilder>().Build());
+            container.RegisterType<ScenarioViewModel>();
+            container.RegisterType<ProjectViewModel>();
+            container.RegisterType<TestViewModel>();
+            container.RegisterType<StepViewModel>();
         }
 
-        protected override void _initializeRegions() {
-            IRegion projectsRegion = _regionManager.Regions[RegionNames.ProjectsRegion];
+        protected override void InitializeRegions() {
+            IRegion projectsRegion = regionManager.Regions[RegionNames.ProjectsRegion];
 
-            projectsRegion.Add(_container.Resolve<ProjectsView>());
+            projectsRegion.Add(container.Resolve<ProjectsView>());
         }
 
         #endregion

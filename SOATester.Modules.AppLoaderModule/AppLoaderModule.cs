@@ -3,6 +3,7 @@ using Prism.Regions;
 using SOATester.Infrastructure;
 using SOATester.Modules.AppLoaderModule.ViewModels;
 using SOATester.Modules.AppLoaderModule.Views;
+using SOATester.Repositories;
 
 namespace SOATester.Modules.AppLoaderModule {
     public class AppLoaderModule : ModuleBase {
@@ -15,18 +16,22 @@ namespace SOATester.Modules.AppLoaderModule {
 
         #region methods
 
-        protected override void _initializeViewModels() {
-            _container.RegisterType<AppLoaderViewModel>();
+        protected override void InitializeRepositories() {
+            container.RegisterInstance(new ProjectsRepository());
         }
 
-        protected override void _initializeViews() {
-            _container.RegisterType<AppLoaderView>();
+        protected override void InitializeViewModels() {
+            container.RegisterType<AppLoaderViewModel>();
         }
 
-        protected override void _initializeRegions() {
-            IRegion menuRegion = _regionManager.Regions[RegionNames.SplashScreenRegion];
+        protected override void InitializeViews() {
+            container.RegisterType<AppLoaderView>();
+        }
 
-            menuRegion.Add(_container.Resolve<AppLoaderView>());
+        protected override void InitializeRegions() {
+            IRegion menuRegion = regionManager.Regions[RegionNames.SplashScreenRegion];
+
+            menuRegion.Add(container.Resolve<AppLoaderView>());
         }
 
         #endregion

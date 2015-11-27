@@ -2,13 +2,15 @@
 using Prism.Events;
 using Prism.Modularity;
 using Prism.Unity;
-using SOATester.Infrastructure.Events.EventClasses;
+using SOATester.Infrastructure.Events;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
 
 namespace SOATester {
+    public enum Shells { MAIN_SHELL, SPLASH_SCREEN_SHELL }
+
     public class Bootstrapper : UnityBootstrapper {
 
         #region constants
@@ -48,16 +50,14 @@ namespace SOATester {
         #region methods
 
         protected override DependencyObject CreateShell() {
-            Window shell = null;
-
-            if (_chosenShell == Shells.SPLASH_SCREEN_SHELL) {
-                shell = Container.Resolve<SplashScreenShell>();
+            switch(_chosenShell) {
+                case Shells.SPLASH_SCREEN_SHELL:
+                    return Container.Resolve<SplashScreenShell>();
+                case Shells.MAIN_SHELL:
+                    return Container.Resolve<MainShell>();
+                default:
+                    return null;
             }
-            if (_chosenShell == Shells.MAIN_SHELL) {
-                shell = Container.Resolve<MainShell>();
-            }
-
-            return shell;
         }
 
         protected override void InitializeShell() {
@@ -68,14 +68,14 @@ namespace SOATester {
         }
 
         protected override IModuleCatalog CreateModuleCatalog() {
-            if (_chosenShell == Shells.SPLASH_SCREEN_SHELL) {
-                return Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/SOATester;component/" + SPLASH_SHELL_CATALOG_NAME, UriKind.Relative));
+            switch (_chosenShell) {
+                case Shells.SPLASH_SCREEN_SHELL:
+                    return Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/SOATester;component/ModCatalogs/" + SPLASH_SHELL_CATALOG_NAME, UriKind.Relative));
+                case Shells.MAIN_SHELL:
+                    return Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/SOATester;component/ModCatalogs/" + MAIN_SHELL_CATALOG_NAME, UriKind.Relative));
+                default:
+                    return null;
             }
-            if (_chosenShell == Shells.MAIN_SHELL) {
-                return Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/SOATester;component/" + MAIN_SHELL_CATALOG_NAME, UriKind.Relative));
-            }
-
-            return null;
         }
 
         private void _setupEvents() {
@@ -88,17 +88,14 @@ namespace SOATester {
             if (success) {
                 _chosenShell = Shells.MAIN_SHELL;
 
-                App.Current.MainWindow.Hide();
+                var startupWindow = App.Current.MainWindow;
 
+                App.Current.MainWindow.Hide();
                 Run();
+
+                startupWindow.Close();
             }
         }
-
-        #endregion
-
-        #region enums
-
-        private enum Shells { MAIN_SHELL, SPLASH_SCREEN_SHELL }
 
         #endregion
 

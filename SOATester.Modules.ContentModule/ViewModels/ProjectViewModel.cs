@@ -77,12 +77,12 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region methods
 
-        protected override void _initCollections() {
+        protected override void InitCollections() {
             Parameters = new ObservableCollection<RequestHeader>();
         }
 
-        protected override void _initCommands() {
-            base._initCommands();
+        protected override void InitCommands() {
+            base.InitCommands();
 
             SaveAddress = new DelegateCommand<string>(OnSaveAddress);
         }

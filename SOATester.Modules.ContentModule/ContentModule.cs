@@ -23,12 +23,12 @@ namespace SOATester.Modules.ContentModule {
 
         #region non public methods
 
-        protected override void _initializeRepositories() {
-            if (_appMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
-                _container.RegisterType<ISimpleRepository<Project>, Repositories.ProjectsRepository>();
-                _container.RegisterType<IRepository<Scenario, Project>, Repositories.ScenariosRepository>();
-                _container.RegisterType<IRepository<Test, Scenario>, Repositories.TestsRepository>();
-                _container.RegisterType<IRepository<Step, Test>, Repositories.StepsRepository>();
+        protected override void InitializeRepositories() {
+            if (appMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
+                container.RegisterType<ISimpleRepository<Project>, Repositories.ProjectsRepository>();
+                container.RegisterType<IRepository<Scenario, Project>, Repositories.ScenariosRepository>();
+                container.RegisterType<IRepository<Test, Scenario>, Repositories.TestsRepository>();
+                container.RegisterType<IRepository<Step, Test>, Repositories.StepsRepository>();
             } else {
                 /*_container.RegisterType<ISimpleRepository<Project>, Repositories.Mock.ProjectsRepository>();
                 _container.RegisterType<IRepository<Scenario, Project>, Repositories.Mock.ScenariosRepository>();
@@ -37,7 +37,7 @@ namespace SOATester.Modules.ContentModule {
             }
         }
 
-        protected override void _initializeViewModels() {
+        protected override void InitializeViewModels() {
             // register plugins
             // _container.RegisterType<PluginFactory>();
             // _container.RegisterType<IPlugin, TabAggregator>();
@@ -46,46 +46,46 @@ namespace SOATester.Modules.ContentModule {
             _initializeCommunication();
 
             // register view models
-            _container.RegisterType<ICollectionViewModel, ContentViewModel>(
-                new InjectionProperty("ProjectsRepository", _container.Resolve<ISimpleRepository<Project>>()),
-                new InjectionProperty("ScenariosRepository", _container.Resolve<IRepository<Scenario, Project>>()),
-                new InjectionProperty("TestsRepository", _container.Resolve<IRepository<Test, Scenario>>()),
-                new InjectionProperty("StepsRepository", _container.Resolve<IRepository<Step, Test>>()));
-            _container.RegisterType<ProjectViewModel>();
-            _container.RegisterType<ScenarioViewModel>();
-            _container.RegisterType<TestViewModel>();
-            _container.RegisterType<StepViewModel>();
+            container.RegisterType<ICollectionViewModel, ContentViewModel>(
+                new InjectionProperty("ProjectsRepository", container.Resolve<ISimpleRepository<Project>>()),
+                new InjectionProperty("ScenariosRepository", container.Resolve<IRepository<Scenario, Project>>()),
+                new InjectionProperty("TestsRepository", container.Resolve<IRepository<Test, Scenario>>()),
+                new InjectionProperty("StepsRepository", container.Resolve<IRepository<Step, Test>>()));
+            container.RegisterType<ProjectViewModel>();
+            container.RegisterType<ScenarioViewModel>();
+            container.RegisterType<TestViewModel>();
+            container.RegisterType<StepViewModel>();
         }
 
         private void _initializeCommunication() {
-            _container.RegisterType<IProjectsRunner, ProjectsRunner>();
-            _container.RegisterType<IScenariosRunner, ScenariosRunner>();
-            _container.RegisterType<ITestsRunner, TestsRunner>();
-            _container.RegisterType<IStepsRunner, StepsRunner>();
+            container.RegisterType<IProjectsRunner, ProjectsRunner>();
+            container.RegisterType<IScenariosRunner, ScenariosRunner>();
+            container.RegisterType<ITestsRunner, TestsRunner>();
+            container.RegisterType<IStepsRunner, StepsRunner>();
         }
 
-        protected override void _initializePlugins() {
-            _container.RegisterType<PluginFactory>();
-            _container.RegisterType<IPlugin, AggregatorPlugin>("Aggregator");
-            _container.RegisterType<IPlugin, ColorizerPlugin>("Colorizer");
-            _container.RegisterType<IEnumerable<IPlugin>, IPlugin[]>();
+        protected override void InitializePlugins() {
+            container.RegisterType<PluginFactory>();
+            container.RegisterType<IPlugin, AggregatorPlugin>("Aggregator");
+            container.RegisterType<IPlugin, ColorizerPlugin>("Colorizer");
+            container.RegisterType<IEnumerable<IPlugin>, IPlugin[]>();
         }
 
-        protected override void _initializeViews() {
-            _container.RegisterType<MainMenuView>();
-            _container.RegisterType<ProjectView>();
-            _container.RegisterType<ContentView>();
-            _container.RegisterType<ScenarioView>();
-            _container.RegisterType<StepView>();
-            _container.RegisterType<TestView>();
+        protected override void InitializeViews() {
+            container.RegisterType<MainMenuView>();
+            container.RegisterType<ProjectView>();
+            container.RegisterType<ContentView>();
+            container.RegisterType<ScenarioView>();
+            container.RegisterType<StepView>();
+            container.RegisterType<TestView>();
         }
 
-        protected override void _initializeRegions() {
-            IRegion menuRegion = _regionManager.Regions[RegionNames.MainMenuRegion];
-            IRegion contentRegion = _regionManager.Regions[RegionNames.ContentRegion];
+        protected override void InitializeRegions() {
+            IRegion menuRegion = regionManager.Regions[RegionNames.MainMenuRegion];
+            IRegion contentRegion = regionManager.Regions[RegionNames.ContentRegion];
 
-            menuRegion.Add(_container.Resolve<MainMenuView>());
-            contentRegion.Add(_container.Resolve<ContentView>());
+            menuRegion.Add(container.Resolve<MainMenuView>());
+            contentRegion.Add(container.Resolve<ContentView>());
         }
 
         #endregion

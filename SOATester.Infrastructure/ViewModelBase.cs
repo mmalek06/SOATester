@@ -6,7 +6,7 @@ namespace SOATester.Infrastructure {
     public abstract class ViewModelBase : BindableBase {
         #region fields
 
-        protected IEventAggregator _eventAggregator;
+        protected IEventAggregator eventAggregator;
 
         #endregion
 
@@ -19,24 +19,24 @@ namespace SOATester.Infrastructure {
         #region constructors and destructors
 
         public ViewModelBase(IEventAggregator eventAggregator) {
-            _eventAggregator = eventAggregator;
+            this.eventAggregator = eventAggregator;
 
             ViewProperties = new Dictionary<string, object>();
 
-            _initCollections();
-            _initEvents();
-            _initCommands();
+            InitCollections();
+            InitEvents();
+            InitCommands();
         }
 
         #endregion
 
         #region methods
 
-        protected virtual void _initCollections() {}
+        protected virtual void InitCollections() {}
 
-        protected virtual void _initCommands() {}
+        protected virtual void InitCommands() {}
 
-        protected virtual void _initEvents() {}
+        protected virtual void InitEvents() {}
 
         #endregion
     }
