@@ -1,0 +1,14 @@
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\SOATester.Repositories.dll.config
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\SOATester.Repositories.dll
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\SOATester.Repositories.pdb
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\EntityFramework.dll
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\EntityFramework.SqlServer.dll
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\SOATester.DAL.dll
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\SOATester.Entities.dll
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\SOATester.DAL.pdb
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\SOATester.Entities.pdb
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\EntityFramework.xml
+E:\projekty\cs\SOATester\SOATester.Repositories\bin\Debug\EntityFramework.SqlServer.xml
+E:\projekty\cs\SOATester\SOATester.Repositories\obj\Debug\SOATester.Repositories.csprojResolveAssemblyReference.cache
+E:\projekty\cs\SOATester\SOATester.Repositories\obj\Debug\SOATester.Repositories.dll
+E:\projekty\cs\SOATester\SOATester.Repositories\obj\Debug\SOATester.Repositories.pdb

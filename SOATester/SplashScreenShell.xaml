@@ -1,0 +1,15 @@
+﻿<Window x:Class="SOATester.SplashScreenShell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SOATester"
+        xmlns:prism="http://www.codeplex.com/prism"
+        xmlns:infrastructure="clr-namespace:SOATester.Infrastructure;assembly=SOATester.Infrastructure"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="None">
+    <Grid>
+        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SplashScreenRegion}" />
+    </Grid>
+</Window>

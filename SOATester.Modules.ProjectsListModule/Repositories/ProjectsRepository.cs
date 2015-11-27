@@ -1,42 +1,28 @@
-﻿using SOATester.DAL;
-using SOATester.Entities;
+﻿using SOATester.Entities;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 
 namespace SOATester.Modules.ProjectsListModule.Repositories {
     public class ProjectsRepository : IProjectsRepository {
 
         #region fields
 
-        private IEnumerable<Project> _cache;
+        private SOATester.Repositories.ProjectsRepository _projectsRepository;
+
+        #endregion
+
+        #region constructors and destructors
+
+        public ProjectsRepository(SOATester.Repositories.ProjectsRepository repository) {
+            _projectsRepository = repository;
+        }
 
         #endregion
 
         #region public methods
 
         public IEnumerable<Project> GetProjects() {
-            if (_cache == null) {
-                _loadCache();
-            }
-
-            return _cache;
-        }
-
-        #endregion
-
-        #region methods
-        
-        private void _loadCache() {
-            using (var ctx = new SoaTesterContext()) {
-                var projects = ctx.Projects
-                                  .Include(project => project.Scenarios
-                                                             .Select(scenario => scenario.Tests
-                                                                                         .Select(test => test.Steps)));
-
-                _cache = projects.ToList();
-            }
+            return _projectsRepository.ProjectsCache;
         }
 
         #endregion

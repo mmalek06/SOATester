@@ -20,6 +20,7 @@ namespace SOATester.Modules.ProjectsListModule {
 
         protected override void _initializeRepositories() {
             if (_appMode == AppMode.RUN) {
+                _container.RegisterInstance<SOATester.Repositories.ProjectsRepository>(new SOATester.Repositories.ProjectsRepository());
                 _container.RegisterType<IProjectsRepository, Repositories.ProjectsRepository>();
             } else if (_appMode == AppMode.TESTING) {
                 _container.RegisterType<IProjectsRepository, Repositories.Mock.ProjectsRepository>();

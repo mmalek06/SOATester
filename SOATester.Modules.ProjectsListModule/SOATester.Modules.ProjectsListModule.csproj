@@ -145,6 +145,10 @@
       <Project>{e9c6aa78-5973-4872-8dc2-1b94c39a787f}</Project>
       <Name>SOATester.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SOATester.Repositories\SOATester.Repositories.csproj">
+      <Project>{10003476-f69f-4643-a721-5f762447a4f1}</Project>
+      <Name>SOATester.Repositories</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ProjectsView.xaml">

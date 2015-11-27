@@ -19,9 +19,9 @@ namespace Tests.ContentModuletests.Base {
         protected UnityContainer _container = new UnityContainer();
         protected List<ViewModelBase> _viewModels = new List<ViewModelBase>();
         protected IEventAggregator _eventAggregator;
-        protected IProjectsRepository _projectsRepo;
+        /*protected IProjectsRepository _projectsRepo;
         protected ITestsRepository _testSuitesRepo;
-        protected IStepsRepository _stepsRepo;
+        protected IStepsRepository _stepsRepo;*/
 
         [TestInitialize()]
         public void Initialize() {
@@ -34,13 +34,13 @@ namespace Tests.ContentModuletests.Base {
             var projectViewModel1 = _container.Resolve<ProjectViewModel>();
             var projectViewModel2 = _container.Resolve<ProjectViewModel>();
 
-            projectViewModel1.Project = _projectsRepo.GetProject(1);
+            /*projectViewModel1.Project = _projectsRepo.GetProject(1);
             projectViewModel2.Project = _projectsRepo.GetProject(2);
 
             _viewModels.Add(projectViewModel1);
             _viewModels.Add(projectViewModel2);
 
-            /*var project1TestSuites = _testSuitesRepo.GetTestsForScenario(projectViewModel1.Project);
+            var project1TestSuites = _testSuitesRepo.GetTestsForScenario(projectViewModel1.Project);
             var project2TestSuites = _testSuitesRepo.GetTestsForScenario(projectViewModel2.Project);
             TestViewModel testSuiteViewModel_1 = null;
 
@@ -75,13 +75,13 @@ namespace Tests.ContentModuletests.Base {
         }
 
         protected void _initializeRepos() {
-            _projectsRepo = _container.Resolve<IProjectsRepository>();
+            /*_projectsRepo = _container.Resolve<IProjectsRepository>();
             _testSuitesRepo = _container.Resolve<ITestsRepository>();
-            _stepsRepo = _container.Resolve<IStepsRepository>();
+            _stepsRepo = _container.Resolve<IStepsRepository>();*/
         }
 
         protected void _initializeContainer() {
-            _container.RegisterType<IEventAggregator, EventAggregator>();
+            /*_container.RegisterType<IEventAggregator, EventAggregator>();
             _container.RegisterInstance<IUnityContainer>(_container);
 
             _eventAggregator = _container.Resolve<IEventAggregator>();
@@ -100,7 +100,7 @@ namespace Tests.ContentModuletests.Base {
             // register viewmodels
             _container.RegisterType<ProjectViewModel>();
             _container.RegisterType<TestViewModel>();
-            _container.RegisterType<StepViewModel>();
+            _container.RegisterType<StepViewModel>();*/
         }
     }
 }

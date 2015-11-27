@@ -1,0 +1,8 @@
+﻿<Modularity:ModuleCatalog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SOATester"
+                    xmlns:Modularity="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
+    <Modularity:ModuleInfo Ref="file://SOATester.Modules.AppLoaderModule.dll" ModuleName="AppLoaderModule"
+                           ModuleType="SOATester.Modules.AppLoaderModule.AppLoaderModule, SOATester.Modules.AppLoaderModule, Version=1.0.0.0"
+                           InitializationMode="WhenAvailable" />
+</Modularity:ModuleCatalog>

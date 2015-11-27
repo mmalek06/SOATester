@@ -23,6 +23,8 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels.Builders {
             var mainVm = _container.Resolve<ProjectsViewModel>();
             var vms = new List<ProjectViewModel>();
 
+            return mainVm;
+
             foreach (var project in entities) {
                 // for property injection use: new PropertyOverride("Project", projectEntity)
                 var projectVm = _container.Resolve<ProjectViewModel>(new PropertyOverride("Id", project.Id), 
