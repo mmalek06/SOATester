@@ -11,6 +11,4 @@
 	2.4. when testsuite is chosen before it's project is chosen, then it gets some random color, which is not being overridden when project is chosen. we should change that.
 		 the same applies to step -> testsuite relation and step -> project relation. maybe showing some default color for unbound items would do the trick?
 
-3. ContentView's TabControl is ugly - especially the headers - we should add some border rounding, margins, paddings
-
-4. let's think about using PostSharp - there are some places it could be applied, but is it worth extending the compilation time?
+3. let's think about using PostSharp - there are some places it could be applied, but is it worth extending the compilation time?
