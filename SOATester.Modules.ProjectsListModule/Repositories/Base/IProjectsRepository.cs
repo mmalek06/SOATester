@@ -1,8 +1,13 @@
 ﻿using SOATester.Entities;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SOATester.Modules.ProjectsListModule.Repositories.Base {
     public interface IProjectsRepository {
-        IEnumerable<Project> GetProjects();
+        IEnumerable<Project> ProjectsCache { get; set; }
+        Task LoadProjectsAsync();
     }
 }

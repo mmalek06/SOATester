@@ -14,8 +14,10 @@ using System.Windows.Shapes;
 
 namespace SOATester {
     public partial class MainShell : Window {
-        public MainShell() {
+        public MainShell(MainShellViewModel vm) {
             InitializeComponent();
+
+            DataContext = vm;
         }
     }
 }

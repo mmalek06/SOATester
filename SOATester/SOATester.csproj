@@ -103,9 +103,7 @@
     <Compile Include="Shells\MainShell.xaml.cs">
       <DependentUpon>MainShell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Shells\SplashScreenShell.xaml.cs">
-      <DependentUpon>SplashScreenShell.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModels\MainShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -151,14 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ModCatalogs\ModCatalogMainShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Page Include="Shells\SplashScreenShell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Resource Include="ModCatalogs\ModCatalogSplashScreenShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>

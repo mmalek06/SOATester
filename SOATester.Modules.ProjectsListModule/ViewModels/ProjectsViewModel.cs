@@ -4,15 +4,17 @@ using Prism.Events;
 using SOATester.Infrastructure;
 using SOATester.Infrastructure.Events;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
+using SOATester.Modules.ProjectsListModule.ViewModels.Builders;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels {
     public class ProjectsViewModel : ViewModelBase {
 
         #region fields
 
-        private IProjectsRepository repository;
         private ObservableCollection<ProjectViewModel> projects;
         private IUnityContainer container;
 
@@ -42,74 +44,82 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
 
         #region constructors and destructors
 
-        public ProjectsViewModel(IProjectsRepository repository, IEventAggregator eventAggregator, IUnityContainer container) : base(eventAggregator) {
-            this.repository = repository;
+        public ProjectsViewModel(IEventAggregator eventAggregator, IUnityContainer container) : base(eventAggregator) {
             this.container = container;
+
+            InitComponent();
         }
 
         #endregion
 
         #region methods
-
+        
         protected override void InitCollections() {
             Projects = new ObservableCollection<ProjectViewModel>();
         }
 
         protected override void InitCommands() {
-            ChooseProject = new DelegateCommand<ProjectViewModel>(OnProjectChosen);
-            ChooseScenario = new DelegateCommand<ScenarioViewModel>(OnScenarioChosen);
-            ChooseTestSuite = new DelegateCommand<TestViewModel>(OnTestSuiteChosen);
-            ChooseStep = new DelegateCommand<StepViewModel>(OnStepChosen);
+            ChooseProject = new DelegateCommand<ProjectViewModel>((project) => { OnItemChosen(project.Id, ChosenItemType.PROJECT); });
+            ChooseScenario = new DelegateCommand<ScenarioViewModel>((scenario) => { OnItemChosen(scenario.Id, ChosenItemType.SCENARIO); });
+            ChooseTestSuite = new DelegateCommand<TestViewModel>((test) => { OnItemChosen(test.Id, ChosenItemType.TEST); });
+            ChooseStep = new DelegateCommand<StepViewModel>((step) => { OnItemChosen(step.Id, ChosenItemType.STEP); });
         }
 
-        protected override void InitEvents() {
-            eventAggregator.GetEvent<StartupEventEnd>().Subscribe(OnStartupCompleted);
+        private void InitComponent() {
+            NotifyOfStart();
+
+            var task = InitProjectsAsync();
+
+            NotifyOfEnd(task);
+        }
+
+        private void NotifyOfStart() {
+            const string Message = "Initializing project list";
+            var startDescriptor = new StartupEventDescriptor {
+                Message = Message,
+                Activity = StartupActivity.PROJECTS_INIT
+            };
+
+            eventAggregator.GetEvent<StartupEventBegin>().Publish(startDescriptor);
+        }
+
+        private void NotifyOfEnd(Task task) {
+            var endDescriptor = new StartupEventDescriptor {
+                Activity = StartupActivity.PROJECTS_INIT
+            };
+
+            task.ContinueWith((result) => {
+                Application.Current.Dispatcher.Invoke(() => {
+                    eventAggregator.GetEvent<StartupEventEnd>().Publish(endDescriptor);
+                });
+            });
+        }
+
+        private async Task InitProjectsAsync() {
+            var repository = container.Resolve<IProjectsRepository>();
+            var viewModels = new List<ProjectViewModel>();
+            
+            await repository.LoadProjectsAsync();
+            await Task.Run(() => {
+                var vmBuilder = container.Resolve<HierarchicalViewModelBuilder>();
+
+                viewModels.AddRange(vmBuilder.Build());
+            });
+
+            Projects.AddRange(viewModels);
         }
 
         #endregion
 
         #region event handlers
 
-        private void OnProjectChosen(ProjectViewModel project) {
+        private void OnItemChosen(int id, ChosenItemType itemType) {
             var evtDescriptor = new ItemChosenEventDescriptor {
-                Id = project.Id,
-                ItemType = ChosenItemType.PROJECT
+                Id = id,
+                ItemType = itemType
             };
 
             eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
-        }
-
-        private void OnScenarioChosen(ScenarioViewModel scenario) {
-            var evtDescriptor = new ItemChosenEventDescriptor {
-                Id = scenario.Id,
-                ItemType = ChosenItemType.SCENARIO
-            };
-
-            eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
-        }
-
-        private void OnTestSuiteChosen(TestViewModel test) {
-            var evtDescriptor = new ItemChosenEventDescriptor {
-                Id = test.Id,
-                ItemType = ChosenItemType.TEST
-            };
-
-            eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
-        }
-
-        private void OnStepChosen(StepViewModel step) {
-            var evtDescriptor = new ItemChosenEventDescriptor {
-                Id = step.Id,
-                ItemType = ChosenItemType.STEP
-            };
-
-            eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
-        }
-
-        private void OnStartupCompleted(StartupActivity activity) {
-            if (activity == StartupActivity.PROJECTS_INIT) {
-
-            }
         }
 
         #endregion

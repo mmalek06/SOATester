@@ -8,8 +8,7 @@
              xmlns:Converters="clr-namespace:SOATester.Infrastructure.Converters;assembly=SOATester.Infrastructure"
              xmlns:Behaviors="clr-namespace:SOATester.Infrastructure.Behaviors;assembly=SOATester.Infrastructure"
              xmlns:ViewModels="clr-namespace:SOATester.Modules.ProjectsListModule.ViewModels"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d">
     <UserControl.Resources>
         <!-- converters -->
         <Converters:GetElementTypeConverter x:Key="GetElementTypeConverter" />

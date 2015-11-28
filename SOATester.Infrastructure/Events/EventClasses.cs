@@ -3,7 +3,9 @@
 namespace SOATester.Infrastructure.Events {
     public class BootingCompleted : PubSubEvent<bool> { }
 
-    public class StartupEventEnd : PubSubEvent<StartupActivity> { }
+    public class StartupEventBegin : PubSubEvent<StartupEventDescriptor> { }
+
+    public class StartupEventEnd : PubSubEvent<StartupEventDescriptor> { }
 
     public class ItemOpenedEvent : PubSubEvent<ItemChosenEventDescriptor> { }
 

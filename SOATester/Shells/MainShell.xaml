@@ -7,14 +7,19 @@
         xmlns:prism="http://www.codeplex.com/prism"
         xmlns:infrastructure="clr-namespace:SOATester.Infrastructure;assembly=SOATester.Infrastructure"
         mc:Ignorable="d"
-        Title="SOA Tester">
-    <Grid>
-        <DockPanel LastChildFill="True">
-            <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.MainMenuRegion}" BorderBrush="Black" />
-            <DockPanel DockPanel.Dock="Bottom">
-                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ProjectsRegion}" DockPanel.Dock="Left" />
-                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}" DockPanel.Dock="Right" />
-            </DockPanel>
+        Title="{Binding Title}"
+        SizeToContent="{Binding SizeToContent}"
+        WindowStyle="{Binding WindowStyle}"
+        WindowState="{Binding WindowState}"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel LastChildFill="True">
+        <ContentControl DockPanel.Dock="Top" Margin="0" Visibility="{Binding LoaderVisibility}" 
+                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SplashScreenRegion}" />
+        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.MainMenuRegion}" 
+                        BorderBrush="Black" Visibility="{Binding ContentVisibility}"/>
+        <DockPanel DockPanel.Dock="Bottom" Visibility="{Binding ContentVisibility}">
+            <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ProjectsRegion}" DockPanel.Dock="Left" />
+            <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}" DockPanel.Dock="Right" />
         </DockPanel>
-    </Grid>
+    </DockPanel>
 </Window>

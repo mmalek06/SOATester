@@ -1,6 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
 using SOATester.Modules.ProjectsListModule.Repositories.Base;
-using SOATester.Modules.ProjectsListModule.ViewModels;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels.Builders {
@@ -8,38 +7,35 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels.Builders {
 
         #region fields
 
-        private IUnityContainer _container;
-        private IProjectsRepository _repository;
+        private IUnityContainer container;
+        private IProjectsRepository repository;
 
         #endregion
 
         public HierarchicalViewModelBuilder(IUnityContainer container, IProjectsRepository repository) {
-            _container = container;
-            _repository = repository;
+            this.container = container;
+            this.repository = repository;
         }
 
-        public ProjectsViewModel Build() {
-            var entities = _repository.GetProjects();
-            var mainVm = _container.Resolve<ProjectsViewModel>();
+        public IEnumerable<ProjectViewModel> Build() {
+            var entities = repository.ProjectsCache;
             var vms = new List<ProjectViewModel>();
-
-            return mainVm;
 
             foreach (var project in entities) {
                 // for property injection use: new PropertyOverride("Project", projectEntity)
-                var projectVm = _container.Resolve<ProjectViewModel>(new PropertyOverride("Id", project.Id), 
+                var projectVm = container.Resolve<ProjectViewModel>(new PropertyOverride("Id", project.Id), 
                     new PropertyOverride("Name", project.Name));
 
                 foreach (var scenario in project.Scenarios) {
-                    var scenarioVm = _container.Resolve<ScenarioViewModel>(new PropertyOverride("Id", scenario.Id),
+                    var scenarioVm = container.Resolve<ScenarioViewModel>(new PropertyOverride("Id", scenario.Id),
                         new PropertyOverride("Name", scenario.Name));
 
                     foreach (var test in scenario.Tests) {
-                        var testVm = _container.Resolve<TestViewModel>(new PropertyOverride("Id", test.Id),
+                        var testVm = container.Resolve<TestViewModel>(new PropertyOverride("Id", test.Id),
                             new PropertyOverride("Name", test.Name));
 
                         foreach (var step in test.Steps) {
-                            var stepVm = _container.Resolve<StepViewModel>(new PropertyOverride("Id", step.Id),
+                            var stepVm = container.Resolve<StepViewModel>(new PropertyOverride("Id", step.Id),
                                 new PropertyOverride("Name", step.Name));
 
                             testVm.Items.Add(stepVm);
@@ -54,11 +50,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels.Builders {
                 vms.Add(projectVm);
             }
 
-            foreach (var vm in vms) {
-                mainVm.Projects.Add(vm);
-            }
-
-            return mainVm;
+            return vms;
         }
     }
 }

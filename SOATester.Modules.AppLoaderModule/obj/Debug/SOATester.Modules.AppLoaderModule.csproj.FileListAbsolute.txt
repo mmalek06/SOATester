@@ -7,13 +7,8 @@ E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Microsoft.P
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Prism.dll
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Prism.Wpf.dll
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\SOATester.Infrastructure.dll
-E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\SOATester.Repositories.dll
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\System.Windows.Interactivity.dll
-E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\SOATester.Entities.dll
-E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\SOATester.DAL.dll
-E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\EntityFramework.dll
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\SOATester.Infrastructure.pdb
-E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\SOATester.Repositories.pdb
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Microsoft.Practices.Unity.xml
@@ -21,9 +16,6 @@ E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Microsoft.P
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Microsoft.Practices.Unity.RegistrationByConvention.xml
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Prism.xml
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\Prism.Wpf.xml
-E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\SOATester.Entities.pdb
-E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\SOATester.DAL.pdb
-E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\EntityFramework.xml
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\de\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\en\System.Windows.Interactivity.resources.dll
 E:\projekty\cs\SOATester\SOATester.Modules.AppLoaderModule\bin\Debug\es\System.Windows.Interactivity.resources.dll

@@ -3,7 +3,6 @@ using Prism.Regions;
 using SOATester.Infrastructure;
 using SOATester.Modules.AppLoaderModule.ViewModels;
 using SOATester.Modules.AppLoaderModule.Views;
-using SOATester.Repositories;
 
 namespace SOATester.Modules.AppLoaderModule {
     public class AppLoaderModule : ModuleBase {
@@ -15,10 +14,6 @@ namespace SOATester.Modules.AppLoaderModule {
         #endregion
 
         #region methods
-
-        protected override void InitializeRepositories() {
-            container.RegisterInstance(new ProjectsRepository());
-        }
 
         protected override void InitializeViewModels() {
             container.RegisterType<AppLoaderViewModel>();

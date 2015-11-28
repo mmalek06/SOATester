@@ -2,6 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:SOATester"
                     xmlns:Modularity="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
+    <Modularity:ModuleInfo Ref="file://SOATester.Modules.AppLoaderModule.dll" ModuleName="AppLoaderModule"
+                           ModuleType="SOATester.Modules.AppLoaderModule.AppLoaderModule, SOATester.Modules.AppLoaderModule, Version=1.0.0.0"
+                           InitializationMode="WhenAvailable" />
     <Modularity:ModuleInfo Ref="file://SOATester.Modules.ContentModule.dll" ModuleName="ContentModule" 
                            ModuleType="SOATester.Modules.ContentModule.ContentModule, SOATester.Modules.ContentModule, Version=1.0.0.0" 
                            InitializationMode="WhenAvailable" />

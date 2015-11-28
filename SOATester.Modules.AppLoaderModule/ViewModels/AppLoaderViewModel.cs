@@ -2,20 +2,21 @@
 using Prism.Events;
 using SOATester.Infrastructure;
 using SOATester.Infrastructure.Events;
-using SOATester.Repositories;
 using System.Collections.ObjectModel;
-using System.Threading;
-using System.Threading.Tasks;
 using System;
-using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SOATester.Modules.AppLoaderModule.ViewModels {
     public class AppLoaderViewModel : ViewModelBase {
 
         #region fields
 
-        private int _progress;
+        private int progress;
+        private int totalOperationsToRun;
+        private int percentPerOperation;
         private ObservableCollection<string> runningOperations;
+        private IList<StartupEventDescriptor> runningActivities;
         private IUnityContainer container;
 
         #endregion
@@ -23,8 +24,8 @@ namespace SOATester.Modules.AppLoaderModule.ViewModels {
         #region properties
 
         public int Progress {
-            get { return _progress; }
-            set { SetProperty(ref _progress, value); }
+            get { return progress; }
+            set { SetProperty(ref progress, value); }
         }
 
         public ObservableCollection<string> RunningOperations {
@@ -38,17 +39,48 @@ namespace SOATester.Modules.AppLoaderModule.ViewModels {
 
         public AppLoaderViewModel(IEventAggregator eventAggregator, IUnityContainer container) : base(eventAggregator) {
             Progress = 0;
+            totalOperationsToRun = 2;
+            percentPerOperation = 100 / totalOperationsToRun;
+            runningActivities = new List<StartupEventDescriptor>();
             RunningOperations = new ObservableCollection<string>();
             this.container = container;
-
-            InitializeApplication();
         }
 
         #endregion
 
         #region methods
 
-        public void InitializeApplication() {
+        protected override void InitEvents() {
+            eventAggregator.GetEvent<StartupEventBegin>().Subscribe(OnComponentStart);
+            eventAggregator.GetEvent<StartupEventEnd>().Subscribe(OnComponentEnd);
+        }
+
+        #endregion
+
+        #region event handlers
+
+        private void OnComponentStart(StartupEventDescriptor descriptor) {
+            runningActivities.Add(descriptor);
+            RunningOperations.Add(descriptor.Message);
+        }
+
+        private void OnComponentEnd(StartupEventDescriptor descriptor) {
+            var activity = runningActivities.FirstOrDefault(act => act.Activity == descriptor.Activity);
+
+            if (activity != null) {
+                RunningOperations.Remove(activity.Message);
+                runningActivities.Remove(activity);
+                Progress += percentPerOperation;
+
+                if (!runningActivities.Any()) {
+                    eventAggregator.GetEvent<BootingCompleted>().Publish(true);
+                }
+            }
+        }
+
+        #endregion
+
+        /*public void InitializeApplication() {
             var tasks = new Task[2];
 
             tasks[0] = InitWorkspaceAsync();
@@ -85,9 +117,7 @@ namespace SOATester.Modules.AppLoaderModule.ViewModels {
 
             RunningOperations.Remove(Activity);
             eventAggregator.GetEvent<StartupEventEnd>().Publish(StartupActivity.WORKSPACE_INIT);
-        }
-
-        #endregion
+        }*/
 
     }
 }

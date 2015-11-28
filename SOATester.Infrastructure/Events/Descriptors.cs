@@ -21,4 +21,15 @@
         #endregion
 
     }
+
+    public class StartupEventDescriptor {
+
+        #region public properties
+
+        public string Message { get; set; }
+        public StartupActivity Activity { get; set; }
+
+        #endregion
+
+    }
 }
