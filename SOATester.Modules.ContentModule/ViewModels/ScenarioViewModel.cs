@@ -14,7 +14,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         private Scenario _scenario;
         private string _name;
         private Uri _address;
-        private Protocol _protocol;
+        private Protocol? _protocol;
                 
         #endregion
 
@@ -37,12 +37,18 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         }
 
         public Uri Address {
-            get { return _address == null ? new Uri(_scenario.Address) : _address; }
+            get {
+                if (_address == null && _scenario.Address == null) {
+                    return null;
+                }
+
+                return _address == null ? new Uri(_scenario.Address) : _address;
+            }
             set { SetProperty(ref _address, value); }
         }
 
-        public Protocol Protocol {
-            get { return (Protocol)Enum.Parse(typeof(Protocol), _scenario.Protocol); }
+        public Protocol? Protocol {
+            get { return string.IsNullOrEmpty(_scenario.Protocol) ? (Protocol?)null : (Protocol)Enum.Parse(typeof(Protocol), _scenario.Protocol); }
             set { SetProperty(ref _protocol, value); }
         }
 
