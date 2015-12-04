@@ -2,10 +2,9 @@
 using Prism.Commands;
 using Prism.Events;
 using SOATester.Entities;
-using SOATester.Infrastructure;
 using SOATester.Infrastructure.Events;
+using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.Repositories.Base;
-using SOATester.Modules.ContentModule.ViewModels.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -39,22 +38,22 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         
         [Dependency]
         public ISimpleRepository<Project> ProjectsRepository {
-            set { SetProperty(ref _projectsRepository, value); }
+            set { _projectsRepository = value; }
         }
 
         [Dependency]
         public IRepository<Scenario, Project> ScenariosRepository {
-            set { SetProperty(ref _scenariosRepository, value); }
+            set { _scenariosRepository = value; }
         }
 
         [Dependency]
         public IRepository<Test, Scenario> TestsRepository {
-            set { SetProperty(ref _testsRepository, value); }
+            set { _testsRepository = value; }
         }
 
         [Dependency]
         public IRepository<Step, Test> StepsRepository {
-            set { SetProperty(ref _stepsRepository, value); }
+            set { _stepsRepository = value; }
         }
 
         #endregion

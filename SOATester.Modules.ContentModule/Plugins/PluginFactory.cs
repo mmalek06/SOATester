@@ -1,6 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
-using SOATester.Modules.ContentModule.Plugins.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,18 +10,17 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region fields
 
-        private readonly IUnityContainer _container;
-
-        private IEnumerable<PluginConfigEntry> _configEntries;
+        private readonly IUnityContainer container;
+        private IEnumerable<PluginConfigEntry> configEntries;
 
         #endregion
 
         #region constructors and destructors
 
         public PluginFactory(IUnityContainer container) {
-            _container = container;
+            this.container = container;
 
-            _initializeConfig();
+            InitializeConfig();
         }
 
         #endregion
@@ -34,10 +32,10 @@ namespace SOATester.Modules.ContentModule.Plugins {
         }
 
         public IEnumerable<IPlugin> GetPlugins() {
-            var plugins = _container.Resolve<IEnumerable<IPlugin>>();
+            var plugins = container.Resolve<IEnumerable<IPlugin>>();
 
             foreach (var plugin in plugins) {
-                _configurePlugin(plugin);
+                ConfigurePlugin(plugin);
             }
 
             return plugins.OrderBy(plugin => plugin.Priority);
@@ -47,20 +45,22 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region methods
 
-        private void _initializeConfig() {
-            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/Configs/plugins.json")) {
+        private void InitializeConfig() {
+            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/Plugins/Configs/plugins.json")) {
                 var itemsData = reader.ReadToEnd();
 
-                _configEntries = JsonConvert.DeserializeObject<IEnumerable<PluginConfigEntry>>(itemsData);
+                configEntries = JsonConvert.DeserializeObject<IEnumerable<PluginConfigEntry>>(itemsData);
             }
         }
 
-        private void _configurePlugin(IPlugin plugin) {
-            var configEntry = _configEntries.FirstOrDefault(entry => entry.Key == plugin.PluginKey && entry.Strategy == plugin.Strategy);
+        private void ConfigurePlugin(IPlugin plugin) {
+            var configEntry = configEntries.FirstOrDefault(entry => entry.Key == plugin.PluginKey && entry.Strategy == plugin.Strategy);
 
             if (configEntry != null) {
                 plugin.IsActive = configEntry.IsActive;
                 plugin.Priority = configEntry.Priority;
+            } else {
+                throw new ArgumentException("No config entry for plugin");
             }
         }
 
@@ -69,8 +69,8 @@ namespace SOATester.Modules.ContentModule.Plugins {
         #region private classes
 
         private class PluginConfigEntry {
-            public Enums.PluginKey Key { get; set; }
-            public Enums.Strategy Strategy { get; set; }
+            public PluginKey Key { get; set; }
+            public Strategy Strategy { get; set; }
             public bool IsActive { get; set; }
             public int Priority { get; set; }
         }

@@ -1,6 +1,4 @@
-﻿using SOATester.Infrastructure.Enums;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SOATester.Entities.Base {
     public abstract class RequestModel {

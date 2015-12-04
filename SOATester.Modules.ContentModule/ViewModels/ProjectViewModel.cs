@@ -6,55 +6,65 @@ using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.RestCommunication.Base;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ProjectViewModel : RunnableViewModel<Project> {
+    public class ProjectViewModel : RunnableViewModel<Project>, IPluggableViewModel {
 
         #region fields
 
-        private Project _project;
-        private string _name;
-        private Uri _address;
-        private ObservableCollection<RequestHeader> _parameters;
+        private Project project;
+        private string name;
+        private Uri address;
+        private ObservableCollection<RequestHeader> parameters;
+        private Dictionary<string, object> viewProperties;
 
         #endregion
 
         #region properties
 
         public Project Project {
-            get { return _project; }
+            get { return project; }
             set {
-                if (_project == null) {
-                    SetProperty(ref _project, value);
+                if (project == null) {
+                    SetProperty(ref project, value);
                 }
             }
         }
+        
+        public int Importance => 1;
 
-        public int Id => _project.Id;
+        public int Id => project.Id;
+
+        public int ParentId => project.Id;
+
+        public int TopmostParentId => project.Id;
+
+        public IDictionary<string, object> ViewProperties => viewProperties;
 
         public string Name {
-            get { return _name ?? Project.Name; }
-            set { SetProperty(ref _name, value); }
+            get { return name ?? Project.Name; }
+            set { SetProperty(ref name, value); }
         }
 
         public Uri Address {
             get {
-                if (_address == null) {
-                    if (_project.Address != null) {
-                        return new Uri(_project.Address);
+                if (address == null) {
+                    if (project.Address != null) {
+                        return new Uri(project.Address);
                     }
 
                     return null;
                 }
 
-                return _address;
+                return address;
             }
-            set { SetProperty(ref _address, value); }
+            set { SetProperty(ref address, value); }
         }
 
         public ObservableCollection<RequestHeader> Parameters {
-            get { return _parameters; }
-            set { SetProperty(ref _parameters, value); }
+            get { return parameters; }
+            set { SetProperty(ref parameters, value); }
         }
         
         #endregion
@@ -67,7 +77,9 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public ProjectViewModel(IEventAggregator eventAggregator, IUnityContainer container, IProjectsRunner runner) : base(eventAggregator, container, runner) {}
+        public ProjectViewModel(IEventAggregator eventAggregator, IUnityContainer container, IProjectsRunner runner) : base(eventAggregator, container, runner) {
+            viewProperties = new Dictionary<string, object>();
+        }
 
         #endregion
 
@@ -95,16 +107,16 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             Address = new Uri(address);
         }
 
-        protected async override void _run() {
-            var result = await _runner.RunAsync(Project);
+        protected async override void Run() {
+            var result = await runner.RunAsync(Project);
         }
 
-        protected async override void _stop() {
-            await _runner.StopAsync(Project);
+        protected async override void Stop() {
+            await runner.StopAsync(Project);
         }
 
-        protected async override void _pause() {
-            await _runner.PauseAsync(Project);
+        protected async override void Pause() {
+            await runner.PauseAsync(Project);
         }
 
         #endregion

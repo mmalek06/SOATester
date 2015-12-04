@@ -1,38 +1,29 @@
-﻿using System.Collections.Generic;
-
-using Prism.Events;
-
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using SOATester.Infrastructure;
-using SOATester.Modules.ContentModule.Repositories.Base;
-using SOATester.Modules.ContentModule.Repositories.Mock;
+using Prism.Events;
+using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.ViewModels.Base;
-using SOATester.Modules.ContentModule.Plugins.Enums;
-using SOATester.Modules.ContentModule.Plugins.Base;
-using SOATester.Modules.ContentModule.Plugins;
+using System.Collections.Generic;
 
 namespace Tests.ContentModuletests.Base {
     public abstract class BaseTest {
-        protected UnityContainer _container = new UnityContainer();
-        protected List<ViewModelBase> _viewModels = new List<ViewModelBase>();
-        protected IEventAggregator _eventAggregator;
+        protected UnityContainer container = new UnityContainer();
+        protected List<ViewModelBase> viewModels = new List<ViewModelBase>();
+        protected IEventAggregator eventAggregator;
         /*protected IProjectsRepository _projectsRepo;
         protected ITestsRepository _testSuitesRepo;
         protected IStepsRepository _stepsRepo;*/
 
         [TestInitialize()]
         public void Initialize() {
-            _initializeContainer();
-            _initializeRepos();
-            _initializeViewModels();
+            InitializeContainer();
+            InitializeRepos();
+            InitializeViewModels();
         }
 
-        protected void _initializeViewModels() {
-            var projectViewModel1 = _container.Resolve<ProjectViewModel>();
-            var projectViewModel2 = _container.Resolve<ProjectViewModel>();
+        protected void InitializeViewModels() {
+            var projectViewModel1 = container.Resolve<ProjectViewModel>();
+            var projectViewModel2 = container.Resolve<ProjectViewModel>();
 
             /*projectViewModel1.Project = _projectsRepo.GetProject(1);
             projectViewModel2.Project = _projectsRepo.GetProject(2);
@@ -74,13 +65,13 @@ namespace Tests.ContentModuletests.Base {
             }*/
         }
 
-        protected void _initializeRepos() {
+        protected void InitializeRepos() {
             /*_projectsRepo = _container.Resolve<IProjectsRepository>();
             _testSuitesRepo = _container.Resolve<ITestsRepository>();
             _stepsRepo = _container.Resolve<IStepsRepository>();*/
         }
 
-        protected void _initializeContainer() {
+        protected void InitializeContainer() {
             /*_container.RegisterType<IEventAggregator, EventAggregator>();
             _container.RegisterInstance<IUnityContainer>(_container);
 

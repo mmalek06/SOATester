@@ -1,8 +1,8 @@
 ﻿using Prism.Common;
-using SOATester.Infrastructure;
+using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.Plugins;
-using SOATester.Modules.ContentModule.Plugins.Base;
 using SOATester.Modules.ContentModule.ViewModels;
+using SOATester.Modules.ContentModule.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,30 +24,29 @@ namespace SOATester.Modules.ContentModule.Views {
 
         #region fields
 
-        private IEnumerable<IPlugin> _plugins;
-        private bool _hasAnyPlugins;
+        private IEnumerable<IPlugin> Plugins;
+        private bool HasAnyPlugins;
 
         #endregion
 
         #region public properties
 
-        public ObservableCollection<ViewModelBase> OpenedItems { get; set; }
-        public ObservableObject<ViewModelBase> SelectedItem { get; set; }
+        public ObservableCollection<IPluggableViewModel> OpenedItems { get; set; }
+        public ObservableObject<IPluggableViewModel> SelectedItem { get; set; }
 
         #endregion
 
         #region constructors and destructors
 
-        //public ContentView(ContentViewModel vm, IEnumerable<IPlugin> plugins) {
         public ContentView(ContentViewModel vm, PluginFactory pluginFactory) { 
             InitializeComponent();
             
-            _plugins = pluginFactory.GetActivePlugins();
-            _hasAnyPlugins = _plugins.Any();
+            Plugins = pluginFactory.GetActivePlugins();
+            HasAnyPlugins = Plugins.Any();
 
             DataContext = vm;
-            OpenedItems = new ObservableCollection<ViewModelBase>();
-            SelectedItem = new ObservableObject<ViewModelBase>();
+            OpenedItems = new ObservableCollection<IPluggableViewModel>();
+            SelectedItem = new ObservableObject<IPluggableViewModel>();
 
             vm.Items.CollectionChanged += Items_CollectionChanged;
         }
@@ -58,25 +57,25 @@ namespace SOATester.Modules.ContentModule.Views {
 
         private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add) {
-                _itemAdded(e.NewItems[0] as ViewModelBase);
+                ItemAdded(e.NewItems[0] as IPluggableViewModel);
             } else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove) {
-                _itemRemoved(e.OldItems[0] as ViewModelBase);
+                ItemRemoved(e.OldItems[0] as IPluggableViewModel);
             }
         }
 
-        private void _itemAdded(ViewModelBase newItem) {
-            _fillDefaultViewProperties(newItem);
+        private void ItemAdded(IPluggableViewModel newItem) {
+            FillDefaultViewProperties(newItem);
 
-            if (_hasAnyPlugins) {
-                _runPlugins(newItem);
+            if (HasAnyPlugins) {
+                RunPlugins(newItem);
             } else {
                 OpenedItems.Add(newItem);
             }
 
-            _selectItem(newItem);
+            SelectItem(newItem);
         }
 
-        private void _itemRemoved(ViewModelBase oldItem) {
+        private void ItemRemoved(IPluggableViewModel oldItem) {
             var itemToRemove = OpenedItems.First(item => item.Equals(oldItem));
 
             OpenedItems.Remove(itemToRemove);
@@ -86,15 +85,15 @@ namespace SOATester.Modules.ContentModule.Views {
 
         #region methods
 
-        private void _runPlugins(ViewModelBase item) {
-            var viewModels = new List<ViewModelBase>();
+        private void RunPlugins(IPluggableViewModel item) {
+            var viewModels = new List<IPluggableViewModel>();
 
-            IEnumerable<ViewModelBase> pluginExecutionResult = null;
+            IEnumerable<IPluggableViewModel> pluginExecutionResult = null;
 
             viewModels.AddRange(OpenedItems);
             viewModels.Add(item);
 
-            foreach (var plugin in _plugins) {
+            foreach (var plugin in Plugins) {
                 pluginExecutionResult = plugin.Execute(pluginExecutionResult == null ? viewModels : pluginExecutionResult);
             }
 
@@ -102,11 +101,11 @@ namespace SOATester.Modules.ContentModule.Views {
             OpenedItems.AddRange(pluginExecutionResult == null ? viewModels : pluginExecutionResult);
         }
 
-        private void _selectItem(ViewModelBase item) {
+        private void SelectItem(IPluggableViewModel item) {
             SelectedItem.Value = OpenedItems.FirstOrDefault(openedItem => openedItem.Equals(item));
         }
 
-        private void _fillDefaultViewProperties(ViewModelBase viewModel) {
+        private void FillDefaultViewProperties(IPluggableViewModel viewModel) {
             viewModel.ViewProperties["Brush"] = null;
         }
 

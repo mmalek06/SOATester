@@ -1,9 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Events;
-using SOATester.Infrastructure;
 using SOATester.Infrastructure.Events;
+using SOATester.Infrastructure.ViewModels;
 using System.Collections.ObjectModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

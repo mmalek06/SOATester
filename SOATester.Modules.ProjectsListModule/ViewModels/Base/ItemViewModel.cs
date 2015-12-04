@@ -1,6 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Events;
-using SOATester.Infrastructure;
+using SOATester.Infrastructure.ViewModels;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels.Base {
     public abstract class ItemViewModel : ViewModelBase {

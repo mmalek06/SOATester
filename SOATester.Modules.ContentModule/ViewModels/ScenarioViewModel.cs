@@ -5,73 +5,85 @@ using SOATester.Infrastructure.Enums;
 using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.RestCommunication.Base;
 using System;
+using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ScenarioViewModel : RunnableViewModel<Scenario> {
+    public class ScenarioViewModel : RunnableViewModel<Scenario>, IPluggableViewModel {
 
         #region fields
 
-        private Scenario _scenario;
-        private string _name;
-        private Uri _address;
-        private Protocol? _protocol;
+        private Scenario scenario;
+        private string name;
+        private Uri address;
+        private Protocol? protocol;
+        private Dictionary<string, object> viewProperties;
                 
         #endregion
 
         #region properties
 
         public Scenario Scenario {
-            get { return _scenario; }
+            get { return scenario; }
             set {
-                if (_scenario == null) {
-                    SetProperty(ref _scenario, value);
+                if (scenario == null) {
+                    SetProperty(ref scenario, value);
                 }
             }
         }
 
-        public int Id => _scenario.Id;
+        public int Importance => 2;
+
+        public int Id => scenario.Id;
+
+        public int ParentId => scenario.ProjectId;
+
+        public int TopmostParentId => scenario.ProjectId;
+
+        public IDictionary<string, object> ViewProperties => viewProperties;
 
         public string Name {
-            get { return _name ?? _scenario.Name; }
-            set { SetProperty(ref _name, value); }
+            get { return name ?? scenario.Name; }
+            set { SetProperty(ref name, value); }
         }
 
         public Uri Address {
             get {
-                if (_address == null && _scenario.Address == null) {
+                if (address == null && scenario.Address == null) {
                     return null;
                 }
 
-                return _address == null ? new Uri(_scenario.Address) : _address;
+                return address == null ? new Uri(scenario.Address) : address;
             }
-            set { SetProperty(ref _address, value); }
+            set { SetProperty(ref address, value); }
         }
 
         public Protocol? Protocol {
-            get { return string.IsNullOrEmpty(_scenario.Protocol) ? (Protocol?)null : (Protocol)Enum.Parse(typeof(Protocol), _scenario.Protocol); }
-            set { SetProperty(ref _protocol, value); }
+            get { return string.IsNullOrEmpty(scenario.Protocol) ? (Protocol?)null : (Protocol)Enum.Parse(typeof(Protocol), scenario.Protocol); }
+            set { SetProperty(ref protocol, value); }
         }
 
         #endregion
 
         #region constructors and destructors
 
-        public ScenarioViewModel(IEventAggregator eventAggregator, IUnityContainer container, IScenariosRunner runner) : base(eventAggregator, container, runner) {}
+        public ScenarioViewModel(IEventAggregator eventAggregator, IUnityContainer container, IScenariosRunner runner) : base(eventAggregator, container, runner) {
+            viewProperties = new Dictionary<string, object>();
+        }
 
         #endregion
 
         #region event handlers
 
-        protected override void _run() {
-            _runner.RunAsync(Scenario);
+        protected override void Run() {
+            runner.RunAsync(Scenario);
         }
 
-        protected override void _stop() {
-            _runner.StopAsync(Scenario);
+        protected override void Stop() {
+            runner.StopAsync(Scenario);
         }
 
-        protected override void _pause() {
-            _runner.PauseAsync(Scenario);
+        protected override void Pause() {
+            runner.PauseAsync(Scenario);
         }
 
         #endregion

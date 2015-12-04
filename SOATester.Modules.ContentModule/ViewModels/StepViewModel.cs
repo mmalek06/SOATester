@@ -3,55 +3,67 @@ using Prism.Events;
 using SOATester.Entities;
 using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.RestCommunication.Base;
+using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class StepViewModel : RunnableViewModel<Step> {
+    public class StepViewModel : RunnableViewModel<Step>, IPluggableViewModel {
 
         #region fields
 
-        private Step _step;
-        private string _name;
+        private Step step;
+        private string name;
+        private Dictionary<string, object> viewProperties;
 
         #endregion
 
         #region properties
         
         public Step Step {
-            get { return _step; }
+            get { return step; }
             set {
-                if (_step == null) {
-                    SetProperty(ref _step, value);
+                if (step == null) {
+                    SetProperty(ref step, value);
                 }
             }
         }
 
-        public int Id => _step.Id;
+        public int Importance => 4;
+
+        public int Id => step.Id;
+
+        public int ParentId => step.TestId;
+
+        public int TopmostParentId => step.Test.Scenario.ProjectId;
+
+        public IDictionary<string, object> ViewProperties => viewProperties;
 
         public string Name {
-            get { return _name ?? _step.Name; }
-            set { SetProperty(ref _name, value); }
+            get { return name ?? step.Name; }
+            set { SetProperty(ref name, value); }
         }
 
         #endregion
 
         #region constructors and destructors
 
-        public StepViewModel(IEventAggregator eventAggregator, IUnityContainer container, IStepsRunner runner) : base(eventAggregator, container, runner) { }
+        public StepViewModel(IEventAggregator eventAggregator, IUnityContainer container, IStepsRunner runner) : base(eventAggregator, container, runner) {
+            viewProperties = new Dictionary<string, object>();
+        }
 
         #endregion
 
         #region event handlers 
 
-        protected override void _run() {
-            _runner.RunAsync(Step);
+        protected override void Run() {
+            runner.RunAsync(Step);
         }
 
-        protected override void _stop() {
-            _runner.StopAsync(Step);
+        protected override void Stop() {
+            runner.StopAsync(Step);
         }
 
-        protected override void _pause() {
-            _runner.PauseAsync(Step);
+        protected override void Pause() {
+            runner.PauseAsync(Step);
         }
 
         #endregion

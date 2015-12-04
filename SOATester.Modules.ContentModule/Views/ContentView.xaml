@@ -7,7 +7,6 @@
              xmlns:infrastructure="clr-namespace:SOATester.Infrastructure;assembly=SOATester.Infrastructure"
              xmlns:Partials="clr-namespace:SOATester.Modules.ContentModule.Views"
              xmlns:ViewModels="clr-namespace:SOATester.Modules.ContentModule.ViewModels"
-             xmlns:Controls="clr-namespace:SOATester.Infrastructure.Controls;assembly=SOATester.Infrastructure"
              xmlns:prism="http://www.codeplex.com/prism"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">

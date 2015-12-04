@@ -1,12 +1,13 @@
-﻿using SOATester.Infrastructure;
-using SOATester.Modules.ContentModule.Plugins.Enums;
+﻿using SOATester.Modules.ContentModule.ViewModels.Base;
 using System.Collections.Generic;
 
-namespace SOATester.Modules.ContentModule.Plugins.Base {
-    public interface IPlugin : Infrastructure.Plugins.IPlugin {
+namespace SOATester.Modules.ContentModule.Plugins {
+    public interface IPlugin {
 
         #region properties
 
+        bool IsActive { get; set; }
+        int Priority { get; set; }
         PluginKey PluginKey { get; set; }
         Strategy Strategy { get; set; }
 
@@ -14,7 +15,7 @@ namespace SOATester.Modules.ContentModule.Plugins.Base {
 
         #region methods
 
-        IEnumerable<ViewModelBase> Execute(IEnumerable<ViewModelBase> parameter);
+        IEnumerable<IPluggableViewModel> Execute(IEnumerable<IPluggableViewModel> parameter);
 
         #endregion
 

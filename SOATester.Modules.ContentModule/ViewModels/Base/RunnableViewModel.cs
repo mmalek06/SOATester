@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
-using SOATester.Infrastructure;
+using SOATester.Infrastructure.ViewModels;
 using SOATester.RestCommunication.Base;
 
 namespace SOATester.Modules.ContentModule.ViewModels.Base {
@@ -9,24 +9,24 @@ namespace SOATester.Modules.ContentModule.ViewModels.Base {
 
         #region fields
 
-        protected IRunner<T> _runner;
-        protected IUnityContainer _container;
+        protected IRunner<T> runner;
+        protected IUnityContainer container;
 
         #endregion
 
         #region commands
 
-        public DelegateCommand Run { get; set; }
-        public DelegateCommand Stop { get; set; }
-        public DelegateCommand Pause { get; set; }
+        public DelegateCommand RunCommand { get; set; }
+        public DelegateCommand StopCommand { get; set; }
+        public DelegateCommand PauseCommand { get; set; }
 
         #endregion
 
         #region constructors and destructors
 
         public RunnableViewModel(IEventAggregator eventAggregator, IUnityContainer container, IRunner<T> runner) : base(eventAggregator) {
-            _container = container;
-            _runner = runner;
+            this.container = container;
+            this.runner = runner;
         }
 
         #endregion
@@ -34,18 +34,18 @@ namespace SOATester.Modules.ContentModule.ViewModels.Base {
         #region methods
 
         protected override void InitCommands() {
-            Run = new DelegateCommand(_run);
-            Stop = new DelegateCommand(_stop);
-            Pause = new DelegateCommand(_pause);
+            RunCommand = new DelegateCommand(Run);
+            StopCommand = new DelegateCommand(Stop);
+            PauseCommand = new DelegateCommand(Pause);
         }
 
         #endregion
 
         #region event handlers
 
-        protected abstract void _run();
-        protected abstract void _stop();
-        protected abstract void _pause();
+        protected abstract void Run();
+        protected abstract void Stop();
+        protected abstract void Pause();
 
         #endregion
 

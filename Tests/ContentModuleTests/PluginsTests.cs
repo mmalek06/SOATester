@@ -1,17 +1,11 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-
-using Prism.Events;
-
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using SOATester.Infrastructure;
-using SOATester.Modules.ContentModule.ViewModels;
+using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.Plugins;
-using SOATester.Modules.ContentModule.Plugins.Enums;
-using SOATester.Modules.ContentModule.Plugins.Base;
-
+using SOATester.Modules.ContentModule.ViewModels;
+using SOATester.Modules.ContentModule.ViewModels.Base;
+using System.Collections.Generic;
+using System.Linq;
 using Tests.ContentModuletests.Base;
 
 namespace Tests {
@@ -23,9 +17,9 @@ namespace Tests {
         [TestMethod]
         public void Test_AggregateStrategy_NONE() {
             var plugin = _getAggregateNonePlugin();
-            var unorderedViewModels = _viewModels;
+            var unorderedViewModels = viewModels.Cast<IPluggableViewModel>();
             var orderedViewModels = plugin.Execute(unorderedViewModels);
-            var orderingReference = _getOrderingReference(unorderedViewModels);
+            var orderingReference = GetOrderingReference(unorderedViewModels);
 
             // false conditions
             Assert.IsFalse(Enumerable.SequenceEqual(orderingReference, unorderedViewModels), "Collections should not have the same ordering");
@@ -41,13 +35,13 @@ namespace Tests {
         #region helper methods
 
         private IPlugin _getAggregateNonePlugin() {
-            var plugins = _container.Resolve<PluginFactory>().GetPlugins();
+            var plugins = container.Resolve<PluginFactory>().GetPlugins();
 
             return plugins.FirstOrDefault(plugin => plugin.PluginKey == PluginKey.AGGREGATOR && plugin.Strategy == Strategy.NONE);
         }
 
-        private IEnumerable<ViewModelBase> _getOrderingReference(IEnumerable<ViewModelBase> unorderedWrappedViewModels) {
-            var result = (new List<ViewModelBase> {
+        private IEnumerable<IPluggableViewModel> GetOrderingReference(IEnumerable<IPluggableViewModel> unorderedWrappedViewModels) {
+            var result = (new List<IPluggableViewModel> {
                 // ProjectViewModel
                 unorderedWrappedViewModels.FirstOrDefault(viewModel => {
                     if (viewModel is ProjectViewModel) {

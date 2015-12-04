@@ -85,12 +85,6 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SOATester.Infrastructure\SOATester.Infrastructure.csproj">
-      <Project>{e9c6aa78-5973-4872-8dc2-1b94c39a787f}</Project>
-      <Name>SOATester.Infrastructure</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

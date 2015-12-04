@@ -1,16 +1,15 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Regions;
-using SOATester.RestCommunication;
-using SOATester.RestCommunication.Base;
+using SOATester.Entities;
 using SOATester.Infrastructure;
+using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.Plugins;
-using SOATester.Modules.ContentModule.Plugins.Base;
 using SOATester.Modules.ContentModule.Repositories.Base;
 using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.Modules.ContentModule.Views;
+using SOATester.RestCommunication;
+using SOATester.RestCommunication.Base;
 using System.Collections.Generic;
-using SOATester.Entities;
 
 namespace SOATester.Modules.ContentModule {
     public class ContentModule : ModuleBase {
@@ -66,8 +65,8 @@ namespace SOATester.Modules.ContentModule {
 
         protected override void InitializePlugins() {
             container.RegisterType<PluginFactory>();
-            container.RegisterType<IPlugin, AggregatorPlugin>("Aggregator");
-            container.RegisterType<IPlugin, ColorizerPlugin>("Colorizer");
+            container.RegisterType<IPlugin, Aggregator>("Aggregator");
+            container.RegisterType<IPlugin, Colorizer>("Colorizer");
             container.RegisterType<IEnumerable<IPlugin>, IPlugin[]>();
         }
 
