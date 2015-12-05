@@ -6,15 +6,15 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels.Base {
 
         #region fields
 
-        protected ObservableCollection<T> _items;
+        protected ObservableCollection<T> items;
         
         #endregion
 
         #region properties
 
         public ObservableCollection<T> Items {
-            get { return _items; }
-            set { SetProperty(ref _items, value); }
+            get { return items; }
+            set { SetProperty(ref items, value); }
         }
 
         #endregion

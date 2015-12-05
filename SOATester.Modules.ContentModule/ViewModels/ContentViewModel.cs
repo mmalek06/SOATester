@@ -14,46 +14,46 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region fields
 
-        private ObservableCollection<object> _openedItems;
-        private IUnityContainer _container;
-        private ISimpleRepository<Project> _projectsRepository;
-        private IRepository<Scenario, Project> _scenariosRepository;
-        private IRepository<Test, Scenario> _testsRepository;
-        private IRepository<Step, Test> _stepsRepository;
-        private object _activeItem;
+        private ObservableCollection<object> openedItems;
+        private IUnityContainer container;
+        private ISimpleRepository<Project> projectsRepository;
+        private IRepository<Scenario, Project> scenariosRepository;
+        private IRepository<Test, Scenario> testsRepository;
+        private IRepository<Step, Test> stepsRepository;
+        private object activeItem;
 
         #endregion
 
         #region properties
 
         public ObservableCollection<object> Items {
-            get { return _openedItems; }
-            protected set { SetProperty(ref _openedItems, value); }
+            get { return openedItems; }
+            protected set { SetProperty(ref openedItems, value); }
         }
 
         public object ActiveItem {
-            get { return _activeItem; }
-            private set { SetProperty(ref _activeItem, value); }
+            get { return activeItem; }
+            private set { SetProperty(ref activeItem, value); }
         }
         
         [Dependency]
         public ISimpleRepository<Project> ProjectsRepository {
-            set { _projectsRepository = value; }
+            set { projectsRepository = value; }
         }
 
         [Dependency]
         public IRepository<Scenario, Project> ScenariosRepository {
-            set { _scenariosRepository = value; }
+            set { scenariosRepository = value; }
         }
 
         [Dependency]
         public IRepository<Test, Scenario> TestsRepository {
-            set { _testsRepository = value; }
+            set { testsRepository = value; }
         }
 
         [Dependency]
         public IRepository<Step, Test> StepsRepository {
-            set { _stepsRepository = value; }
+            set { stepsRepository = value; }
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         public ContentViewModel(IEventAggregator eventAggregator, IUnityContainer container) : base(eventAggregator) {
             Items = new ObservableCollection<object>();
-            _container = container;
+            this.container = container;
         }
 
         #endregion
@@ -106,14 +106,14 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnProjectChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.PROJECT) {
-                var project = _projectsRepository.GetEntity(evtDescriptor.Id);
+                var project = projectsRepository.GetEntity(evtDescriptor.Id);
                 
                 if (project != null) {
                     ProjectViewModel projectVm;
-                    int itemIndex = _getItemIndex<ProjectViewModel>((vm) => { return vm != null && vm.Id == project.Id; });
+                    int itemIndex = GetItemIndex<ProjectViewModel>((vm) => { return vm != null && vm.Id == project.Id; });
 
                     if (itemIndex < 0) {
-                        projectVm = _container.Resolve<ProjectViewModel>();
+                        projectVm = container.Resolve<ProjectViewModel>();
 
                         projectVm.Project = project;
 
@@ -131,14 +131,14 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnScenarioChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.SCENARIO) {
-                var scenario = _scenariosRepository.GetEntity(evtDescriptor.Id);
+                var scenario = scenariosRepository.GetEntity(evtDescriptor.Id);
 
                 if (scenario != null) {
                     ScenarioViewModel scenarioVm;
-                    int itemIndex = _getItemIndex<ScenarioViewModel>(vm => vm != null && vm.Id == scenario.Id);
+                    int itemIndex = GetItemIndex<ScenarioViewModel>(vm => vm != null && vm.Id == scenario.Id);
 
                     if (itemIndex < 0) {
-                        scenarioVm = _container.Resolve<ScenarioViewModel>();
+                        scenarioVm = container.Resolve<ScenarioViewModel>();
 
                         scenarioVm.Scenario = scenario;
 
@@ -156,14 +156,14 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnTestSuiteChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.TEST) {
-                var testSuite = _testsRepository.GetEntity(evtDescriptor.Id);
+                var testSuite = testsRepository.GetEntity(evtDescriptor.Id);
                 
                 if (testSuite != null) {
                     TestViewModel testSuiteVm;
-                    int itemIndex = _getItemIndex<TestViewModel>((vm) => { return vm != null && vm.Id == testSuite.Id; });
+                    int itemIndex = GetItemIndex<TestViewModel>((vm) => { return vm != null && vm.Id == testSuite.Id; });
 
                     if (itemIndex < 0) {
-                        testSuiteVm = _container.Resolve<TestViewModel>();
+                        testSuiteVm = container.Resolve<TestViewModel>();
 
                         testSuiteVm.Test = testSuite;
 
@@ -181,14 +181,14 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnStepChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.STEP) {
-                var step = _stepsRepository.GetEntity(evtDescriptor.Id);
+                var step = stepsRepository.GetEntity(evtDescriptor.Id);
 
                 if (step != null) {
                     StepViewModel stepVm;
-                    int itemIndex = _getItemIndex<StepViewModel>((vm) => { return vm != null && vm.Id == step.Id; });
+                    int itemIndex = GetItemIndex<StepViewModel>((vm) => { return vm != null && vm.Id == step.Id; });
 
                     if (itemIndex < 0) {
-                        stepVm = _container.Resolve<StepViewModel>();
+                        stepVm = container.Resolve<StepViewModel>();
 
                         stepVm.Step = step;
 
@@ -204,7 +204,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        private int _getItemIndex<T>(Func<T, bool> compareFunc) where T : ViewModelBase {
+        private int GetItemIndex<T>(Func<T, bool> compareFunc) where T : ViewModelBase {
             for (int i = 0; i < Items.Count; i++) {
                 var vm = Items[i] as T;
 

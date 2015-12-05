@@ -99,7 +99,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
             foreach (var vm in group) { 
                 int id = vm.ParentId;
-                int step = _getStep(ref maxUnboundIdx, stepSize, id, counts, lookup);
+                int step = GetStep(ref maxUnboundIdx, stepSize, id, counts, lookup);
 
                 proxiesWithKeys[step] = vm;
                 localLookup[vm.Id] = new IndexedViewModel {
@@ -114,7 +114,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
             };
         }
 
-        private int _getStep(ref int maxUnboundIdx, int stepSize, int parentId, Dictionary<int, int> counts, Dictionary<int, IndexedViewModel> lookup) {
+        private int GetStep(ref int maxUnboundIdx, int stepSize, int parentId, Dictionary<int, int> counts, Dictionary<int, IndexedViewModel> lookup) {
             IndexedViewModel outVal;
             int step;
 

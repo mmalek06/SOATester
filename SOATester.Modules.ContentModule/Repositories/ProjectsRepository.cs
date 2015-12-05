@@ -8,7 +8,7 @@ namespace SOATester.Modules.ContentModule.Repositories {
 
         #region methods
 
-        protected override IQueryable<Project> _getEntityQuery(int id, SoaTesterContext ctx) {
+        protected override IQueryable<Project> GetEntityQuery(int id, SoaTesterContext ctx) {
             return from proj in ctx.Projects
                    where proj.Id == id
                    select proj;

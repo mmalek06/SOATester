@@ -5,22 +5,22 @@ using System.Collections.Generic;
 
 namespace SOATester.Infrastructure.IOC {
     public class TypedParametersOverride : ResolverOverride {
-        private readonly Dictionary<Type, InjectionParameterValue> _parameterValues;
+        private readonly Dictionary<Type, InjectionParameterValue> parameterValues;
 
         public TypedParametersOverride(IEnumerable<object> parameterValues) {
-            _parameterValues = new Dictionary<Type, InjectionParameterValue>();
+            this.parameterValues = new Dictionary<Type, InjectionParameterValue>();
 
             foreach (var parameterValue in parameterValues) {
-                _parameterValues[parameterValue.GetType()] = InjectionParameterValue.ToParameter(parameterValue);
+                this.parameterValues[parameterValue.GetType()] = InjectionParameterValue.ToParameter(parameterValue);
             }
         }
 
         public override IDependencyResolverPolicy GetResolver(IBuilderContext context, Type dependencyType) {
-            if (_parameterValues.Count < 1) {
+            if (parameterValues.Count < 1) {
                 return null;
             }
 
-            var value = _parameterValues[dependencyType];
+            var value = parameterValues[dependencyType];
 
             return value.GetResolverPolicy(dependencyType);
         }

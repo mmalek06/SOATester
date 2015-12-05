@@ -8,7 +8,7 @@ namespace SOATester.Infrastructure.Behaviors {
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
             typeof(MouseDoubleClick),
-            new UIPropertyMetadata(_commandChanged));
+            new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
@@ -27,7 +27,7 @@ namespace SOATester.Infrastructure.Behaviors {
             return target.GetValue(CommandParameterProperty);
         }
 
-        protected static void _execute(object sender, RoutedEventArgs e) {
+        protected static void Execute(object sender, RoutedEventArgs e) {
             Control control = sender as Control;
             var possibleTreeViewItem = sender as TreeViewItem;
             if (control == null || (possibleTreeViewItem != null && !possibleTreeViewItem.IsSelected)) {
@@ -38,13 +38,13 @@ namespace SOATester.Infrastructure.Behaviors {
             command.Execute(commandParameter);
         }
 
-        protected static void _commandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e) {
+        protected static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e) {
             Control control = target as Control;
             if (control != null) {
                 if ((e.NewValue != null) && (e.OldValue == null)) {
-                    control.MouseDoubleClick += _execute;
+                    control.MouseDoubleClick += Execute;
                 } else if ((e.NewValue == null) && (e.OldValue != null)) {
-                    control.MouseDoubleClick -= _execute;
+                    control.MouseDoubleClick -= Execute;
                 }
             }
         }

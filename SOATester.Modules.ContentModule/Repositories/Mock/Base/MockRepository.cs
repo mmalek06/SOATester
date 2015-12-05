@@ -8,20 +8,19 @@ namespace SOATester.Modules.ContentModule.Repositories.Mock.Base {
 
         #region fields
 
-        protected List<T> _cache;
-
-        protected string _dataFileName;
+        protected List<T> cache;
+        protected string dataFileName;
 
         #endregion
 
         #region properties
 
-        protected List<T> cache {
+        protected List<T> Cache {
             get {
-                if (_cache == null) {
-                    _loadCache();
+                if (cache == null) {
+                    LoadCache();
                 }
-                return _cache;
+                return cache;
             }
         }
 
@@ -29,12 +28,12 @@ namespace SOATester.Modules.ContentModule.Repositories.Mock.Base {
 
         #region protected methods
 
-        protected void _loadCache() {
-            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/MockData/" + _dataFileName)) {
+        protected void LoadCache() {
+            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/MockData/" + dataFileName)) {
                 var itemsData = reader.ReadToEnd();
                 var items = JsonConvert.DeserializeObject<List<T>>(itemsData);
 
-                _cache = items;
+                cache = items;
             }
         }
 

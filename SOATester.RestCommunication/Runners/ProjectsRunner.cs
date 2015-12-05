@@ -18,7 +18,7 @@ namespace SOATester.RestCommunication {
 
         public async Task<RunResult> RunAsync(Project project) {
             return await Task.Run(() => {
-                return _run(project);
+                return Run(project);
             });
         }
 
@@ -42,8 +42,8 @@ namespace SOATester.RestCommunication {
 
         #region methods
 
-        private RunResult _run(Project project) {
-            var runInfo = _getRunInfo(project);
+        private RunResult Run(Project project) {
+            var runInfo = GetRunInfo(project);
 
             return new ProjectResult {
                 Type = Enums.RunType.PROJECT,
@@ -51,15 +51,15 @@ namespace SOATester.RestCommunication {
             };
         }
 
-        private void _stop(Project project) {
-            var runInfo = _getRunInfo(project);
+        private void Stop(Project project) {
+            var runInfo = GetRunInfo(project);
         }
 
-        private void _pause(Project project) {
-            var runInfo = _getRunInfo(project);
+        private void Pause(Project project) {
+            var runInfo = GetRunInfo(project);
         }
 
-        private RunInfo _getRunInfo(Project project) {
+        private RunInfo GetRunInfo(Project project) {
             var scenarios = project.Scenarios;
             var tests = from scenario in scenarios
                         from test in scenario.Tests

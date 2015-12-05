@@ -7,7 +7,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels.Base {
 
         #region fields
 
-        protected string _name;
+        protected string name;
 
         #endregion
 
@@ -18,8 +18,8 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels.Base {
 
         [Dependency]
         public string Name {
-            get { return _name; }
-            set { SetProperty(ref _name, value); }
+            get { return name; }
+            set { SetProperty(ref name, value); }
         }
 
         #endregion

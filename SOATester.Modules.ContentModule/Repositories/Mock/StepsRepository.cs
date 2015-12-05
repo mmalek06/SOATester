@@ -10,7 +10,7 @@ namespace SOATester.Modules.ContentModule.Repositories.Mock {
         #region constructors and destructors
 
         public StepsRepository() {
-            _dataFileName = "steps_data.json";
+            dataFileName = "steps_data.json";
         }
 
         #endregion

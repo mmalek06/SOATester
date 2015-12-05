@@ -1,5 +1,4 @@
-﻿using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.ViewModels.Base;
+﻿using SOATester.Modules.ContentModule.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region fields
 
-        private HashSet<Color> _occupiedColors;
+        private HashSet<Color> occupiedColors;
 
         #endregion
 
@@ -28,7 +27,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
         public Colorizer() {
             PluginKey = PluginKey.COLORIZER;
             Strategy = Strategy.NONE;
-            _occupiedColors = new HashSet<Color>();
+            occupiedColors = new HashSet<Color>();
         }
 
         #endregion
@@ -70,11 +69,11 @@ namespace SOATester.Modules.ContentModule.Plugins {
             if (brush == null) {
                 var color = GetColor(rand);
 
-                while (_occupiedColors.Contains(color)) {
+                while (occupiedColors.Contains(color)) {
                     color = GetColor(rand);
                 }
 
-                _occupiedColors.Add(color);
+                occupiedColors.Add(color);
                 colorMap[viewModel.Id] = color;
                 viewModel.ViewProperties["Brush"] = new SolidColorBrush(color);
             } else {
@@ -92,7 +91,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
                     color = GetColor(rand);
                 }
 
-                _occupiedColors.Add(color);
+                occupiedColors.Add(color);
                 viewModel.ViewProperties["Brush"] = new SolidColorBrush(color);
             } else {
                 color = (viewModel.ViewProperties["Brush"] as SolidColorBrush).Color;

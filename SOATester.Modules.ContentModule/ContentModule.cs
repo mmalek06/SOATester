@@ -29,20 +29,20 @@ namespace SOATester.Modules.ContentModule {
                 container.RegisterType<IRepository<Test, Scenario>, Repositories.TestsRepository>();
                 container.RegisterType<IRepository<Step, Test>, Repositories.StepsRepository>();
             } else {
-                /*_container.RegisterType<ISimpleRepository<Project>, Repositories.Mock.ProjectsRepository>();
-                _container.RegisterType<IRepository<Scenario, Project>, Repositories.Mock.ScenariosRepository>();
-                _container.RegisterType<IRepository<Test, Scenario>, Repositories.Mock.TestsRepository>();
-                _container.RegisterType<IRepository<Step, Test>, Repositories.Mock.StepsRepository>();*/
+                /*container.RegisterType<ISimpleRepository<Project>, Repositories.Mock.ProjectsRepository>();
+                container.RegisterType<IRepository<Scenario, Project>, Repositories.Mock.ScenariosRepository>();
+                container.RegisterType<IRepository<Test, Scenario>, Repositories.Mock.TestsRepository>();
+                container.RegisterType<IRepository<Step, Test>, Repositories.Mock.StepsRepository>();*/
             }
         }
 
         protected override void InitializeViewModels() {
             // register plugins
-            // _container.RegisterType<PluginFactory>();
-            // _container.RegisterType<IPlugin, TabAggregator>();
-            // _container.RegisterType<IPlugin, TabColorizer>();
+            // container.RegisterType<PluginFactory>();
+            // container.RegisterType<IPlugin, TabAggregator>();
+            // container.RegisterType<IPlugin, TabColorizer>();
 
-            _initializeCommunication();
+            InitializeCommunication();
 
             // register view models
             container.RegisterType<ICollectionViewModel, ContentViewModel>(
@@ -56,7 +56,7 @@ namespace SOATester.Modules.ContentModule {
             container.RegisterType<StepViewModel>();
         }
 
-        private void _initializeCommunication() {
+        private void InitializeCommunication() {
             container.RegisterType<IProjectsRunner, ProjectsRunner>();
             container.RegisterType<IScenariosRunner, ScenariosRunner>();
             container.RegisterType<ITestsRunner, TestsRunner>();

@@ -10,7 +10,7 @@ namespace SOATester.Modules.ContentModule.Repositories.Mock {
         #region constructors and destructors
 
         public ScenariosRepository() {
-            _dataFileName = "scenarios_data.json";
+            dataFileName = "scenarios_data.json";
         }
 
         #endregion

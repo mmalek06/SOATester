@@ -8,31 +8,31 @@ namespace SOATester.Modules.ContentModule.Repositories {
 
         #region methods
 
-        protected override IQueryable<Step> _getEntityQuery(int id, SoaTesterContext ctx) {
+        protected override IQueryable<Step> GetEntityQuery(int id, SoaTesterContext ctx) {
             return from step in ctx.Steps
                    where step.Id == id
                    select step;
         }
 
-        protected override IQueryable<Step> _getByParentEntityQuery(int parentId, SoaTesterContext ctx) {
+        protected override IQueryable<Step> GetByParentEntityQuery(int parentId, SoaTesterContext ctx) {
             return from step in ctx.Steps
                    where step.TestId == parentId
                    select step;
         }
 
-        protected override int _getId(Step entity) {
+        protected override int GetId(Step entity) {
             return entity.Id;
         }
 
-        protected override int _getParentId(Test parent) {
+        protected override int GetParentId(Test parent) {
             return parent.Id;
         }
 
-        protected override int _getParentId(Step entity) {
+        protected override int GetParentId(Step entity) {
             return entity.TestId;
         }
 
-        protected override void _addToContext(SoaTesterContext ctx, Step entity) {
+        protected override void AddToContext(SoaTesterContext ctx, Step entity) {
             ctx.Steps.Add(entity);
         }
 
