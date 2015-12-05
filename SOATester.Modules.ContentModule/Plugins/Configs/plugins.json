@@ -1,0 +1,14 @@
+﻿[
+    {
+        "key": "AGGREGATOR",
+        "strategy": "NONE",
+        "isActive": true,
+        "priority": 1
+    },
+    {
+        "key": "COLORIZER",
+        "strategy": "NONE",
+        "isActive": true,
+        "priority": 1
+    }
+]

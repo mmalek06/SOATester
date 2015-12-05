@@ -99,16 +99,9 @@
     <Compile Include="ContentModule.cs" />
     <Compile Include="Plugins\Algorithms\Aggregator.cs" />
     <Compile Include="Plugins\Algorithms\Colorizer.cs" />
-    <Compile Include="Plugins\Base\PluginBase.cs" />
     <Compile Include="Plugins\Base\IPlugin.cs" />
     <Compile Include="Plugins\Enums.cs" />
-    <Compile Include="Plugins\Exceptions\PluginExecutionException.cs" />
-    <Compile Include="Plugins\Extensions\ProjectVmExtensions.cs" />
-    <Compile Include="Plugins\Extensions\ScenarioVmExtensions.cs" />
-    <Compile Include="Plugins\Extensions\StepVmExtensions.cs" />
-    <Compile Include="Plugins\Extensions\TestVmExtensions.cs" />
     <Compile Include="Plugins\PluginFactory.cs" />
-    <Compile Include="Plugins\VmIdentity.cs" />
     <Compile Include="Repositories\Base\Repository.cs" />
     <Compile Include="Repositories\Base\ISimpleRepository.cs" />
     <Compile Include="Repositories\Base\IRepository.cs" />
@@ -122,8 +115,7 @@
     <Compile Include="Repositories\ScenariosRepository.cs" />
     <Compile Include="Repositories\StepsRepository.cs" />
     <Compile Include="Repositories\TestsRepository.cs" />
-    <Compile Include="Services\Base\IPluginDataService.cs" />
-    <Compile Include="ViewModels\Base\IMetadataViewModel.cs" />
+    <Compile Include="ViewModels\Base\IPluggableViewModel.cs" />
     <Compile Include="ViewModels\Base\RunnableViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
@@ -163,15 +155,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Plugins\Configs\plugins.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Plugins\Configs\plugins.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -89,7 +89,6 @@
     <Compile Include="Events\Descriptors.cs" />
     <Compile Include="Collections\SortableObservableCollection.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="IOC\TypedParametersOverride.cs" />
     <Compile Include="ModuleBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
