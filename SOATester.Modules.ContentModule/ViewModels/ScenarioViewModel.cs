@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ScenarioViewModel : RunnableViewModel<Scenario>, IPluggableViewModel {
+    public class ScenarioViewModel : RunnableViewModel<Scenario>, IPluggableViewModel, IIdentityViewModel {
 
         #region fields
 
@@ -30,6 +30,8 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                 }
             }
         }
+
+        public string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
 
         public int Importance => 2;
 

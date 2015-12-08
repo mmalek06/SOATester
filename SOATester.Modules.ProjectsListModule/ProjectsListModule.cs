@@ -19,7 +19,7 @@ namespace SOATester.Modules.ProjectsListModule {
         #region non public methods
 
         protected override void InitializeRepositories() {
-            if (appMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
+            if (AppMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
                 container.RegisterInstance<IProjectsRepository>(new ProjectsRepository());
             }
         }

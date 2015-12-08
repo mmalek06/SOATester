@@ -6,7 +6,7 @@ using SOATester.RestCommunication.Base;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class TestViewModel : RunnableViewModel<Test>, IPluggableViewModel {
+    public class TestViewModel : RunnableViewModel<Test>, IPluggableViewModel, IIdentityViewModel {
 
         #region fields
 
@@ -26,6 +26,8 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                 }
             }
         }
+
+        public string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
 
         public int Importance => 3;
 

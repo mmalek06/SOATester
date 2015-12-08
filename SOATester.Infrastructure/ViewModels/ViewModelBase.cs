@@ -1,5 +1,6 @@
 ﻿using Prism.Events;
 using Prism.Mvvm;
+using System;
 
 namespace SOATester.Infrastructure.ViewModels {
     public abstract class ViewModelBase : BindableBase {
@@ -7,6 +8,7 @@ namespace SOATester.Infrastructure.ViewModels {
         #region fields
 
         protected IEventAggregator eventAggregator;
+        protected byte[] leakArr = new byte[1024 * 1024 * 10];
 
         #endregion
 

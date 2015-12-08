@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ProjectViewModel : RunnableViewModel<Project>, IPluggableViewModel {
+    public class ProjectViewModel : RunnableViewModel<Project>, IPluggableViewModel, IIdentityViewModel {
 
         #region fields
 
@@ -31,7 +31,9 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                 }
             }
         }
-        
+
+        public string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
+
         public int Importance => 1;
 
         public int Id => project.Id;
@@ -80,10 +82,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         public ProjectViewModel(IEventAggregator eventAggregator, IUnityContainer container, IProjectsRunner runner) : base(eventAggregator, container, runner) {
             viewProperties = new Dictionary<string, object>();
         }
-
-        #endregion
-
-        #region public methods
 
         #endregion
 

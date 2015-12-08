@@ -115,6 +115,7 @@
     <Compile Include="Repositories\ScenariosRepository.cs" />
     <Compile Include="Repositories\StepsRepository.cs" />
     <Compile Include="Repositories\TestsRepository.cs" />
+    <Compile Include="ViewModels\Base\IIdentityViewModel.cs" />
     <Compile Include="ViewModels\Base\IPluggableViewModel.cs" />
     <Compile Include="ViewModels\Base\RunnableViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
@@ -186,6 +187,10 @@
     <ProjectReference Include="..\SOATester.RestCommunication\SOATester.RestCommunication.csproj">
       <Project>{65dc0ba4-a1c7-438c-b7f0-59343174e696}</Project>
       <Name>SOATester.RestCommunication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOATester.TextEditor\SOATester.TextEditor.csproj">
+      <Project>{e49f8db7-2876-4c3e-aeed-3e160461a9a0}</Project>
+      <Name>SOATester.TextEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

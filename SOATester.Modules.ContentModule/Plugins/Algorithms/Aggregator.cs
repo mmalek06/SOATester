@@ -140,12 +140,12 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region classes
 
-        private class MatchingResult {
+        private struct MatchingResult {
             public Dictionary<int, IPluggableViewModel> Mapping { get; set; }
             public Dictionary<int, IndexedViewModel> Lookup { get; set; }
         }
 
-        private class IndexedViewModel {
+        private struct IndexedViewModel {
             public int Index { get; set; }
             public IPluggableViewModel ViewModel { get; set; }
         }

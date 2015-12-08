@@ -15,6 +15,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
 
         #region fields
 
+        private static object lockObj = new object();
         private ObservableCollection<ProjectViewModel> projects;
         private IUnityContainer container;
 
@@ -66,11 +67,13 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
         }
 
         private void InitComponent() {
-            NotifyOfStart();
+            lock (lockObj) {
+                NotifyOfStart();
 
-            var task = InitProjectsAsync();
+                var task = InitProjectsAsync();
 
-            NotifyOfEnd(task);
+                NotifyOfEnd(task);
+            }
         }
 
         private void NotifyOfStart() {

@@ -54,9 +54,9 @@
                     <Style BasedOn="{StaticResource ButtonStyle}" TargetType="{x:Type Button}" />
                 </StackPanel.Resources>
 
-                <Button Command="{Binding Run}">Run</Button>
+                <!--<Button Command="{Binding Run}">Run</Button>
                 <Button Command="{Binding Stop}">Stop</Button>
-                <Button Command="{Binding Pause}">Pause</Button>
+                <Button Command="{Binding Pause}">Pause</Button>-->
             </StackPanel>
 
             <Grid DockPanel.Dock="Bottom">
@@ -76,7 +76,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="Service base address" />
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Address, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                <!--<TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Address, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding SaveAddress}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" />
                         <KeyBinding Key="Tab" Command="{Binding SaveAddress}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" />
@@ -87,7 +87,7 @@
                     <Button.Content>
                         <TextBlock FontWeight="Bold" Text="Save" />
                     </Button.Content>
-                </Button>
+                </Button>-->
             </Grid>
         </DockPanel>
     </Border>

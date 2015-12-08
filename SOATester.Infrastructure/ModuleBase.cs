@@ -12,9 +12,10 @@ namespace SOATester.Infrastructure {
 
         protected IUnityContainer container;
         protected IRegionManager regionManager;
-        protected static AppMode appMode;
 
         #endregion
+
+        public static AppMode AppMode { get; set; }
 
         #region constructors and destructors
 
@@ -22,9 +23,9 @@ namespace SOATester.Infrastructure {
             bool isUnderTests = AppDomain.CurrentDomain.GetAssemblies().Any(a => a.FullName.ToLowerInvariant().StartsWith("microsoft.visualstudio.qualitytools"));
 
             if (isUnderTests) {
-                appMode = AppMode.TESTING;
+                AppMode = AppMode.TESTING;
             } else {
-                appMode = AppMode.RUN;
+                AppMode = AppMode.RUN;
             }
         }
 

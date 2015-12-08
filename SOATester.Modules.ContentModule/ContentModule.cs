@@ -23,7 +23,7 @@ namespace SOATester.Modules.ContentModule {
         #region non public methods
 
         protected override void InitializeRepositories() {
-            if (appMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
+            if (AppMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
                 container.RegisterType<ISimpleRepository<Project>, Repositories.ProjectsRepository>();
                 container.RegisterType<IRepository<Scenario, Project>, Repositories.ScenariosRepository>();
                 container.RegisterType<IRepository<Test, Scenario>, Repositories.TestsRepository>();
@@ -45,11 +45,8 @@ namespace SOATester.Modules.ContentModule {
             InitializeCommunication();
 
             // register view models
-            container.RegisterType<ICollectionViewModel, ContentViewModel>(
-                new InjectionProperty("ProjectsRepository", container.Resolve<ISimpleRepository<Project>>()),
-                new InjectionProperty("ScenariosRepository", container.Resolve<IRepository<Scenario, Project>>()),
-                new InjectionProperty("TestsRepository", container.Resolve<IRepository<Test, Scenario>>()),
-                new InjectionProperty("StepsRepository", container.Resolve<IRepository<Step, Test>>()));
+            //container.RegisterType<ICollectionViewModel, ContentViewModel>();
+            container.RegisterType<ContentViewModel>();
             container.RegisterType<ProjectViewModel>();
             container.RegisterType<ScenarioViewModel>();
             container.RegisterType<TestViewModel>();
