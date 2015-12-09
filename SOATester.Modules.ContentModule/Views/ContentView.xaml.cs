@@ -29,8 +29,8 @@ namespace SOATester.Modules.ContentModule.Views {
 
             DataContext = vm;
         }
-        
+
         #endregion
-        
+
     }
 }

@@ -2,6 +2,7 @@
 
 namespace SOATester.Modules.ContentModule.ViewModels.Base {
     public interface IPluggableViewModel {
+        string Identity { get; }
         int Importance { get; }
         int Id { get; }
         int ParentId { get; }

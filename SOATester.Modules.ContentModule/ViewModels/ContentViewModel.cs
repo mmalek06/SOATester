@@ -42,7 +42,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region commands
 
-        public DelegateCommand<IPluggableViewModel> CloseItem { get; private set; }
+        public DelegateCommand<string> CloseItem { get; private set; }
 
         #endregion
 
@@ -70,15 +70,17 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         }
 
         protected override void InitCommands() {
-            CloseItem = new DelegateCommand<IPluggableViewModel>(OnItemClose);
+            CloseItem = new DelegateCommand<string>(OnItemClose);
         }
 
         #endregion
 
         #region event handlers
 
-        private void OnItemClose(IPluggableViewModel vm) {
-            OnItemRemoved(vm);
+        private void OnItemClose(string identity) {
+            var vm = Items.First(item => item.Identity == identity);
+
+            UnselectItem(vm);
             Items.Remove(vm);
         }
 
@@ -171,14 +173,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                 Items.Add(newItem);
             }
 
-            SelectItem(newItem);
-        }
-
-        private void OnItemRemoved(IPluggableViewModel oldItem) {
-            var itemToRemove = Items.First(item => item.Equals(oldItem));
-
-            UnselectItem(itemToRemove);
-            Items.Remove(itemToRemove);
+            SelectedItem = newItem;
         }
 
         #endregion
@@ -200,8 +195,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             Items.Clear();
             Items.AddRange(pluginExecutionResult == null ? viewModels : pluginExecutionResult);
         }
-
-        private void SelectItem(IPluggableViewModel item) => SelectedItem = Items.FirstOrDefault(openedItem => openedItem.Equals(item));
 
         private void UnselectItem(IPluggableViewModel item) {
             if (item.Equals(SelectedItem)) {

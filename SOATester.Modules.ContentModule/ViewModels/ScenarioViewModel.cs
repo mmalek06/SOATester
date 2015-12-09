@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ScenarioViewModel : RunnableViewModel<Scenario>, IPluggableViewModel, IIdentityViewModel {
+    public class ScenarioViewModel : RunnableViewModel<Scenario>, IPluggableViewModel {
 
         #region fields
 

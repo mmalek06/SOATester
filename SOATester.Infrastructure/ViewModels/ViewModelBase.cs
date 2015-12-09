@@ -22,6 +22,10 @@ namespace SOATester.Infrastructure.ViewModels {
             InitCollections();
         }
 
+        ~ViewModelBase() {
+            Console.WriteLine("Asdf");
+        }
+
         #endregion
 
         #region methods

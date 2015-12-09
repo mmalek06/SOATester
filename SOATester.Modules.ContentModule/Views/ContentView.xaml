@@ -24,7 +24,7 @@
                     <Button DockPanel.Dock="Right" BorderThickness="0" Background="Transparent" 
                             Margin="10,2,2,2" 
                             Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=DataContext.CloseItem}" 
-                            CommandParameter="{Binding}">
+                            CommandParameter="{Binding Identity, Mode=OneTime}">
                         <Button.Content>
                             <TextBlock FontWeight="Bold" Text="X" />
                         </Button.Content>

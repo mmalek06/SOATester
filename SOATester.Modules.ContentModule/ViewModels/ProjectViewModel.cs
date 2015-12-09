@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ProjectViewModel : RunnableViewModel<Project>, IPluggableViewModel, IIdentityViewModel {
+    public class ProjectViewModel : RunnableViewModel<Project>, IPluggableViewModel {
 
         #region fields
 

@@ -6,7 +6,7 @@ using SOATester.RestCommunication.Base;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class TestViewModel : RunnableViewModel<Test>, IPluggableViewModel, IIdentityViewModel {
+    public class TestViewModel : RunnableViewModel<Test>, IPluggableViewModel {
 
         #region fields
 
