@@ -1,7 +1,7 @@
 ﻿using Prism.Events;
 using System.Collections.ObjectModel;
 
-namespace SOATester.Modules.ProjectsListModule.ViewModels.Base {
+namespace SOATester.Modules.ProjectsListModule.ViewModels {
     public abstract class CollectionViewModel<T> : ItemViewModel {
 
         #region fields

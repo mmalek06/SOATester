@@ -1,6 +1,5 @@
 ﻿using SOATester.DAL;
 using SOATester.Entities;
-using SOATester.Modules.ContentModule.Repositories.Base;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SOATester.Modules.ContentModule.Repositories.Base {
+namespace SOATester.Modules.ContentModule.Repositories {
     public abstract class SimpleRepository<T> : ISimpleRepository<T> {
 
         #region fields

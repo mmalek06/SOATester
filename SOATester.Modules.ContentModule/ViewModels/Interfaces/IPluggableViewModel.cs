@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SOATester.Modules.ContentModule.ViewModels.Base {
+namespace SOATester.Modules.ContentModule.ViewModels {
     public interface IPluggableViewModel {
         string Identity { get; }
         int Importance { get; }

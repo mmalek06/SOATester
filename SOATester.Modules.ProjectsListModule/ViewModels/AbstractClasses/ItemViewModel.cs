@@ -2,7 +2,7 @@
 using Prism.Events;
 using SOATester.Infrastructure.ViewModels;
 
-namespace SOATester.Modules.ProjectsListModule.ViewModels.Base {
+namespace SOATester.Modules.ProjectsListModule.ViewModels {
     public abstract class ItemViewModel : ViewModelBase {
 
         #region fields

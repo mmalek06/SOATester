@@ -2,7 +2,6 @@
 using Prism.Events;
 using SOATester.Entities;
 using SOATester.Infrastructure.Enums;
-using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.RestCommunication.Base;
 using System;
 using System.Collections.Generic;

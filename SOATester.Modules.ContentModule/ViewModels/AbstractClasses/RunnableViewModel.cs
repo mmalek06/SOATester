@@ -4,7 +4,7 @@ using Prism.Events;
 using SOATester.Infrastructure.ViewModels;
 using SOATester.RestCommunication.Base;
 
-namespace SOATester.Modules.ContentModule.ViewModels.Base {
+namespace SOATester.Modules.ContentModule.ViewModels {
     public abstract class RunnableViewModel<T> : ViewModelBase {
 
         #region fields

@@ -1,9 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.Plugins;
 using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.ViewModels.Base;
 using System.Collections.Generic;
 using System.Linq;
 using Tests.ContentModuletests.Base;

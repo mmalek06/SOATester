@@ -1,7 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Events;
 using SOATester.Entities;
-using SOATester.Modules.ContentModule.ViewModels.Base;
 using SOATester.RestCommunication.Base;
 using System.Collections.Generic;
 

@@ -1,5 +1,4 @@
 ﻿using Prism.Events;
-using SOATester.Modules.ProjectsListModule.ViewModels.Base;
 using System.Collections.ObjectModel;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels {

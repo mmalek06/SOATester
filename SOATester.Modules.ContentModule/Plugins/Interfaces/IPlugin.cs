@@ -1,4 +1,4 @@
-﻿using SOATester.Modules.ContentModule.ViewModels.Base;
+﻿using SOATester.Modules.ContentModule.ViewModels;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.Plugins {

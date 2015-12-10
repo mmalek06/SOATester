@@ -4,7 +4,7 @@ using SOATester.Entities;
 using SOATester.Infrastructure;
 using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.Plugins;
-using SOATester.Modules.ContentModule.Repositories.Base;
+using SOATester.Modules.ContentModule.Repositories;
 using SOATester.Modules.ContentModule.ViewModels;
 using SOATester.Modules.ContentModule.Views;
 using SOATester.RestCommunication;

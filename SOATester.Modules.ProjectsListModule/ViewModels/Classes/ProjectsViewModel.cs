@@ -3,7 +3,7 @@ using Prism.Commands;
 using Prism.Events;
 using SOATester.Infrastructure.Events;
 using SOATester.Infrastructure.ViewModels;
-using SOATester.Modules.ProjectsListModule.Repositories.Base;
+using SOATester.Modules.ProjectsListModule.Repositories;
 using SOATester.Modules.ProjectsListModule.ViewModels.Builders;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -1,4 +1,4 @@
-﻿using SOATester.Modules.ContentModule.ViewModels.Base;
+﻿using SOATester.Modules.ContentModule.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

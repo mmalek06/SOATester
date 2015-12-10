@@ -1,6 +1,5 @@
 ﻿using SOATester.DAL;
 using SOATester.Entities;
-using SOATester.Modules.ProjectsListModule.Repositories.Base;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;

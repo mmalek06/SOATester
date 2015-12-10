@@ -2,7 +2,6 @@
 using Prism.Regions;
 using SOATester.Infrastructure;
 using SOATester.Modules.ProjectsListModule.Repositories;
-using SOATester.Modules.ProjectsListModule.Repositories.Base;
 using SOATester.Modules.ProjectsListModule.ViewModels;
 using SOATester.Modules.ProjectsListModule.ViewModels.Builders;
 using SOATester.Modules.ProjectsListModule.Views;

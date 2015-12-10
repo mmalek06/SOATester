@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SOATester.Modules.ContentModule.Repositories.Base {
+namespace SOATester.Modules.ContentModule.Repositories {
     public interface IRepository<T, K> : ISimpleRepository<T> {
         IEnumerable<T> GetEntitiesByParent(K parent);
 

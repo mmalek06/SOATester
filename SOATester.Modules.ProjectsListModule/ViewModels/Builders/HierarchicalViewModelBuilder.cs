@@ -1,5 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
-using SOATester.Modules.ProjectsListModule.Repositories.Base;
+using SOATester.Modules.ProjectsListModule.Repositories;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels.Builders {

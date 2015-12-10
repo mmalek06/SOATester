@@ -1,8 +1,5 @@
-﻿using Prism.Common;
-using SOATester.Infrastructure.ViewModels;
-using SOATester.Modules.ContentModule.Plugins;
+﻿using SOATester.Modules.ContentModule.Plugins;
 using SOATester.Modules.ContentModule.ViewModels;
-using SOATester.Modules.ContentModule.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
