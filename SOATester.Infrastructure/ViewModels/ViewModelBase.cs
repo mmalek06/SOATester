@@ -8,7 +8,6 @@ namespace SOATester.Infrastructure.ViewModels {
         #region fields
 
         protected IEventAggregator eventAggregator;
-        protected byte[] leakArr = new byte[1024 * 1024 * 10];
 
         #endregion
 
@@ -20,10 +19,6 @@ namespace SOATester.Infrastructure.ViewModels {
             InitEvents();
             InitCommands();
             InitCollections();
-        }
-
-        ~ViewModelBase() {
-            Console.WriteLine("Asdf");
         }
 
         #endregion
