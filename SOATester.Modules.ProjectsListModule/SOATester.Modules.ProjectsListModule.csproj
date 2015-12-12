@@ -108,8 +108,7 @@
     <Compile Include="Repositories\Interfaces\IProjectsRepository.cs" />
     <Compile Include="Repositories\Classes\ProjectsRepository.cs" />
     <Compile Include="ViewModels\Builders\HierarchicalViewModelBuilder.cs" />
-    <Compile Include="ViewModels\AbstractClasses\ItemViewModel.cs" />
-    <Compile Include="ViewModels\AbstractClasses\CollectionViewModel.cs" />
+    <Compile Include="ViewModels\AbstractClasses\HierarchicalViewModel.cs" />
     <Compile Include="ViewModels\Classes\ProjectsViewModel.cs" />
     <Compile Include="ViewModels\Classes\ProjectViewModel.cs" />
     <Compile Include="ViewModels\Classes\ScenarioViewModel.cs" />

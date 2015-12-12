@@ -2,13 +2,11 @@
 using System.Collections.ObjectModel;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels {
-    public class ScenarioViewModel : CollectionViewModel<TestViewModel> {
+    public class ScenarioViewModel : HierarchicalViewModel<TestViewModel> {
 
         #region constructors and destructors
 
-        public ScenarioViewModel(IEventAggregator eventAggregator) : base(eventAggregator) {
-            Items = new ObservableCollection<TestViewModel>();
-        }
+        public ScenarioViewModel(IEventAggregator eventAggregator) : base(eventAggregator) { }
 
         #endregion
 

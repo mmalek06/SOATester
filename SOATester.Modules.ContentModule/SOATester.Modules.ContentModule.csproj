@@ -122,6 +122,8 @@
     <Compile Include="ViewModels\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\StepViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
+    <Compile Include="Views\Actions\AbstractClasses\BaseCloseTabAction.cs" />
+    <Compile Include="Views\Actions\Classes\ButtonCloseTabAction.cs" />
     <Compile Include="Views\ContentView.xaml.cs">
       <DependentUpon>ContentView.xaml</DependentUpon>
     </Compile>
@@ -186,10 +188,6 @@
     <ProjectReference Include="..\SOATester.RestCommunication\SOATester.RestCommunication.csproj">
       <Project>{65dc0ba4-a1c7-438c-b7f0-59343174e696}</Project>
       <Name>SOATester.RestCommunication</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SOATester.TextEditor\SOATester.TextEditor.csproj">
-      <Project>{e49f8db7-2876-4c3e-aeed-3e160461a9a0}</Project>
-      <Name>SOATester.TextEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

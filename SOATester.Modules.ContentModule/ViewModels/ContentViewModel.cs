@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Regions;
 using SOATester.Entities;
 using SOATester.Infrastructure.Events;
 using SOATester.Infrastructure.ViewModels;
@@ -17,12 +18,13 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region fields
 
         private IPluggableViewModel selectedItem;
-        private ObservableCollection<IPluggableViewModel> openedItems;
+        private IRegionManager regionManager;
         private IUnityContainer container;
-        private PluginFactory pluginFactory;
         private IEnumerable<IPlugin> Plugins;
+        private ObservableCollection<IPluggableViewModel> openedItems;
+        private PluginFactory pluginFactory;
         private bool hasAnyPlugins;
-
+        
         #endregion
 
         #region properties
@@ -47,9 +49,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public ContentViewModel(IEventAggregator eventAggregator, IUnityContainer container, PluginFactory pluginFactory) : base(eventAggregator) {
+        public ContentViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, IUnityContainer container, PluginFactory pluginFactory) : base(eventAggregator) {
             Items = new ObservableCollection<IPluggableViewModel>();
             SelectedItem = null;
+            this.regionManager = regionManager;
             this.container = container;
             this.pluginFactory = pluginFactory;
 
@@ -62,6 +65,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region methods
 
         protected override void InitEvents() {
+            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnItemOpened);
             eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnProjectChosen);
             eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnScenarioChosen);
             eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnTestSuiteChosen);
@@ -75,6 +79,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #endregion
 
         #region event handlers
+
+        private void OnItemOpened(ItemChosenEventDescriptor obj) {
+            //regionManager.RequestNavigate()
+        }
 
         private void OnItemClose(string identity) {
             var vm = Items.First(item => item.Identity == identity);
@@ -96,7 +104,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                         projectVm.Project = project;
 
                         if (!Items.Any(openedProject => openedProject.Equals(projectVm))) {
-                            OnItemAdded(projectVm);
+                            ItemAdded(projectVm);
                         }
                     }
                 }
@@ -105,7 +113,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnScenarioChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.SCENARIO) {
-                var scenario = container.Resolve<IRepository<Scenario, Project>>().GetEntity(evtDescriptor.Id);
+                var scenario = container.Resolve<IRepository<Scenario>>().GetEntity(evtDescriptor.Id);
 
                 if (scenario != null) {
                     int itemIndex = GetItemIndex<ScenarioViewModel>(vm => vm != null && vm.Id == scenario.Id);
@@ -116,7 +124,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                         scenarioVm.Scenario = scenario;
 
                         if (!Items.Any(openedScenario => openedScenario.Equals(scenarioVm))) {
-                            OnItemAdded(scenarioVm);
+                            ItemAdded(scenarioVm);
                         }
                     }
                 }
@@ -125,8 +133,8 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnTestSuiteChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.TEST) {
-                var testSuite = container.Resolve<IRepository<Test, Scenario>>().GetEntity(evtDescriptor.Id);
-                
+                var testSuite = container.Resolve<IRepository<Test>>().GetEntity(evtDescriptor.Id);
+
                 if (testSuite != null) {
                     int itemIndex = GetItemIndex<TestViewModel>((vm) => { return vm != null && vm.Id == testSuite.Id; });
 
@@ -136,7 +144,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                         testSuiteVm.Test = testSuite;
 
                         if (!Items.Any(openedProject => openedProject.Equals(testSuiteVm))) {
-                            OnItemAdded(testSuiteVm);
+                            ItemAdded(testSuiteVm);
                         }
                     }
                 }
@@ -145,7 +153,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         private void OnStepChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.STEP) {
-                var step = container.Resolve<IRepository<Step, Test>>().GetEntity(evtDescriptor.Id);
+                var step = container.Resolve<IRepository<Step>>().GetEntity(evtDescriptor.Id);
 
                 if (step != null) {
                     int itemIndex = GetItemIndex<StepViewModel>((vm) => { return vm != null && vm.Id == step.Id; });
@@ -156,14 +164,18 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                         stepVm.Step = step;
 
                         if (!Items.Any(openedProject => openedProject.Equals(stepVm))) {
-                            OnItemAdded(stepVm);
+                            ItemAdded(stepVm);
                         }
                     }
                 }
             }
         }
 
-        private void OnItemAdded(IPluggableViewModel newItem) {
+        #endregion
+
+        #region methods
+
+        private void ItemAdded(IPluggableViewModel newItem) {
             FillDefaultViewProperties(newItem);
 
             if (hasAnyPlugins) {
@@ -174,10 +186,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
             SelectedItem = newItem;
         }
-
-        #endregion
-
-        #region methods
 
         private void RunPlugins(IPluggableViewModel item) {
             var viewModels = new List<IPluggableViewModel>();

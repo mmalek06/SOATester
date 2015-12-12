@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories {
-    public abstract class Repository<T, K> : SimpleRepository<T>, IRepository<T, K> {
+    public abstract class Repository<T> : SimpleRepository<T>, IRepository<T> {
 
         #region fields
 
@@ -12,10 +12,6 @@ namespace SOATester.Modules.ContentModule.Repositories {
         #endregion
 
         #region public methods
-
-        public IEnumerable<T> GetEntitiesByParent(K parent) {
-            return GetEntitiesByParent(GetParentId(parent));
-        }
 
         public IEnumerable<T> GetEntitiesByParent(int parentId) {
             if (cacheByParent.ContainsKey(parentId)) {
@@ -57,8 +53,6 @@ namespace SOATester.Modules.ContentModule.Repositories {
         protected abstract IQueryable<T> GetByParentEntityQuery(int parentId, SoaTesterContext ctx);
 
         protected abstract int GetId(T entity);
-
-        protected abstract int GetParentId(K parent);
 
         protected abstract int GetParentId(T entity);
 

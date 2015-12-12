@@ -3,7 +3,7 @@ using SOATester.Entities;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Repositories {
-    public class TestsRepository : Repository<Test, Scenario> {
+    public class TestsRepository : Repository<Test> {
 
         #region methods
 
@@ -21,10 +21,6 @@ namespace SOATester.Modules.ContentModule.Repositories {
 
         protected override int GetId(Test entity) {
             return entity.Id;
-        }
-
-        protected override int GetParentId(Scenario parent) {
-            return parent.Id;
         }
 
         protected override int GetParentId(Test entity) {

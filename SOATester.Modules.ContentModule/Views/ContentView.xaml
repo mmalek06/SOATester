@@ -12,6 +12,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <TabControl ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" Name="ContentTabs">
+    <!--<TabControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentTabsRegion}">-->
         <TabControl.Resources>
             <Style TargetType="TabItem">
                 <Setter Property="Padding" Value="0" />

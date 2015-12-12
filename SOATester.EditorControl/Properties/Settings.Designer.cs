@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SOATester.TextEditor.Properties
+namespace SOATester.EditorControl.Properties
 {
     
     

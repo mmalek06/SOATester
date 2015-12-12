@@ -2,7 +2,6 @@
 using Prism.Regions;
 using SOATester.Entities;
 using SOATester.Infrastructure;
-using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.Plugins;
 using SOATester.Modules.ContentModule.Repositories;
 using SOATester.Modules.ContentModule.ViewModels;
@@ -25,9 +24,9 @@ namespace SOATester.Modules.ContentModule {
         protected override void InitializeRepositories() {
             if (AppMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
                 container.RegisterType<ISimpleRepository<Project>, Repositories.ProjectsRepository>();
-                container.RegisterType<IRepository<Scenario, Project>, Repositories.ScenariosRepository>();
-                container.RegisterType<IRepository<Test, Scenario>, Repositories.TestsRepository>();
-                container.RegisterType<IRepository<Step, Test>, Repositories.StepsRepository>();
+                container.RegisterType<IRepository<Scenario>, Repositories.ScenariosRepository>();
+                container.RegisterType<IRepository<Test>, Repositories.TestsRepository>();
+                container.RegisterType<IRepository<Step>, Repositories.StepsRepository>();
             } else {
                 /*container.RegisterType<ISimpleRepository<Project>, Repositories.Mock.ProjectsRepository>();
                 container.RegisterType<IRepository<Scenario, Project>, Repositories.Mock.ScenariosRepository>();

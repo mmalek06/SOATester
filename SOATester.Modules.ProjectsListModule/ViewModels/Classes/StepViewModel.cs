@@ -1,7 +1,9 @@
-﻿using Prism.Events;
+﻿using Microsoft.Practices.Unity;
+using Prism.Events;
+using SOATester.Infrastructure.ViewModels;
 
 namespace SOATester.Modules.ProjectsListModule.ViewModels {
-    public class StepViewModel : ItemViewModel {
+    public class StepViewModel : HierarchicalViewModel<object> {
 
         #region constructors and destructors
 

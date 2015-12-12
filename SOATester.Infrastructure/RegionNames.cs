@@ -4,5 +4,6 @@
         public static string MainMenuRegion = "MainMenuRegion";
         public static string ProjectsRegion = "ProjectsRegion";
         public static string ContentRegion = "ContentRegion";
+        public static string ContentTabsRegion = "ContentTabsRegion";
     }
 }

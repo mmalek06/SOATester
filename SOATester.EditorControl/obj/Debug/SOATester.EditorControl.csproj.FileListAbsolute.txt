@@ -1,0 +1,7 @@
+E:\projekty\cs\SOATester\SOATester.EditorControl\bin\Debug\SOATester.EditorControl.dll
+E:\projekty\cs\SOATester\SOATester.EditorControl\bin\Debug\SOATester.EditorControl.pdb
+E:\projekty\cs\SOATester\SOATester.EditorControl\obj\Debug\SOATester.EditorControl.csprojResolveAssemblyReference.cache
+E:\projekty\cs\SOATester\SOATester.EditorControl\obj\Debug\SOATester.EditorControl.Properties.Resources.resources
+E:\projekty\cs\SOATester\SOATester.EditorControl\obj\Debug\SOATester.EditorControl.csproj.GenerateResource.Cache
+E:\projekty\cs\SOATester\SOATester.EditorControl\obj\Debug\SOATester.EditorControl.dll
+E:\projekty\cs\SOATester\SOATester.EditorControl\obj\Debug\SOATester.EditorControl.pdb
