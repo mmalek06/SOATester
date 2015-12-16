@@ -1,9 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Regions;
-using SOATester.Entities;
 using SOATester.Infrastructure;
 using SOATester.Modules.ContentModule.Plugins;
-using SOATester.Modules.ContentModule.Repositories;
+using SOATester.Modules.ContentModule.Services;
 using SOATester.Modules.ContentModule.ViewModels;
 using SOATester.Modules.ContentModule.Views;
 using SOATester.RestCommunication;
@@ -23,10 +22,10 @@ namespace SOATester.Modules.ContentModule {
 
         protected override void InitializeRepositories() {
             if (AppMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
-                container.RegisterType<ISimpleRepository<Project>, Repositories.ProjectsRepository>();
-                container.RegisterType<IRepository<Scenario>, Repositories.ScenariosRepository>();
-                container.RegisterType<IRepository<Test>, Repositories.TestsRepository>();
-                container.RegisterType<IRepository<Step>, Repositories.StepsRepository>();
+                container.RegisterType<IProjectsService, ProjectsService>();
+                container.RegisterType<IScenariosService, ScenariosService>();
+                container.RegisterType<ITestsService, ITestsService>();
+                container.RegisterType<IStepsService, StepsService>();
             } else {
                 /*container.RegisterType<ISimpleRepository<Project>, Repositories.Mock.ProjectsRepository>();
                 container.RegisterType<IRepository<Scenario, Project>, Repositories.Mock.ScenariosRepository>();
@@ -68,11 +67,11 @@ namespace SOATester.Modules.ContentModule {
 
         protected override void InitializeViews() {
             container.RegisterType<MainMenuView>();
-            container.RegisterType<ProjectView>();
             container.RegisterType<ContentView>();
-            container.RegisterType<ScenarioView>();
-            container.RegisterType<StepView>();
-            container.RegisterType<TestView>();
+            container.RegisterType<object, ProjectView>(typeof(ProjectView).Name.ToString());
+            container.RegisterType<object, ScenarioView>(typeof(ScenarioView).Name.ToString());
+            container.RegisterType<object, StepView>(typeof(StepView).Name.ToString());
+            container.RegisterType<object, TestView>(typeof(TestView).Name.ToString());
         }
 
         protected override void InitializeRegions() {

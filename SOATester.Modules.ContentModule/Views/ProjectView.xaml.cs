@@ -20,8 +20,10 @@ namespace SOATester.Modules.ContentModule.Views {
     /// Interaction logic for ProjectView.xaml
     /// </summary>
     public partial class ProjectView : UserControl {
-        public ProjectView() {
+        public ProjectView(ProjectViewModel vm) {
             InitializeComponent();
+
+            DataContext = vm;
         }
     }
 }

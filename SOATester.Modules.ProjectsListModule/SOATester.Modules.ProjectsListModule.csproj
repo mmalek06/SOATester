@@ -105,15 +105,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Repositories\Interfaces\IProjectsRepository.cs" />
-    <Compile Include="Repositories\Classes\ProjectsRepository.cs" />
-    <Compile Include="ViewModels\Builders\HierarchicalViewModelBuilder.cs" />
-    <Compile Include="ViewModels\AbstractClasses\HierarchicalViewModel.cs" />
+    <Compile Include="Factories\Classes\ProjectsFactory.cs" />
+    <Compile Include="Factories\Interfaces\IProjectsFactory.cs" />
     <Compile Include="ViewModels\Classes\ProjectsViewModel.cs" />
     <Compile Include="ViewModels\Classes\ProjectViewModel.cs" />
     <Compile Include="ViewModels\Classes\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\Classes\StepViewModel.cs" />
     <Compile Include="ViewModels\Classes\TestViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IHierarchicalViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IIdentifiableViewModel.cs" />
     <Compile Include="Views\ProjectsView.xaml.cs">
       <DependentUpon>ProjectsView.xaml</DependentUpon>
     </Compile>

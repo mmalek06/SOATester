@@ -11,8 +11,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <TabControl ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" Name="ContentTabs">
-    <!--<TabControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentTabsRegion}">-->
+    <!--<TabControl ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" Name="ContentTabs">-->
+    <TabControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentTabsRegion}">
         <TabControl.Resources>
             <Style TargetType="TabItem">
                 <Setter Property="Padding" Value="0" />
@@ -33,26 +33,5 @@
                 </DockPanel>
             </DataTemplate>
         </TabControl.ItemTemplate>
-
-        <TabControl.ContentTemplate>
-            <DataTemplate>
-                <ContentControl Content="{Binding}">
-                    <ContentControl.Resources>
-                        <DataTemplate DataType="{x:Type ViewModels:ProjectViewModel}">
-                            <Partials:ProjectView DataContext="{Binding Path=.}" />
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type ViewModels:ScenarioViewModel}">
-                            <Partials:ScenarioView DataContext="{Binding Path=.}" />
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type ViewModels:TestViewModel}">
-                            <Partials:TestView DataContext="{Binding Path=.}" />
-                        </DataTemplate>
-                        <DataTemplate DataType="{x:Type ViewModels:StepViewModel}">
-                            <Partials:StepView DataContext="{Binding Path=.}" />
-                        </DataTemplate>
-                    </ContentControl.Resources>
-                </ContentControl>
-            </DataTemplate>
-        </TabControl.ContentTemplate>
     </TabControl>    
 </UserControl>

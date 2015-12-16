@@ -5,11 +5,17 @@ using System.Collections.Generic;
 
 namespace SOATester.Infrastructure.IOC {
     public class TypedParametersOverride : ResolverOverride {
-        private readonly Dictionary<Type, InjectionParameterValue> parameterValues;
+        private readonly Dictionary<Type, InjectionParameterValue> parameterValues = new Dictionary<Type, InjectionParameterValue>();
+
+        public TypedParametersOverride(object parameterValue, Type asType) {
+            parameterValues[asType] = InjectionParameterValue.ToParameter(parameterValue);
+        }
+
+        public TypedParametersOverride(object parameterValue) {
+            parameterValues[parameterValue.GetType()] = InjectionParameterValue.ToParameter(parameterValue);
+        }
 
         public TypedParametersOverride(IEnumerable<object> parameterValues) {
-            this.parameterValues = new Dictionary<Type, InjectionParameterValue>();
-
             foreach (var parameterValue in parameterValues) {
                 this.parameterValues[parameterValue.GetType()] = InjectionParameterValue.ToParameter(parameterValue);
             }

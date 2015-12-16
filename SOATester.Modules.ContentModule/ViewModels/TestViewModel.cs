@@ -1,17 +1,16 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Events;
+﻿using Prism.Regions;
 using SOATester.Entities;
-using SOATester.RestCommunication.Base;
-using System.Collections.Generic;
+using SOATester.Infrastructure.Events;
+using SOATester.Modules.ContentModule.Services;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class TestViewModel : RunnableViewModel<Test>, IPluggableViewModel {
+    public class TestViewModel : PluggableViewModel, INavigationAware {
 
         #region fields
 
         private Test test;
         private string name;
-        private Dictionary<string, object> viewProperties;
+        private ITestsService testsService;
 
         #endregion
 
@@ -26,38 +25,40 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        public string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
+        public override string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
 
-        public int Importance => 3;
+        public override int Importance => 3;
 
-        public int Id => test.Id;
+        public override int Id => test.Id;
 
-        public int ParentId => test.ScenarioId;
+        public override int ParentId => test.ScenarioId;
 
-        public int TopmostParentId => test.Scenario.ProjectId;
-
-        public IDictionary<string, object> ViewProperties => viewProperties;
+        public override int TopmostParentId => test.Scenario.ProjectId;
 
         public string Name {
             get { return name ?? test.Name; }
             set { SetProperty(ref name, value); }
         }
 
-        #endregion
-
-        #region constructors and destructors
-
-        public TestViewModel(IEventAggregator eventAggregator, IUnityContainer container, ITestsRunner runner) : base(eventAggregator, container, runner) {
-            viewProperties = new Dictionary<string, object>();
+        protected override ChosenItemType MyType {
+            get { return ChosenItemType.TEST; }
         }
 
         #endregion
 
-        #region event handlers
+        #region constructors and destructors
 
-        protected override void Run() => runner.RunAsync(Test);
-        protected override void Stop() => runner.StopAsync(Test);
-        protected override void Pause() => runner.PauseAsync(Test);
+        public TestViewModel(ITestsService testsService) : base() {
+            this.testsService = testsService;
+        }
+
+        #endregion
+
+        #region methods
+
+        protected override void SetItem(ItemChosenEventDescriptor descriptor) {
+            Test = testsService.Get(descriptor.Id);
+        }
 
         #endregion
 

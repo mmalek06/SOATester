@@ -1,22 +1,20 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Events;
-using SOATester.Entities;
-using SOATester.RestCommunication.Base;
-using System.Collections.Generic;
+﻿using SOATester.Entities;
+using SOATester.Infrastructure.Events;
+using SOATester.Modules.ContentModule.Services;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class StepViewModel : RunnableViewModel<Step>, IPluggableViewModel {
+    public class StepViewModel : PluggableViewModel {
 
         #region fields
 
         private Step step;
         private string name;
-        private Dictionary<string, object> viewProperties;
+        private IStepsService stepsService;
 
         #endregion
 
         #region properties
-        
+
         public Step Step {
             get { return step; }
             set {
@@ -26,45 +24,39 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        public string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
+        public override string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
 
-        public int Importance => 4;
+        public override int Importance => 4;
 
-        public int Id => step.Id;
+        public override int Id => step.Id;
 
-        public int ParentId => step.TestId;
+        public override int ParentId => step.TestId;
 
-        public int TopmostParentId => step.Test.Scenario.ProjectId;
-
-        public IDictionary<string, object> ViewProperties => viewProperties;
+        public override int TopmostParentId => step.Test.Scenario.ProjectId;
 
         public string Name {
             get { return name ?? step.Name; }
             set { SetProperty(ref name, value); }
         }
 
+        protected override ChosenItemType MyType {
+            get { return ChosenItemType.STEP; }
+        }
+
         #endregion
 
         #region constructors and destructors
 
-        public StepViewModel(IEventAggregator eventAggregator, IUnityContainer container, IStepsRunner runner) : base(eventAggregator, container, runner) {
-            viewProperties = new Dictionary<string, object>();
+        public StepViewModel(IStepsService stepsService) : base() {
+            this.stepsService = stepsService;
         }
 
         #endregion
 
-        #region event handlers 
+        #region methods
 
-        protected override void Run() {
-            runner.RunAsync(Step);
-        }
-
-        protected override void Stop() {
-            runner.StopAsync(Step);
-        }
-
-        protected override void Pause() {
-            runner.PauseAsync(Step);
+        protected override void SetItem(ItemChosenEventDescriptor descriptor) {
+            Step = stepsService.Get(descriptor.Id);
         }
 
         #endregion

@@ -31,7 +31,7 @@
         </HierarchicalDataTemplate>
     </UserControl.Resources>
 
-    <TreeView HorizontalAlignment="Stretch" ItemsSource="{Binding Projects, UpdateSourceTrigger=PropertyChanged}" 
+    <TreeView HorizontalAlignment="Stretch" ItemsSource="{Binding Tree, UpdateSourceTrigger=PropertyChanged}" 
               ItemTemplate="{StaticResource ProjectsOverview}" Width="200">
         <TreeView.ItemContainerStyle>
             <Style TargetType="{x:Type TreeViewItem}">

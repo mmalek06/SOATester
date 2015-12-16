@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SOATester.Modules.ContentModule.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,10 @@ namespace SOATester.Modules.ContentModule.Views {
     /// Interaction logic for ScenarioView.xaml
     /// </summary>
     public partial class ScenarioView : UserControl {
-        public ScenarioView() {
+        public ScenarioView(ScenarioViewModel vm) {
             InitializeComponent();
+
+            DataContext = vm;
         }
     }
 }

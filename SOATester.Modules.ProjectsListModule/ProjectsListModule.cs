@@ -1,9 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Regions;
 using SOATester.Infrastructure;
-using SOATester.Modules.ProjectsListModule.Repositories;
+using SOATester.Modules.ProjectsListModule.Factories;
 using SOATester.Modules.ProjectsListModule.ViewModels;
-using SOATester.Modules.ProjectsListModule.ViewModels.Builders;
 using SOATester.Modules.ProjectsListModule.Views;
 
 namespace SOATester.Modules.ProjectsListModule {
@@ -18,9 +17,7 @@ namespace SOATester.Modules.ProjectsListModule {
         #region non public methods
 
         protected override void InitializeRepositories() {
-            if (AppMode == Infrastructure.ConfigurationEnums.AppMode.RUN) {
-                container.RegisterInstance<IProjectsRepository>(new ProjectsRepository());
-            }
+            
         }
 
         protected override void InitializeViews() {
@@ -29,7 +26,7 @@ namespace SOATester.Modules.ProjectsListModule {
 
         protected override void InitializeViewModels() {
             // register utility classes
-            container.RegisterType<HierarchicalViewModelBuilder>();
+            container.RegisterType<IProjectsFactory, ProjectsFactory>();
 
             // register view models
             //container.RegisterInstance<ProjectsViewModel>(container.Resolve<HierarchicalViewModelBuilder>().Build());

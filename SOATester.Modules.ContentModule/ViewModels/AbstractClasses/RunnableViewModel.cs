@@ -10,7 +10,6 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region fields
 
         protected IRunner<T> runner;
-        protected IUnityContainer container;
 
         #endregion
 
@@ -24,8 +23,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public RunnableViewModel(IEventAggregator eventAggregator, IUnityContainer container, IRunner<T> runner) : base(eventAggregator) {
-            this.container = container;
+        public RunnableViewModel(IRunner<T> runner) : base() {
             this.runner = runner;
         }
 

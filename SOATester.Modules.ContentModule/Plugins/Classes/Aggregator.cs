@@ -32,10 +32,10 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region public methods
 
-        public IEnumerable<IPluggableViewModel> Execute(IEnumerable<IPluggableViewModel> viewModels) {
+        public IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels) {
             if (viewModels != null) {
                 var groups = viewModels.GroupBy(vm => vm.GetType()).OrderBy(group => group.First().Importance);
-                var dictionaries = new List<Dictionary<int, IPluggableViewModel>>();
+                var dictionaries = new List<Dictionary<int, PluggableViewModel>>();
                 var lastLookup = new Dictionary<int, IndexedViewModel>();
 
                 foreach (var group in groups) {
@@ -60,7 +60,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region methods
 
-        private MatchingResult Match(IEnumerable<IPluggableViewModel> group, Dictionary<int, IndexedViewModel> lookup) {
+        private MatchingResult Match(IEnumerable<PluggableViewModel> group, Dictionary<int, IndexedViewModel> lookup) {
             if (group.First().Importance == 1) {
                 return MatchRoot(group);
             } else {
@@ -68,8 +68,8 @@ namespace SOATester.Modules.ContentModule.Plugins {
             }
         }
 
-        private MatchingResult MatchRoot(IEnumerable<IPluggableViewModel> group) {
-            var proxiesWithKeys = new Dictionary<int, IPluggableViewModel>();
+        private MatchingResult MatchRoot(IEnumerable<PluggableViewModel> group) {
+            var proxiesWithKeys = new Dictionary<int, PluggableViewModel>();
             var lookup = new Dictionary<int, IndexedViewModel>();
             int stepSize = (int)Math.Pow(10, MAX_10TH_POWER - group.First().Importance);
             int step = stepSize;
@@ -90,8 +90,8 @@ namespace SOATester.Modules.ContentModule.Plugins {
             };
         }
 
-        private MatchingResult MatchChild(IEnumerable<IPluggableViewModel> group, Dictionary<int, IndexedViewModel> lookup) {
-            var proxiesWithKeys = new Dictionary<int, IPluggableViewModel>();
+        private MatchingResult MatchChild(IEnumerable<PluggableViewModel> group, Dictionary<int, IndexedViewModel> lookup) {
+            var proxiesWithKeys = new Dictionary<int, PluggableViewModel>();
             var localLookup = new Dictionary<int, IndexedViewModel>();
             var counts = new Dictionary<int, int>();
             int maxUnboundIdx = (int)Math.Pow(10, MAX_10TH_POWER - group.First().Importance + 1);
@@ -141,13 +141,13 @@ namespace SOATester.Modules.ContentModule.Plugins {
         #region classes
 
         private struct MatchingResult {
-            public Dictionary<int, IPluggableViewModel> Mapping { get; set; }
+            public Dictionary<int, PluggableViewModel> Mapping { get; set; }
             public Dictionary<int, IndexedViewModel> Lookup { get; set; }
         }
 
         private struct IndexedViewModel {
             public int Index { get; set; }
-            public IPluggableViewModel ViewModel { get; set; }
+            public PluggableViewModel ViewModel { get; set; }
         }
 
         #endregion

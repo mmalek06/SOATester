@@ -1,14 +1,12 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Commands;
-using Prism.Events;
+﻿using Prism.Commands;
 using SOATester.Entities;
-using SOATester.RestCommunication.Base;
+using SOATester.Infrastructure.Events;
+using SOATester.Modules.ContentModule.Services;
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ProjectViewModel : RunnableViewModel<Project>, IPluggableViewModel {
+    public class ProjectViewModel : PluggableViewModel {
 
         #region fields
 
@@ -16,7 +14,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         private string name;
         private Uri address;
         private ObservableCollection<RequestHeader> parameters;
-        private Dictionary<string, object> viewProperties;
+        private IProjectsService projectsService;
 
         #endregion
 
@@ -24,24 +22,18 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         public Project Project {
             get { return project; }
-            set {
-                if (project == null) {
-                    SetProperty(ref project, value);
-                }
-            }
+            protected set { SetProperty(ref project, value); }
         }
 
-        public string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
+        public override string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
 
-        public int Importance => 1;
+        public override int Importance => 1;
 
-        public int Id => project.Id;
+        public override int Id => project.Id;
 
-        public int ParentId => project.Id;
+        public override int ParentId => project.Id;
 
-        public int TopmostParentId => project.Id;
-
-        public IDictionary<string, object> ViewProperties => viewProperties;
+        public override int TopmostParentId => project.Id;
 
         public string Name {
             get { return name ?? Project.Name; }
@@ -67,7 +59,11 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             get { return parameters; }
             set { SetProperty(ref parameters, value); }
         }
-        
+
+        protected override ChosenItemType MyType {
+            get { return ChosenItemType.PROJECT; }
+        }
+
         #endregion
 
         #region commands
@@ -78,8 +74,8 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public ProjectViewModel(IEventAggregator eventAggregator, IUnityContainer container, IProjectsRunner runner) : base(eventAggregator, container, runner) {
-            viewProperties = new Dictionary<string, object>();
+        public ProjectViewModel(IProjectsService projectsService) : base() {
+            this.projectsService = projectsService;
         }
 
         #endregion
@@ -96,24 +92,16 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             SaveAddress = new DelegateCommand<string>(OnSaveAddress);
         }
 
+        protected override void SetItem(ItemChosenEventDescriptor descriptor) {
+            Project = projectsService.Get(descriptor.Id);
+        }
+
         #endregion
 
         #region event handlers
 
         private void OnSaveAddress(string address) {
             Address = new Uri(address);
-        }
-
-        protected async override void Run() {
-            var result = await runner.RunAsync(Project);
-        }
-
-        protected async override void Stop() {
-            await runner.StopAsync(Project);
-        }
-
-        protected async override void Pause() {
-            await runner.PauseAsync(Project);
         }
 
         #endregion

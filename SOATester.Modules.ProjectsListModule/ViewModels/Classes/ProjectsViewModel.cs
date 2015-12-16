@@ -3,8 +3,7 @@ using Prism.Commands;
 using Prism.Events;
 using SOATester.Infrastructure.Events;
 using SOATester.Infrastructure.ViewModels;
-using SOATester.Modules.ProjectsListModule.Repositories;
-using SOATester.Modules.ProjectsListModule.ViewModels.Builders;
+using SOATester.Modules.ProjectsListModule.Factories;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -16,20 +15,17 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
         #region fields
 
         private static object lockObj = new object();
-        private ObservableCollection<ProjectViewModel> projects;
-        private IUnityContainer container;
+        private ObservableCollection<IIdentifiableViewModel> tree;
+        private IEventAggregator eventAggregator;
+        private IProjectsFactory projectsFactory;
 
         #endregion
 
         #region properties
 
-        public ObservableCollection<ProjectViewModel> Projects {
-            get {
-                return projects;
-            }
-            private set {
-                SetProperty(ref projects, value);
-            }
+        public ObservableCollection<IIdentifiableViewModel> Tree {
+            get { return tree; }
+            private set { SetProperty(ref tree, value); }
         }
 
         #endregion
@@ -45,8 +41,9 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
 
         #region constructors and destructors
 
-        public ProjectsViewModel(IEventAggregator eventAggregator, IUnityContainer container) : base(eventAggregator) {
-            this.container = container;
+        public ProjectsViewModel(IEventAggregator eventAggregator, IProjectsFactory projectsFactory) : base() {
+            this.eventAggregator = eventAggregator;
+            this.projectsFactory = projectsFactory;
 
             InitComponent();
         }
@@ -56,7 +53,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
         #region methods
         
         protected override void InitCollections() {
-            Projects = new ObservableCollection<ProjectViewModel>();
+            Tree = new ObservableCollection<IIdentifiableViewModel>();
         }
 
         protected override void InitCommands() {
@@ -99,17 +96,15 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
         }
 
         private async Task InitProjectsAsync() {
-            var repository = container.Resolve<IProjectsRepository>();
-            var viewModels = new List<ProjectViewModel>();
+            var viewModels = new List<IIdentifiableViewModel>();
             
-            await repository.LoadProjectsAsync();
             await Task.Run(() => {
-                var vmBuilder = container.Resolve<HierarchicalViewModelBuilder>();
+                var vmHierarchy = projectsFactory.GetTreeStructure();
 
-                viewModels.AddRange(vmBuilder.Build());
+                viewModels.AddRange(vmHierarchy);
             });
 
-            Projects.AddRange(viewModels);
+            Tree.AddRange(viewModels);
         }
 
         #endregion

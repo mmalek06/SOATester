@@ -1,13 +1,12 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Events;
+﻿using Prism.Regions;
 using SOATester.Entities;
 using SOATester.Infrastructure.Enums;
-using SOATester.RestCommunication.Base;
+using SOATester.Infrastructure.Events;
+using SOATester.Modules.ContentModule.Services;
 using System;
-using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ScenarioViewModel : RunnableViewModel<Scenario>, IPluggableViewModel {
+    public class ScenarioViewModel : PluggableViewModel, INavigationAware {
 
         #region fields
 
@@ -15,8 +14,8 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         private string name;
         private Uri address;
         private Protocol? protocol;
-        private Dictionary<string, object> viewProperties;
-                
+        private IScenariosService scenariosService;
+
         #endregion
 
         #region properties
@@ -30,17 +29,15 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             }
         }
 
-        public string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
+        public override string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
 
-        public int Importance => 2;
+        public override int Importance => 2;
 
-        public int Id => scenario.Id;
+        public override int Id => scenario.Id;
 
-        public int ParentId => scenario.ProjectId;
+        public override int ParentId => scenario.ProjectId;
 
-        public int TopmostParentId => scenario.ProjectId;
-
-        public IDictionary<string, object> ViewProperties => viewProperties;
+        public override int TopmostParentId => scenario.ProjectId;
 
         public string Name {
             get { return name ?? scenario.Name; }
@@ -63,28 +60,24 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             set { SetProperty(ref protocol, value); }
         }
 
+        protected override ChosenItemType MyType {
+            get { return ChosenItemType.SCENARIO; }
+        }
+
         #endregion
 
         #region constructors and destructors
 
-        public ScenarioViewModel(IEventAggregator eventAggregator, IUnityContainer container, IScenariosRunner runner) : base(eventAggregator, container, runner) {
-            viewProperties = new Dictionary<string, object>();
+        public ScenarioViewModel(IScenariosService scenariosService) : base() {
+            this.scenariosService = scenariosService;
         }
 
         #endregion
 
-        #region event handlers
+        #region methods
 
-        protected override void Run() {
-            runner.RunAsync(Scenario);
-        }
-
-        protected override void Stop() {
-            runner.StopAsync(Scenario);
-        }
-
-        protected override void Pause() {
-            runner.PauseAsync(Scenario);
+        protected override void SetItem(ItemChosenEventDescriptor descriptor) {
+            Scenario = scenariosService.Get(descriptor.Id);
         }
 
         #endregion

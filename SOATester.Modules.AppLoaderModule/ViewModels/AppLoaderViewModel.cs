@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Events;
+﻿using Prism.Events;
 using SOATester.Infrastructure.Events;
 using SOATester.Infrastructure.ViewModels;
 using System.Collections.ObjectModel;
@@ -16,7 +15,6 @@ namespace SOATester.Modules.AppLoaderModule.ViewModels {
         private int percentPerOperation;
         private ObservableCollection<string> runningOperations;
         private IList<StartupEventDescriptor> runningActivities;
-        private IUnityContainer container;
 
         #endregion
 
@@ -36,13 +34,12 @@ namespace SOATester.Modules.AppLoaderModule.ViewModels {
 
         #region constructors and destructors
 
-        public AppLoaderViewModel(IEventAggregator eventAggregator, IUnityContainer container) : base(eventAggregator) {
+        public AppLoaderViewModel(IEventAggregator eventAggregator) : base(eventAggregator) {
             Progress = 0;
             totalOperationsToRun = 2;
             percentPerOperation = 100 / totalOperationsToRun;
             runningActivities = new List<StartupEventDescriptor>();
             RunningOperations = new ObservableCollection<string>();
-            this.container = container;
         }
 
         #endregion

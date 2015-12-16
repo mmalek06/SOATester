@@ -15,7 +15,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region methods
 
-        IEnumerable<IPluggableViewModel> Execute(IEnumerable<IPluggableViewModel> parameter);
+        IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> parameter);
 
         #endregion
 

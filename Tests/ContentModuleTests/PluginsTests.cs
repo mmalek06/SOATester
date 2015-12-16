@@ -15,7 +15,7 @@ namespace Tests {
         [TestMethod]
         public void Test_AggregateStrategy_NONE() {
             var plugin = _getAggregateNonePlugin();
-            var unorderedViewModels = viewModels.Cast<IPluggableViewModel>();
+            var unorderedViewModels = viewModels.Cast<PluggableViewModel>();
             var orderedViewModels = plugin.Execute(unorderedViewModels);
             var orderingReference = GetOrderingReference(unorderedViewModels);
 
@@ -38,8 +38,8 @@ namespace Tests {
             return plugins.FirstOrDefault(plugin => plugin.PluginKey == PluginKey.AGGREGATOR && plugin.Strategy == Strategy.NONE);
         }
 
-        private IEnumerable<IPluggableViewModel> GetOrderingReference(IEnumerable<IPluggableViewModel> unorderedWrappedViewModels) {
-            var result = (new List<IPluggableViewModel> {
+        private IEnumerable<PluggableViewModel> GetOrderingReference(IEnumerable<PluggableViewModel> unorderedWrappedViewModels) {
+            var result = (new List<PluggableViewModel> {
                 // ProjectViewModel
                 unorderedWrappedViewModels.FirstOrDefault(viewModel => {
                     if (viewModel is ProjectViewModel) {

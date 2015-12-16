@@ -34,7 +34,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region public methods
 
-        public IEnumerable<IPluggableViewModel> Execute(IEnumerable<IPluggableViewModel> viewModels) {
+        public IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels) {
             if (viewModels != null) {
                 var groups = viewModels.GroupBy(vm => vm.GetType()).OrderBy(group => group.First().Importance);
                 var rand = new Random();
@@ -62,7 +62,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region methods
 
-        private void SetParentColor(IPluggableViewModel viewModel, Random rand, Dictionary<int, Color> colorMap) {
+        private void SetParentColor(PluggableViewModel viewModel, Random rand, Dictionary<int, Color> colorMap) {
             object brush;
             bool isBrushAvailable = viewModel.ViewProperties.TryGetValue("Brush", out brush);
 
@@ -81,7 +81,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
             }
         }
 
-        private void SetChildColor(IPluggableViewModel viewModel, Random rand, Dictionary<int, Color> parentMap, Dictionary<int, Color> childMap) {
+        private void SetChildColor(PluggableViewModel viewModel, Random rand, Dictionary<int, Color> parentMap, Dictionary<int, Color> childMap) {
             Color color;
             object brush;
             bool isBrushAvailable = viewModel.ViewProperties.TryGetValue("Brush", out brush);

@@ -102,20 +102,16 @@
     <Compile Include="Plugins\Interfaces\IPlugin.cs" />
     <Compile Include="Plugins\Enums.cs" />
     <Compile Include="Plugins\PluginFactory.cs" />
-    <Compile Include="Repositories\AbstractClasses\Repository.cs" />
-    <Compile Include="Repositories\Interfaces\ISimpleRepository.cs" />
-    <Compile Include="Repositories\Interfaces\IRepository.cs" />
-    <Compile Include="Repositories\AbstractClasses\SimpleRepository.cs" />
-    <Compile Include="Repositories\Mock\Base\MockRepository.cs" />
-    <Compile Include="Repositories\Mock\ProjectsRepository.cs" />
-    <Compile Include="Repositories\Mock\ScenariosRepository.cs" />
-    <Compile Include="Repositories\Mock\StepsRepository.cs" />
-    <Compile Include="Repositories\Mock\TestsRepository.cs" />
-    <Compile Include="Repositories\Classes\ProjectsRepository.cs" />
-    <Compile Include="Repositories\Classes\ScenariosRepository.cs" />
-    <Compile Include="Repositories\Classes\StepsRepository.cs" />
-    <Compile Include="Repositories\Classes\TestsRepository.cs" />
-    <Compile Include="ViewModels\Interfaces\IPluggableViewModel.cs" />
+    <Compile Include="Services\Classes\ProjectsService.cs" />
+    <Compile Include="Services\Classes\ScenariosService.cs" />
+    <Compile Include="Services\Classes\StepsService.cs" />
+    <Compile Include="Services\Classes\TestsService.cs" />
+    <Compile Include="Services\Interfaces\IProjectsService.cs" />
+    <Compile Include="Services\Interfaces\IScenariosService.cs" />
+    <Compile Include="Services\Interfaces\IService.cs" />
+    <Compile Include="Services\Interfaces\IStepsService.cs" />
+    <Compile Include="Services\Interfaces\ITestsService.cs" />
+    <Compile Include="ViewModels\AbstractClasses\PluggableViewModel.cs" />
     <Compile Include="ViewModels\AbstractClasses\RunnableViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
@@ -216,7 +212,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)*.dll" "$(SolutionDir)\bin\$(ConfigurationName)\" /Y

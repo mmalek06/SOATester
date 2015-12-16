@@ -1,27 +1,25 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
-using SOATester.Entities;
+using SOATester.Infrastructure;
 using SOATester.Infrastructure.Events;
 using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ContentModule.Plugins;
-using SOATester.Modules.ContentModule.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
     public class ContentViewModel : ViewModelBase {
 
         #region fields
 
-        private IPluggableViewModel selectedItem;
+        private PluggableViewModel selectedItem;
         private IRegionManager regionManager;
-        private IUnityContainer container;
         private IEnumerable<IPlugin> Plugins;
-        private ObservableCollection<IPluggableViewModel> openedItems;
+        private ObservableCollection<PluggableViewModel> openedItems;
         private PluginFactory pluginFactory;
         private bool hasAnyPlugins;
         
@@ -29,12 +27,12 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region properties
 
-        public IPluggableViewModel SelectedItem {
+        public PluggableViewModel SelectedItem {
             get { return selectedItem; }
             set { SetProperty(ref selectedItem, value); }
         }
 
-        public ObservableCollection<IPluggableViewModel> Items {
+        public ObservableCollection<PluggableViewModel> Items {
             get { return openedItems; }
             protected set { SetProperty(ref openedItems, value); }
         }
@@ -49,11 +47,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public ContentViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, IUnityContainer container, PluginFactory pluginFactory) : base(eventAggregator) {
-            Items = new ObservableCollection<IPluggableViewModel>();
+        public ContentViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, PluginFactory pluginFactory) : base(eventAggregator) {
+            Items = new ObservableCollection<PluggableViewModel>();
             SelectedItem = null;
             this.regionManager = regionManager;
-            this.container = container;
             this.pluginFactory = pluginFactory;
 
             Plugins = pluginFactory.GetActivePlugins();
@@ -65,11 +62,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region methods
 
         protected override void InitEvents() {
-            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnItemOpened);
-            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnProjectChosen);
-            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnScenarioChosen);
-            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnTestSuiteChosen);
-            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(OnStepChosen);
+            eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(ItemChosen);
         }
 
         protected override void InitCommands() {
@@ -80,8 +73,13 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region event handlers
 
-        private void OnItemOpened(ItemChosenEventDescriptor obj) {
-            //regionManager.RequestNavigate()
+        private void ItemChosen(ItemChosenEventDescriptor evtDescriptor) {
+            var navPath = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(evtDescriptor.ItemType.ToString().ToLower()) + "View";
+            var navParameters = new NavigationParameters();
+
+            navParameters.Add("descriptor", evtDescriptor);
+
+            regionManager.RequestNavigate(RegionNames.ContentTabsRegion, navPath, navParameters);
         }
 
         private void OnItemClose(string identity) {
@@ -91,7 +89,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             Items.Remove(vm);
         }
 
-        private void OnProjectChosen(ItemChosenEventDescriptor evtDescriptor) {
+        /*private void OnProjectChosen(ItemChosenEventDescriptor evtDescriptor) {
             if (evtDescriptor.ItemType == ChosenItemType.PROJECT) {
                 var project = container.Resolve<ISimpleRepository<Project>>().GetEntity(evtDescriptor.Id);
                 
@@ -169,15 +167,13 @@ namespace SOATester.Modules.ContentModule.ViewModels {
                     }
                 }
             }
-        }
+        }*/
 
         #endregion
 
         #region methods
 
-        private void ItemAdded(IPluggableViewModel newItem) {
-            FillDefaultViewProperties(newItem);
-
+        private void ItemAdded(PluggableViewModel newItem) {
             if (hasAnyPlugins) {
                 RunPlugins(newItem);
             } else {
@@ -187,10 +183,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             SelectedItem = newItem;
         }
 
-        private void RunPlugins(IPluggableViewModel item) {
-            var viewModels = new List<IPluggableViewModel>();
+        private void RunPlugins(PluggableViewModel item) {
+            var viewModels = new List<PluggableViewModel>();
 
-            IEnumerable<IPluggableViewModel> pluginExecutionResult = null;
+            IEnumerable<PluggableViewModel> pluginExecutionResult = null;
 
             viewModels.AddRange(Items);
             viewModels.Add(item);
@@ -203,14 +199,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             Items.AddRange(pluginExecutionResult == null ? viewModels : pluginExecutionResult);
         }
 
-        private void UnselectItem(IPluggableViewModel item) {
+        private void UnselectItem(PluggableViewModel item) {
             if (item.Equals(SelectedItem)) {
                 SelectedItem = null;
             }
-        }
-
-        private void FillDefaultViewProperties(IPluggableViewModel viewModel) {
-            viewModel.ViewProperties["Brush"] = null;
         }
 
         private int GetItemIndex<T>(Func<T, bool> compareFunc) where T : ViewModelBase {

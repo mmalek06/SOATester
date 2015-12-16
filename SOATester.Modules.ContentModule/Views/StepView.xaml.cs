@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SOATester.Modules.ContentModule.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,10 @@ namespace SOATester.Modules.ContentModule.Views {
     /// Interaction logic for StepView.xaml
     /// </summary>
     public partial class StepView : UserControl {
-        public StepView() {
+        public StepView(StepViewModel vm) {
             InitializeComponent();
+
+            DataContext = vm;
         }
     }
 }

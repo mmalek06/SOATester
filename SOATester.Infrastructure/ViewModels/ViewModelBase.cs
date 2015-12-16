@@ -13,17 +13,25 @@ namespace SOATester.Infrastructure.ViewModels {
 
         #region constructors and destructors
 
+        public ViewModelBase() {
+            InitVM();
+        }
+
         public ViewModelBase(IEventAggregator eventAggregator) {
             this.eventAggregator = eventAggregator;
 
-            InitEvents();
-            InitCommands();
-            InitCollections();
+            InitVM();
         }
 
         #endregion
 
         #region methods
+
+        protected virtual void InitVM() {
+            InitEvents();
+            InitCommands();
+            InitCollections();
+        }
 
         protected virtual void InitEvents() { }
         protected virtual void InitCommands() { }

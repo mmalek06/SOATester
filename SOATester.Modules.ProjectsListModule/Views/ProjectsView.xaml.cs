@@ -22,6 +22,7 @@ namespace SOATester.Modules.ProjectsListModule.Views {
     public partial class ProjectsView : UserControl {
         public ProjectsView(ProjectsViewModel vm) {
             InitializeComponent();
+
             DataContext = vm;
         }
     }

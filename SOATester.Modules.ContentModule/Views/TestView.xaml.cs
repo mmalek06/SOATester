@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SOATester.Modules.ContentModule.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,10 @@ namespace SOATester.Modules.ContentModule.Views {
     /// Interaction logic for TestView.xaml
     /// </summary>
     public partial class TestView : UserControl {
-        public TestView() {
+        public TestView(TestViewModel vm) {
             InitializeComponent();
+
+            DataContext = vm;
         }
     }
 }
