@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using SOATester.DAL.Repositories;
+using SOATester.Entities;
+using SOATester.Infrastructure.IOC;
+using SOATester.Modules.ProjectsListModule.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SOATester.Modules.ProjectsListModule.ViewModels;
-using Microsoft.Practices.Unity;
-using SOATester.DAL.Repositories;
-using SOATester.Infrastructure.IOC;
-using SOATester.Entities;
 
 namespace SOATester.Modules.ProjectsListModule.Factories {
     public class ProjectsFactory : IProjectsFactory {
 
         #region fields
 
-        private Queue<Type[]> hierarchy;
+        private IList<Type[]> hierarchy;
         private ProjectsRepository projectsRepository;
         private IUnityContainer container;
 
@@ -23,7 +23,7 @@ namespace SOATester.Modules.ProjectsListModule.Factories {
         public ProjectsFactory(IUnityContainer container, ProjectsRepository projectsRepository) {
             this.container = container;
             this.projectsRepository = projectsRepository;
-            hierarchy = new Queue<Type[]>(new[] {
+            hierarchy = new List<Type[]>(new[] {
                 new[] { typeof(ProjectViewModel), typeof(Project) },
                 new[] { typeof(ScenarioViewModel), typeof(Scenario) },
                 new[] { typeof(TestViewModel), typeof(Test) },
@@ -46,16 +46,11 @@ namespace SOATester.Modules.ProjectsListModule.Factories {
 
         #region methods
 
-        private IEnumerable<IIdentifiableViewModel> CreateViewModels(IEnumerable<object> entities) {
+        private IEnumerable<IIdentifiableViewModel> CreateViewModels(IEnumerable<object> entities, int level = 0) {
             var vms = new List<IIdentifiableViewModel>();
+            Type[] pair = hierarchy[level];
 
             if (hierarchy.Any()) {
-                var pair = hierarchy.Dequeue();
-
-                if (pair == null) {
-                    return null;
-                }
-
                 foreach (var entity in entities) {
                     var vm = container.Resolve(pair[0], new TypedParametersOverride(entity, pair[1]));
                     bool entityContainsChildren = entity is IParentEntity;
@@ -64,7 +59,7 @@ namespace SOATester.Modules.ProjectsListModule.Factories {
                     vms.Add(vm as IIdentifiableViewModel);
 
                     if (entityContainsChildren && isViewModelHierarchical) {
-                        var tmpVms = CreateViewModels((entity as IParentEntity).Children);
+                        var tmpVms = CreateViewModels((entity as IParentEntity).Children, level + 1);
 
                         (vm as IHierarchicalViewModel).Items.AddRange(tmpVms);
                     }
