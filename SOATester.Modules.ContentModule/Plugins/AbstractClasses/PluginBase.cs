@@ -44,6 +44,10 @@ namespace SOATester.Modules.ContentModule.Plugins {
             return true;
         }
 
+        public void CleanupState(PluggableViewModel viewModel) {
+            lastRunResult.Remove(viewModel.GetHashCode());
+        }
+
         public abstract IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels);
 
         #endregion

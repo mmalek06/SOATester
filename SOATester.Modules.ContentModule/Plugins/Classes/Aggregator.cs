@@ -93,8 +93,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
             int stepSize = (int)Math.Pow(10, MAX_10TH_POWER - group.First().Importance);
 
             foreach (var vm in group) { 
-                int id = vm.ParentId;
-                int step = GetStep(ref maxUnboundIdx, stepSize, id, counts, lookup);
+                int step = GetStep(ref maxUnboundIdx, stepSize, vm.ParentId, vm.TopmostParentId, counts, lookup);
 
                 proxiesWithKeys[step] = vm;
                 localLookup[vm.Id] = new IndexedViewModel {
@@ -109,11 +108,12 @@ namespace SOATester.Modules.ContentModule.Plugins {
             };
         }
 
-        private int GetStep(ref int maxUnboundIdx, int stepSize, int parentId, Dictionary<int, int> counts, Dictionary<int, IndexedViewModel> lookup) {
+        private int GetStep(ref int maxUnboundIdx, int stepSize, int parentId, int topmostParentId, Dictionary<int, int> counts, Dictionary<int, IndexedViewModel> lookup) {
             IndexedViewModel outVal;
             int step;
+            bool parentExists = lookup.TryGetValue(parentId, out outVal) || lookup.TryGetValue(topmostParentId, out outVal);
 
-            if (lookup.TryGetValue(parentId, out outVal)) {
+            if (parentExists) {
                 int currCount;
 
                 if (counts.TryGetValue(parentId, out currCount)) {

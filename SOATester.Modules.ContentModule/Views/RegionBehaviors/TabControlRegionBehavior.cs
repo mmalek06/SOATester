@@ -24,12 +24,29 @@ namespace SOATester.Modules.ContentModule.Views.RegionBehaviors {
             hasAnyPlugins = plugins.Any();
         }
 
+        private void Views_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove) {
+                if (!(e.OldItems[0] is UserControl)) {
+                    return;
+                }
+
+                var control = (e.OldItems[0] as UserControl);
+                var vm = control.DataContext as PluggableViewModel;
+
+                foreach (var plugin in plugins) {
+                    plugin.CleanupState(vm);
+                }
+            }
+        }
+
         #endregion
 
         #region methods
 
         protected override void OnAttach() {
             (Region.Views as ViewsCollection).SortComparison = CompareVms;
+
+            Region.Views.CollectionChanged += Views_CollectionChanged;
         }
 
         private int CompareVms(object first, object second) {

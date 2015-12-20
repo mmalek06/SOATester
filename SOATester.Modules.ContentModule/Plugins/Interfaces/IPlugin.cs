@@ -17,6 +17,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels);
         bool CheckShouldExecute(IEnumerable<PluggableViewModel> viewModels);
+        void CleanupState(PluggableViewModel viewModel);
 
         #endregion
 
