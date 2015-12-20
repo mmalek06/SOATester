@@ -38,7 +38,7 @@ namespace SOATester.Infrastructure {
 
         #region public methods
 
-        public void Initialize() {
+        public virtual void Initialize() {
             InitializeRepositories();
             InitializeViewModels();
             InitializePlugins();

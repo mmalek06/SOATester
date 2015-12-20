@@ -2,7 +2,7 @@
 using SOATester.DAL.Repositories;
 
 namespace SOATester.Modules.ContentModule.Services {
-    internal class TestService : ITestsService {
+    internal class TestsService : ITestsService {
 
         #region fields
 
@@ -12,7 +12,7 @@ namespace SOATester.Modules.ContentModule.Services {
 
         #region constructor
 
-        public TestService(TestsRepository repository) {
+        public TestsService(TestsRepository repository) {
             this.repository = repository;
         }
 

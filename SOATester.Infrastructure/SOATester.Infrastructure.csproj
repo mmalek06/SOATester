@@ -57,6 +57,10 @@
       <HintPath>..\SOATester\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
+      <HintPath>..\SOATester\packages\Prism.Unity.6.1.1\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Prism.Wpf, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\SOATester\packages\Prism.Wpf.6.1.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
@@ -91,6 +95,8 @@
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="IOC\TypedParametersOverride.cs" />
     <Compile Include="ModuleBase.cs" />
+    <Compile Include="Prism\SoaTesterRegionNavigationContentLoader.cs" />
+    <Compile Include="Prism\SoaTesterUnityRegionNavigationContentLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,6 +112,7 @@
     </Compile>
     <Compile Include="RegionNames.cs" />
     <Compile Include="ViewModels\ICollectionViewModel.cs" />
+    <Compile Include="ViewModels\INavigableViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

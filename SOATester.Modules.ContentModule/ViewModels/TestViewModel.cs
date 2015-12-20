@@ -1,10 +1,9 @@
-﻿using Prism.Regions;
-using SOATester.Entities;
+﻿using SOATester.Entities;
 using SOATester.Infrastructure.Events;
 using SOATester.Modules.ContentModule.Services;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class TestViewModel : PluggableViewModel, INavigationAware {
+    public class TestViewModel : PluggableViewModel {
 
         #region fields
 
@@ -16,27 +15,8 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region properties
 
-        public Test Test {
-            get { return test; }
-            set {
-                if (test == null) {
-                    SetProperty(ref test, value);
-                }
-            }
-        }
-
-        public override string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
-
-        public override int Importance => 3;
-
-        public override int Id => test.Id;
-
-        public override int ParentId => test.ScenarioId;
-
-        public override int TopmostParentId => test.Scenario.ProjectId;
-
         public string Name {
-            get { return name ?? test.Name; }
+            get { return name; }
             set { SetProperty(ref name, value); }
         }
 
@@ -57,7 +37,13 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region methods
 
         protected override void SetItem(ItemChosenEventDescriptor descriptor) {
-            Test = testsService.Get(descriptor.Id);
+            test = testsService.Get(descriptor.Id);
+            Identity = string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
+            Importance = 3;
+            Id = test.Id;
+            ParentId = test.ScenarioId;
+            TopmostParentId = test.Scenario.ProjectId;
+            Name = test.Name;
         }
 
         #endregion

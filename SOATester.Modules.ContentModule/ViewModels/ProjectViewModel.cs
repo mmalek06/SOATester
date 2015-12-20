@@ -20,38 +20,13 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region properties
 
-        public Project Project {
-            get { return project; }
-            protected set { SetProperty(ref project, value); }
-        }
-
-        public override string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
-
-        public override int Importance => 1;
-
-        public override int Id => project.Id;
-
-        public override int ParentId => project.Id;
-
-        public override int TopmostParentId => project.Id;
-
         public string Name {
-            get { return name ?? Project.Name; }
+            get { return name; }
             set { SetProperty(ref name, value); }
         }
 
         public Uri Address {
-            get {
-                if (address == null) {
-                    if (project.Address != null) {
-                        return new Uri(project.Address);
-                    }
-
-                    return null;
-                }
-
-                return address;
-            }
+            get { return address; }
             set { SetProperty(ref address, value); }
         }
 
@@ -93,7 +68,13 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         }
 
         protected override void SetItem(ItemChosenEventDescriptor descriptor) {
-            Project = projectsService.Get(descriptor.Id);
+            project = projectsService.Get(descriptor.Id);
+            Id = project.Id;
+            ParentId = Id;
+            TopmostParentId = Id;
+            Name = project.Name;
+            importance = 1;
+            Identity = string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
         }
 
         #endregion

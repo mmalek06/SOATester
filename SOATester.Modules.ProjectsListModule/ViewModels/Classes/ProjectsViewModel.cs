@@ -1,11 +1,14 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Regions;
+using SOATester.Infrastructure;
 using SOATester.Infrastructure.Events;
 using SOATester.Infrastructure.ViewModels;
 using SOATester.Modules.ProjectsListModule.Factories;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -16,8 +19,8 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
 
         private static object lockObj = new object();
         private ObservableCollection<IIdentifiableViewModel> tree;
-        private IEventAggregator eventAggregator;
         private IProjectsFactory projectsFactory;
+        private IRegionManager regionManager;
 
         #endregion
 
@@ -41,9 +44,9 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
 
         #region constructors and destructors
 
-        public ProjectsViewModel(IEventAggregator eventAggregator, IProjectsFactory projectsFactory) : base() {
-            this.eventAggregator = eventAggregator;
+        public ProjectsViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, IProjectsFactory projectsFactory) : base(eventAggregator) {
             this.projectsFactory = projectsFactory;
+            this.regionManager = regionManager;
 
             InitComponent();
         }
@@ -99,7 +102,7 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
             var viewModels = new List<IIdentifiableViewModel>();
             
             await Task.Run(() => {
-                var vmHierarchy = projectsFactory.GetTreeStructure();
+                var vmHierarchy = projectsFactory.CreateTreeStructure();
 
                 viewModels.AddRange(vmHierarchy);
             });
@@ -117,7 +120,13 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
                 ItemType = itemType
             };
 
-            eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
+            var navPath = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(evtDescriptor.ItemType.ToString().ToLower()) + "View";
+            var navParameters = new NavigationParameters();
+
+            navParameters.Add("descriptor", evtDescriptor);
+            regionManager.RequestNavigate(RegionNames.ContentTabsRegion, navPath, navParameters);
+
+            //eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
         }
 
         #endregion

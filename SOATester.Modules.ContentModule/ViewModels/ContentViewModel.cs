@@ -1,61 +1,13 @@
-﻿using Prism.Commands;
-using Prism.Events;
-using Prism.Regions;
-using SOATester.Infrastructure;
+﻿using Prism.Events;
 using SOATester.Infrastructure.Events;
 using SOATester.Infrastructure.ViewModels;
-using SOATester.Modules.ContentModule.Plugins;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
     public class ContentViewModel : ViewModelBase {
 
-        #region fields
-
-        private PluggableViewModel selectedItem;
-        private IRegionManager regionManager;
-        private IEnumerable<IPlugin> Plugins;
-        private ObservableCollection<PluggableViewModel> openedItems;
-        private PluginFactory pluginFactory;
-        private bool hasAnyPlugins;
-        
-        #endregion
-
-        #region properties
-
-        public PluggableViewModel SelectedItem {
-            get { return selectedItem; }
-            set { SetProperty(ref selectedItem, value); }
-        }
-
-        public ObservableCollection<PluggableViewModel> Items {
-            get { return openedItems; }
-            protected set { SetProperty(ref openedItems, value); }
-        }
-
-        #endregion
-
-        #region commands
-
-        public DelegateCommand<string> CloseItem { get; private set; }
-
-        #endregion
-
         #region constructors and destructors
 
-        public ContentViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, PluginFactory pluginFactory) : base(eventAggregator) {
-            Items = new ObservableCollection<PluggableViewModel>();
-            SelectedItem = null;
-            this.regionManager = regionManager;
-            this.pluginFactory = pluginFactory;
-
-            Plugins = pluginFactory.GetActivePlugins();
-            hasAnyPlugins = Plugins.Any();
-        }
+        public ContentViewModel(IEventAggregator eventAggregator) : base(eventAggregator) { }
 
         #endregion
 
@@ -65,156 +17,12 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             eventAggregator.GetEvent<ItemOpenedEvent>().Subscribe(ItemChosen);
         }
 
-        protected override void InitCommands() {
-            CloseItem = new DelegateCommand<string>(OnItemClose);
-        }
-
         #endregion
 
         #region event handlers
 
         private void ItemChosen(ItemChosenEventDescriptor evtDescriptor) {
-            var navPath = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(evtDescriptor.ItemType.ToString().ToLower()) + "View";
-            var navParameters = new NavigationParameters();
-
-            navParameters.Add("descriptor", evtDescriptor);
-
-            regionManager.RequestNavigate(RegionNames.ContentTabsRegion, navPath, navParameters);
-        }
-
-        private void OnItemClose(string identity) {
-            var vm = Items.First(item => item.Identity == identity);
-
-            UnselectItem(vm);
-            Items.Remove(vm);
-        }
-
-        /*private void OnProjectChosen(ItemChosenEventDescriptor evtDescriptor) {
-            if (evtDescriptor.ItemType == ChosenItemType.PROJECT) {
-                var project = container.Resolve<ISimpleRepository<Project>>().GetEntity(evtDescriptor.Id);
-                
-                if (project != null) {
-                    int itemIndex = GetItemIndex<ProjectViewModel>((vm) => { return vm != null && vm.Id == project.Id; });
-
-                    if (itemIndex < 0) {
-                        ProjectViewModel projectVm = container.Resolve<ProjectViewModel>();
-
-                        projectVm.Project = project;
-
-                        if (!Items.Any(openedProject => openedProject.Equals(projectVm))) {
-                            ItemAdded(projectVm);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void OnScenarioChosen(ItemChosenEventDescriptor evtDescriptor) {
-            if (evtDescriptor.ItemType == ChosenItemType.SCENARIO) {
-                var scenario = container.Resolve<IRepository<Scenario>>().GetEntity(evtDescriptor.Id);
-
-                if (scenario != null) {
-                    int itemIndex = GetItemIndex<ScenarioViewModel>(vm => vm != null && vm.Id == scenario.Id);
-
-                    if (itemIndex < 0) {
-                        ScenarioViewModel scenarioVm = container.Resolve<ScenarioViewModel>();
-
-                        scenarioVm.Scenario = scenario;
-
-                        if (!Items.Any(openedScenario => openedScenario.Equals(scenarioVm))) {
-                            ItemAdded(scenarioVm);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void OnTestSuiteChosen(ItemChosenEventDescriptor evtDescriptor) {
-            if (evtDescriptor.ItemType == ChosenItemType.TEST) {
-                var testSuite = container.Resolve<IRepository<Test>>().GetEntity(evtDescriptor.Id);
-
-                if (testSuite != null) {
-                    int itemIndex = GetItemIndex<TestViewModel>((vm) => { return vm != null && vm.Id == testSuite.Id; });
-
-                    if (itemIndex < 0) {
-                        TestViewModel testSuiteVm = container.Resolve<TestViewModel>();
-
-                        testSuiteVm.Test = testSuite;
-
-                        if (!Items.Any(openedProject => openedProject.Equals(testSuiteVm))) {
-                            ItemAdded(testSuiteVm);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void OnStepChosen(ItemChosenEventDescriptor evtDescriptor) {
-            if (evtDescriptor.ItemType == ChosenItemType.STEP) {
-                var step = container.Resolve<IRepository<Step>>().GetEntity(evtDescriptor.Id);
-
-                if (step != null) {
-                    int itemIndex = GetItemIndex<StepViewModel>((vm) => { return vm != null && vm.Id == step.Id; });
-
-                    if (itemIndex < 0) {
-                        StepViewModel stepVm = container.Resolve<StepViewModel>();
-
-                        stepVm.Step = step;
-
-                        if (!Items.Any(openedProject => openedProject.Equals(stepVm))) {
-                            ItemAdded(stepVm);
-                        }
-                    }
-                }
-            }
-        }*/
-
-        #endregion
-
-        #region methods
-
-        private void ItemAdded(PluggableViewModel newItem) {
-            if (hasAnyPlugins) {
-                RunPlugins(newItem);
-            } else {
-                Items.Add(newItem);
-            }
-
-            SelectedItem = newItem;
-        }
-
-        private void RunPlugins(PluggableViewModel item) {
-            var viewModels = new List<PluggableViewModel>();
-
-            IEnumerable<PluggableViewModel> pluginExecutionResult = null;
-
-            viewModels.AddRange(Items);
-            viewModels.Add(item);
-
-            foreach (var plugin in Plugins) {
-                pluginExecutionResult = plugin.Execute(pluginExecutionResult == null ? viewModels : pluginExecutionResult);
-            }
-
-            Items.Clear();
-            Items.AddRange(pluginExecutionResult == null ? viewModels : pluginExecutionResult);
-        }
-
-        private void UnselectItem(PluggableViewModel item) {
-            if (item.Equals(SelectedItem)) {
-                SelectedItem = null;
-            }
-        }
-
-        private int GetItemIndex<T>(Func<T, bool> compareFunc) where T : ViewModelBase {
-            for (int i = 0; i < Items.Count; i++) {
-                var vm = Items[i] as T;
-
-                if (compareFunc(vm)) { 
-                    return i;
-                }
-            }
-
-            return -1;
+            
         }
 
         #endregion

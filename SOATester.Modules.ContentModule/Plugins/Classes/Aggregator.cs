@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Plugins {
-    public class Aggregator : IPlugin {
+    public class Aggregator : PluginBase {
 
         #region fields
 
@@ -12,18 +12,9 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #endregion
 
-        #region public properties
-
-        public PluginKey PluginKey { get; set; }
-        public Strategy Strategy { get; set; }
-        public bool IsActive { get; set; }
-        public int Priority { get; set; }
-
-        #endregion
-
         #region constructors and destructors
 
-        public Aggregator() {
+        public Aggregator() : base() {
             PluginKey = PluginKey.AGGREGATOR;
             Strategy = Strategy.NONE;
         }
@@ -32,33 +23,37 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region public methods
 
-        public IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels) {
-            if (viewModels != null) {
-                var groups = viewModels.GroupBy(vm => vm.GetType()).OrderBy(group => group.First().Importance);
-                var dictionaries = new List<Dictionary<int, PluggableViewModel>>();
-                var lastLookup = new Dictionary<int, IndexedViewModel>();
+        public override IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels) {
+            var result = Aggregate(viewModels);
 
-                foreach (var group in groups) {
-                    var matchingResult = Match(group, lastLookup);
+            SetLastRunResult(result);
 
-                    lastLookup = matchingResult.Lookup;
-
-                    dictionaries.Add(matchingResult.Mapping);
-                }
-
-                var flatDictionary = dictionaries.SelectMany(dict => dict).ToDictionary(pair => pair.Key, pair => pair.Value);
-                var orderedEnumerable = flatDictionary.OrderBy(pair => pair.Key);
-                var result = orderedEnumerable.Select(entry => entry.Value);
-
-                return result;
-            }
-
-            return null;
+            return result;
         }
 
         #endregion
 
         #region methods
+
+        private IEnumerable<PluggableViewModel> Aggregate(IEnumerable<PluggableViewModel> viewModels) {
+            var groups = viewModels.GroupBy(vm => vm.GetType()).OrderBy(group => group.First().Importance);
+            var dictionaries = new List<Dictionary<int, PluggableViewModel>>();
+            var lastLookup = new Dictionary<int, IndexedViewModel>();
+
+            foreach (var group in groups) {
+                var matchingResult = Match(group, lastLookup);
+
+                lastLookup = matchingResult.Lookup;
+
+                dictionaries.Add(matchingResult.Mapping);
+            }
+
+            var flatDictionary = dictionaries.SelectMany(dict => dict).ToDictionary(pair => pair.Key, pair => pair.Value);
+            var orderedEnumerable = flatDictionary.OrderBy(pair => pair.Key);
+            var result = orderedEnumerable.Select(entry => entry.Value).ToArray();
+
+            return result;
+        }
 
         private MatchingResult Match(IEnumerable<PluggableViewModel> group, Dictionary<int, IndexedViewModel> lookup) {
             if (group.First().Importance == 1) {

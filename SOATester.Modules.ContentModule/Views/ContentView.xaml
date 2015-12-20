@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SOATester.Modules.ContentModule.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:SOATester.Modules.ContentModule.Views.Actions"
              xmlns:infrastructure="clr-namespace:SOATester.Infrastructure;assembly=SOATester.Infrastructure"
              xmlns:Partials="clr-namespace:SOATester.Modules.ContentModule.Views"
              xmlns:ViewModels="clr-namespace:SOATester.Modules.ContentModule.ViewModels"
@@ -11,27 +12,36 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <!--<TabControl ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" Name="ContentTabs">-->
-    <TabControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentTabsRegion}">
-        <TabControl.Resources>
-            <Style TargetType="TabItem">
-                <Setter Property="Padding" Value="0" />
-            </Style>
-        </TabControl.Resources>
-        <TabControl.ItemTemplate>
-            <DataTemplate>
-                <DockPanel Background="{Binding ViewProperties[Brush]}">
-                    <TextBlock Text="{Binding Path=Name}" DockPanel.Dock="Left" Margin="2,3,0,2" />
-                    <Button DockPanel.Dock="Right" BorderThickness="0" Background="Transparent" 
-                            Margin="10,2,2,2" 
-                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=DataContext.CloseItem}" 
-                            CommandParameter="{Binding Identity, Mode=OneTime}">
-                        <Button.Content>
-                            <TextBlock FontWeight="Bold" Text="X" />
-                        </Button.Content>
-                    </Button>
-                </DockPanel>
-            </DataTemplate>
-        </TabControl.ItemTemplate>
-    </TabControl>    
+    <UserControl.Resources>
+        <Style TargetType="TabItem">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Header" Value="{Binding DataContext.Name}" />
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}, Path=DataContext.DataContext.PluggableProperties[Brush]}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <ContentControl Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,8,2" Content="{Binding}" />
+                            <Button Grid.Column="1" BorderThickness="0" Background="Transparent" Margin="10,2,2,2">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <local:ButtonCloseTabAction />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <Button.Content>
+                                    <TextBlock FontWeight="Bold" Text="X" />
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <TabControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentTabsRegion}" />
 </UserControl>

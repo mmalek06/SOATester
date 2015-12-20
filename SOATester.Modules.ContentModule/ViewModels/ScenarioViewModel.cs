@@ -6,7 +6,7 @@ using SOATester.Modules.ContentModule.Services;
 using System;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
-    public class ScenarioViewModel : PluggableViewModel, INavigationAware {
+    public class ScenarioViewModel : PluggableViewModel {
 
         #region fields
 
@@ -20,38 +20,13 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region properties
 
-        public Scenario Scenario {
-            get { return scenario; }
-            set {
-                if (scenario == null) {
-                    SetProperty(ref scenario, value);
-                }
-            }
-        }
-
-        public override string Identity => string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
-
-        public override int Importance => 2;
-
-        public override int Id => scenario.Id;
-
-        public override int ParentId => scenario.ProjectId;
-
-        public override int TopmostParentId => scenario.ProjectId;
-
         public string Name {
-            get { return name ?? scenario.Name; }
+            get { return name; }
             set { SetProperty(ref name, value); }
         }
 
         public Uri Address {
-            get {
-                if (address == null && scenario.Address == null) {
-                    return null;
-                }
-
-                return address == null ? new Uri(scenario.Address) : address;
-            }
+            get { return address; }
             set { SetProperty(ref address, value); }
         }
 
@@ -77,7 +52,13 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         #region methods
 
         protected override void SetItem(ItemChosenEventDescriptor descriptor) {
-            Scenario = scenariosService.Get(descriptor.Id);
+            scenario = scenariosService.Get(descriptor.Id);
+            Id = scenario.Id;
+            ParentId = scenario.ProjectId;
+            TopmostParentId = scenario.ProjectId;
+            Name = scenario.Name;
+            importance = 2;
+            Identity = string.Format("{0}.{1}.{2}.{3}", Importance, Id, ParentId, TopmostParentId);
         }
 
         #endregion

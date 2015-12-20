@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentModule.cs" />
+    <Compile Include="Plugins\AbstractClasses\PluginBase.cs" />
     <Compile Include="Plugins\Classes\Aggregator.cs" />
     <Compile Include="Plugins\Classes\Colorizer.cs" />
     <Compile Include="Plugins\Interfaces\IPlugin.cs" />
@@ -118,8 +119,7 @@
     <Compile Include="ViewModels\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\StepViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
-    <Compile Include="Views\Actions\AbstractClasses\BaseCloseTabAction.cs" />
-    <Compile Include="Views\Actions\Classes\ButtonCloseTabAction.cs" />
+    <Compile Include="Views\Actions\ButtonCloseTabAction.cs" />
     <Compile Include="Views\ContentView.xaml.cs">
       <DependentUpon>ContentView.xaml</DependentUpon>
     </Compile>
@@ -129,6 +129,7 @@
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RegionBehaviors\TabControlRegionBehavior.cs" />
     <Compile Include="Views\ScenarioView.xaml.cs">
       <DependentUpon>ScenarioView.xaml</DependentUpon>
     </Compile>
@@ -212,9 +213,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)*.dll" "$(SolutionDir)\bin\$(ConfigurationName)\" /Y

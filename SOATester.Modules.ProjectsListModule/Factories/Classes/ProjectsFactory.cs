@@ -35,7 +35,7 @@ namespace SOATester.Modules.ProjectsListModule.Factories {
 
         #region public methods
 
-        public IEnumerable<IIdentifiableViewModel> GetTreeStructure() {
+        public IEnumerable<IIdentifiableViewModel> CreateTreeStructure() {
             var projects = projectsRepository.GetProjects();
             var vms = CreateViewModels(projects);
             

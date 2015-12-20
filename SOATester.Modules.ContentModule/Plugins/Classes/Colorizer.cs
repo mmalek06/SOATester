@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Media;
 
 namespace SOATester.Modules.ContentModule.Plugins {
-    public class Colorizer : IPlugin {
+    public class Colorizer : PluginBase {
 
         #region fields
 
@@ -22,9 +22,9 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #endregion
 
-        #region constructors and destructors
+        #region constructor
 
-        public Colorizer() {
+        public Colorizer() : base() {
             PluginKey = PluginKey.COLORIZER;
             Strategy = Strategy.NONE;
             occupiedColors = new HashSet<Color>();
@@ -34,7 +34,19 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region public methods
 
-        public IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels) {
+        public override IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels) {
+            var result = Colorize(viewModels);
+
+            SetLastRunResult(result);
+
+            return result;
+        }
+
+        #endregion
+
+        #region methods
+
+        private IEnumerable<PluggableViewModel> Colorize(IEnumerable<PluggableViewModel> viewModels) {
             if (viewModels != null) {
                 var groups = viewModels.GroupBy(vm => vm.GetType()).OrderBy(group => group.First().Importance);
                 var rand = new Random();
@@ -58,13 +70,9 @@ namespace SOATester.Modules.ContentModule.Plugins {
             return viewModels;
         }
 
-        #endregion
-
-        #region methods
-
         private void SetParentColor(PluggableViewModel viewModel, Random rand, Dictionary<int, Color> colorMap) {
             object brush;
-            bool isBrushAvailable = viewModel.ViewProperties.TryGetValue("Brush", out brush);
+            bool isBrushAvailable = viewModel.PluggableProperties.TryGetValue("Brush", out brush);
 
             if (brush == null) {
                 var color = GetColor(rand);
@@ -75,16 +83,16 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
                 occupiedColors.Add(color);
                 colorMap[viewModel.Id] = color;
-                viewModel.ViewProperties["Brush"] = new SolidColorBrush(color);
+                viewModel.PluggableProperties["Brush"] = new SolidColorBrush(color);
             } else {
-                colorMap[viewModel.Id] = (viewModel.ViewProperties["Brush"] as SolidColorBrush).Color;
+                colorMap[viewModel.Id] = (viewModel.PluggableProperties["Brush"] as SolidColorBrush).Color;
             }
         }
 
         private void SetChildColor(PluggableViewModel viewModel, Random rand, Dictionary<int, Color> parentMap, Dictionary<int, Color> childMap) {
             Color color;
             object brush;
-            bool isBrushAvailable = viewModel.ViewProperties.TryGetValue("Brush", out brush);
+            bool isBrushAvailable = viewModel.PluggableProperties.TryGetValue("Brush", out brush);
 
             if (brush == null) {
                 if (!parentMap.TryGetValue(viewModel.ParentId, out color)) {
@@ -92,12 +100,12 @@ namespace SOATester.Modules.ContentModule.Plugins {
                 }
 
                 occupiedColors.Add(color);
-                viewModel.ViewProperties["Brush"] = new SolidColorBrush(color);
+                viewModel.PluggableProperties["Brush"] = new SolidColorBrush(color);
             } else {
-                color = (viewModel.ViewProperties["Brush"] as SolidColorBrush).Color;
+                color = (viewModel.PluggableProperties["Brush"] as SolidColorBrush).Color;
             }
 
-            childMap[viewModel.Id] = (viewModel.ViewProperties["Brush"] as SolidColorBrush).Color;
+            childMap[viewModel.Id] = (viewModel.PluggableProperties["Brush"] as SolidColorBrush).Color;
         }
 
         private Color GetColor(Random rand) {
