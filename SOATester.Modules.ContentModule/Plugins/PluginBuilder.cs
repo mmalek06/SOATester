@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 
 namespace SOATester.Modules.ContentModule.Plugins {
-    public class PluginFactory {
+    public class PluginBuilder {
 
         #region fields
 
@@ -17,7 +17,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region constructors and destructors
 
-        public PluginFactory(IUnityContainer container) {
+        public PluginBuilder(IUnityContainer container) {
             this.container = container;
 
             InitializeConfig();
@@ -27,12 +27,12 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
         #region public methods
 
-        public IEnumerable<IPlugin> GetActivePlugins() {
+        public IEnumerable<PluginBase> GetActivePlugins() {
             return GetPlugins().Where(plugin => plugin.IsActive);
         }
 
-        public IEnumerable<IPlugin> GetPlugins() {
-            var plugins = container.Resolve<IEnumerable<IPlugin>>();
+        public IEnumerable<PluginBase> GetPlugins() {
+            var plugins = container.Resolve<IEnumerable<PluginBase>>();
 
             foreach (var plugin in plugins) {
                 ConfigurePlugin(plugin);
@@ -53,7 +53,7 @@ namespace SOATester.Modules.ContentModule.Plugins {
             }
         }
 
-        private void ConfigurePlugin(IPlugin plugin) {
+        private void ConfigurePlugin(PluginBase plugin) {
             var configEntry = configEntries.FirstOrDefault(entry => entry.Key == plugin.PluginKey && entry.Strategy == plugin.Strategy);
 
             if (configEntry != null) {

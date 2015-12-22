@@ -35,18 +35,6 @@ namespace SOATester.Modules.ContentModule.Plugins {
         #region public methods
 
         public override IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels) {
-            var result = Colorize(viewModels);
-
-            SetLastRunResult(result);
-
-            return result;
-        }
-
-        #endregion
-
-        #region methods
-
-        private IEnumerable<PluggableViewModel> Colorize(IEnumerable<PluggableViewModel> viewModels) {
             if (viewModels != null) {
                 var groups = viewModels.GroupBy(vm => vm.GetType()).OrderBy(group => group.First().Importance);
                 var rand = new Random();
@@ -69,6 +57,10 @@ namespace SOATester.Modules.ContentModule.Plugins {
 
             return viewModels;
         }
+
+        #endregion
+
+        #region methods
 
         private void SetParentColor(PluggableViewModel viewModel, Random rand, Dictionary<int, Color> colorMap) {
             object brush;

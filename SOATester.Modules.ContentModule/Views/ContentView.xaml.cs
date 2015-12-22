@@ -1,6 +1,4 @@
-﻿using SOATester.Modules.ContentModule.Plugins;
-using SOATester.Modules.ContentModule.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,10 +19,8 @@ namespace SOATester.Modules.ContentModule.Views {
 
         #region constructors and destructors
 
-        public ContentView(ContentViewModel vm, PluginFactory pluginFactory) { 
+        public ContentView() { 
             InitializeComponent();
-
-            DataContext = vm;
         }
 
         #endregion

@@ -32,8 +32,8 @@ namespace Tests {
 
         #region helper methods
 
-        private IPlugin _getAggregateNonePlugin() {
-            var plugins = container.Resolve<PluginFactory>().GetPlugins();
+        private PluginBase _getAggregateNonePlugin() {
+            var plugins = container.Resolve<PluginBuilder>().GetPlugins();
 
             return plugins.FirstOrDefault(plugin => plugin.PluginKey == PluginKey.AGGREGATOR && plugin.Strategy == Strategy.NONE);
         }

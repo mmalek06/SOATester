@@ -1,5 +1,7 @@
-﻿using SOATester.Entities;
+﻿using Prism.Regions;
+using SOATester.Entities;
 using SOATester.Infrastructure.Events;
+using SOATester.Modules.ContentModule.Plugins;
 using SOATester.Modules.ContentModule.Services;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
@@ -45,9 +47,9 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #endregion
 
-        #region constructors and destructors
+        #region constructor
 
-        public StepViewModel(IStepsService stepsService) : base() {
+        public StepViewModel(IStepsService stepsService, PluginRunner runner) : base(runner) {
             this.stepsService = stepsService;
         }
 
@@ -55,8 +57,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region methods
 
-        protected override void SetItem(ItemChosenEventDescriptor descriptor) {
-            Step = stepsService.Get(descriptor.Id);
+        protected override void BeforeNavigation(NavigationContext context) {
+            int chosenId = (int)context.Parameters["id"];
+
+            Step = stepsService.Get(chosenId);
         }
 
         #endregion

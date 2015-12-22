@@ -1,6 +1,8 @@
 ﻿using Prism.Regions;
 using SOATester.Infrastructure.Events;
 using SOATester.Infrastructure.ViewModels;
+using SOATester.Modules.ContentModule.Plugins;
+using System;
 using System.Collections.Generic;
 
 namespace SOATester.Modules.ContentModule.ViewModels {
@@ -13,6 +15,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
         protected int id;
         protected int parentId;
         protected int topmostParentId;
+        protected PluginRunner pluginRunner;
 
         #endregion
 
@@ -51,33 +54,39 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructor
 
-        public PluggableViewModel() : base() {
+        public PluggableViewModel(PluginRunner runner) : base() {
             PluggableProperties = new Dictionary<string, object>();
 
             PluggableProperties["Brush"] = null;
             PluggableProperties["Order"] = -1;
+
+            pluginRunner = runner;
+            pluginRunner.AddVm(this);
         }
 
         #endregion
 
         #region public methods
 
-        public void InitializeWithContext(NavigationContext navCtx) {
-            var descr = navCtx.Parameters["descriptor"] as ItemChosenEventDescriptor;
-
-            if (descr.ItemType == MyType) {
-                SetItem(descr);
-            }
-        }
-
         public bool IsNavigationTarget(NavigationContext navigationContext) {
-            var descr = navigationContext.Parameters["descriptor"] as ItemChosenEventDescriptor;
+            int chosenId = (int)navigationContext.Parameters["id"];
+            ChosenItemType me = (ChosenItemType)navigationContext.Parameters["itemType"];
 
-            if (descr.ItemType == MyType && descr.Id == Id) {
+            if (me == MyType && chosenId == Id) {
                 return true;
             }
 
             return false;
+        }
+
+        public void OnBeforeNavigation(NavigationContext context) {
+            var me = (ChosenItemType)context.Parameters["itemType"];
+
+            if (me == MyType) {
+                BeforeNavigation(context);
+
+                pluginRunner.RunPlugins();
+            }
         }
 
         public virtual void OnNavigatedTo(NavigationContext navigationContext) { }
@@ -88,7 +97,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region methods
 
-        protected abstract void SetItem(ItemChosenEventDescriptor descriptor);
+        protected abstract void BeforeNavigation(NavigationContext context);
 
         #endregion
 

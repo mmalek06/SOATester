@@ -9,6 +9,8 @@ using SOATester.Modules.ContentModule.Views.RegionBehaviors;
 using SOATester.RestCommunication;
 using SOATester.RestCommunication.Base;
 using System.Collections.Generic;
+using System;
+using SOATester.Infrastructure.Prism;
 
 namespace SOATester.Modules.ContentModule {
     public class ContentModule : ModuleBase {
@@ -19,7 +21,7 @@ namespace SOATester.Modules.ContentModule {
 
         #endregion
 
-        #region constructors and destructors
+        #region constructor
 
         public ContentModule(IUnityContainer container, IRegionManager regionManager, IRegionBehaviorFactory regionBehaviorFactory) : base(container, regionManager) {
             this.regionBehaviorFactory = regionBehaviorFactory;
@@ -34,11 +36,12 @@ namespace SOATester.Modules.ContentModule {
 
             InitializeCommunication();
             InitializeBehaviors();
+            InitializeContentLoader();
         }
 
         #endregion
 
-        #region non public methods
+        #region methods
 
         protected override void InitializeRepositories() {
             container.RegisterType<IProjectsService, ProjectsService>();
@@ -48,7 +51,6 @@ namespace SOATester.Modules.ContentModule {
         }
 
         protected override void InitializeViewModels() {
-            container.RegisterType<ContentViewModel>();
             container.RegisterType<ProjectViewModel>();
             container.RegisterType<ScenarioViewModel>();
             container.RegisterType<TestViewModel>();
@@ -63,10 +65,11 @@ namespace SOATester.Modules.ContentModule {
         }
 
         protected override void InitializePlugins() {
-            container.RegisterType<PluginFactory>();
-            container.RegisterType<IPlugin, Aggregator>("Aggregator");
-            container.RegisterType<IPlugin, Colorizer>("Colorizer");
-            container.RegisterType<IEnumerable<IPlugin>, IPlugin[]>();
+            container.RegisterType<PluginBuilder>();
+            container.RegisterType<PluginBase, Aggregator>("Aggregator");
+            container.RegisterType<PluginBase, Colorizer>("Colorizer");
+            container.RegisterType<IEnumerable<PluginBase>, PluginBase[]>();
+            container.RegisterInstance(new PluginRunner(container.Resolve<PluginBuilder>()));
         }
 
         protected override void InitializeViews() {
@@ -87,7 +90,11 @@ namespace SOATester.Modules.ContentModule {
         }
 
         private void InitializeBehaviors() {
-            regionBehaviorFactory.AddIfMissing(nameof(TabControlRegionBehavior), typeof(TabControlRegionBehavior));
+            regionBehaviorFactory.AddIfMissing(nameof(SortableRegionBehavior), typeof(SortableRegionBehavior));
+        }
+
+        private void InitializeContentLoader() {
+            container.RegisterType<IRegionNavigationContentLoader, ExtendedUnityRegionNavigationContentLoader>(new ContainerControlledLifetimeManager());
         }
 
         #endregion

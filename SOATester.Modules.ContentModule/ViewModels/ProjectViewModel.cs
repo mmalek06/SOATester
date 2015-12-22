@@ -1,6 +1,8 @@
 ﻿using Prism.Commands;
+using Prism.Regions;
 using SOATester.Entities;
 using SOATester.Infrastructure.Events;
+using SOATester.Modules.ContentModule.Plugins;
 using SOATester.Modules.ContentModule.Services;
 using System;
 using System.Collections.ObjectModel;
@@ -49,7 +51,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public ProjectViewModel(IProjectsService projectsService) : base() {
+        public ProjectViewModel(IProjectsService projectsService, PluginRunner runner) : base(runner) {
             this.projectsService = projectsService;
         }
 
@@ -67,8 +69,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
             SaveAddress = new DelegateCommand<string>(OnSaveAddress);
         }
 
-        protected override void SetItem(ItemChosenEventDescriptor descriptor) {
-            project = projectsService.Get(descriptor.Id);
+        protected override void BeforeNavigation(NavigationContext context) {
+            int chosenId = (int)context.Parameters["id"];
+
+            project = projectsService.Get(chosenId);
             Id = project.Id;
             ParentId = Id;
             TopmostParentId = Id;

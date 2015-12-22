@@ -2,6 +2,7 @@
 using SOATester.Entities;
 using SOATester.Infrastructure.Enums;
 using SOATester.Infrastructure.Events;
+using SOATester.Modules.ContentModule.Plugins;
 using SOATester.Modules.ContentModule.Services;
 using System;
 
@@ -43,7 +44,7 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region constructors and destructors
 
-        public ScenarioViewModel(IScenariosService scenariosService) : base() {
+        public ScenarioViewModel(IScenariosService scenariosService, PluginRunner runner) : base(runner) {
             this.scenariosService = scenariosService;
         }
 
@@ -51,8 +52,10 @@ namespace SOATester.Modules.ContentModule.ViewModels {
 
         #region methods
 
-        protected override void SetItem(ItemChosenEventDescriptor descriptor) {
-            scenario = scenariosService.Get(descriptor.Id);
+        protected override void BeforeNavigation(NavigationContext context) {
+            int chosenId = (int)context.Parameters["id"];
+
+            scenario = scenariosService.Get(chosenId);
             Id = scenario.Id;
             ParentId = scenario.ProjectId;
             TopmostParentId = scenario.ProjectId;

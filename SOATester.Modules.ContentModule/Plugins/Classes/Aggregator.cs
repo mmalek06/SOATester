@@ -24,18 +24,6 @@ namespace SOATester.Modules.ContentModule.Plugins {
         #region public methods
 
         public override IEnumerable<PluggableViewModel> Execute(IEnumerable<PluggableViewModel> viewModels) {
-            var result = Aggregate(viewModels);
-
-            SetLastRunResult(result);
-
-            return result;
-        }
-
-        #endregion
-
-        #region methods
-
-        private IEnumerable<PluggableViewModel> Aggregate(IEnumerable<PluggableViewModel> viewModels) {
             var groups = viewModels.GroupBy(vm => vm.GetType()).OrderBy(group => group.First().Importance);
             var dictionaries = new List<Dictionary<int, PluggableViewModel>>();
             var lastLookup = new Dictionary<int, IndexedViewModel>();
@@ -52,8 +40,16 @@ namespace SOATester.Modules.ContentModule.Plugins {
             var orderedEnumerable = flatDictionary.OrderBy(pair => pair.Key);
             var result = orderedEnumerable.Select(entry => entry.Value).ToArray();
 
+            for (int i = 0; i < result.Length; i++) {
+                result[i].PluggableProperties["Order"] = i;
+            }
+
             return result;
         }
+
+        #endregion
+
+        #region methods
 
         private MatchingResult Match(IEnumerable<PluggableViewModel> group, Dictionary<int, IndexedViewModel> lookup) {
             if (group.First().Importance == 1) {

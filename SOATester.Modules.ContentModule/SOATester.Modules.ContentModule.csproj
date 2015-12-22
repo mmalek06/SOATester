@@ -100,9 +100,9 @@
     <Compile Include="Plugins\AbstractClasses\PluginBase.cs" />
     <Compile Include="Plugins\Classes\Aggregator.cs" />
     <Compile Include="Plugins\Classes\Colorizer.cs" />
-    <Compile Include="Plugins\Interfaces\IPlugin.cs" />
     <Compile Include="Plugins\Enums.cs" />
-    <Compile Include="Plugins\PluginFactory.cs" />
+    <Compile Include="Plugins\PluginBuilder.cs" />
+    <Compile Include="Plugins\PluginRunner.cs" />
     <Compile Include="Services\Classes\ProjectsService.cs" />
     <Compile Include="Services\Classes\ScenariosService.cs" />
     <Compile Include="Services\Classes\StepsService.cs" />
@@ -114,7 +114,6 @@
     <Compile Include="Services\Interfaces\ITestsService.cs" />
     <Compile Include="ViewModels\AbstractClasses\PluggableViewModel.cs" />
     <Compile Include="ViewModels\AbstractClasses\RunnableViewModel.cs" />
-    <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\ScenarioViewModel.cs" />
     <Compile Include="ViewModels\StepViewModel.cs" />
@@ -129,7 +128,7 @@
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RegionBehaviors\TabControlRegionBehavior.cs" />
+    <Compile Include="Views\RegionBehaviors\SortableRegionBehavior.cs" />
     <Compile Include="Views\ScenarioView.xaml.cs">
       <DependentUpon>ScenarioView.xaml</DependentUpon>
     </Compile>

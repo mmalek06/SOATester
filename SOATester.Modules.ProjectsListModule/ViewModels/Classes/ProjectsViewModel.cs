@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using SOATester.Infrastructure;
@@ -115,18 +114,12 @@ namespace SOATester.Modules.ProjectsListModule.ViewModels {
         #region event handlers
 
         private void OnItemChosen(int id, ChosenItemType itemType) {
-            var evtDescriptor = new ItemChosenEventDescriptor {
-                Id = id,
-                ItemType = itemType
-            };
-
-            var navPath = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(evtDescriptor.ItemType.ToString().ToLower()) + "View";
+            var navPath = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(itemType.ToString().ToLower()) + "View";
             var navParameters = new NavigationParameters();
 
-            navParameters.Add("descriptor", evtDescriptor);
+            navParameters.Add("id", id);
+            navParameters.Add("itemType", itemType);
             regionManager.RequestNavigate(RegionNames.ContentTabsRegion, navPath, navParameters);
-
-            //eventAggregator.GetEvent<ItemOpenedEvent>().Publish(evtDescriptor);
         }
 
         #endregion

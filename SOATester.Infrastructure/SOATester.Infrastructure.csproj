@@ -95,8 +95,7 @@
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="IOC\TypedParametersOverride.cs" />
     <Compile Include="ModuleBase.cs" />
-    <Compile Include="Prism\SoaTesterRegionNavigationContentLoader.cs" />
-    <Compile Include="Prism\SoaTesterUnityRegionNavigationContentLoader.cs" />
+    <Compile Include="Prism\ExtendedUnityRegionNavigationContentLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
